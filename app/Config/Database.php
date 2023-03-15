@@ -26,12 +26,12 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'qlbaocao',
+        'hostname' => DB_HOST,
+        'username' => DB_USER,
+        'password' => DB_PASSWORD,
+        'database' => DB_NAME,
         'DBDriver' => 'MySQLi',
-        'DBPrefix' => '',
+        'DBPrefix' => DB_PREFIX,
         'pConnect' => false,
         'DBDebug'  => true,
         'charset'  => 'utf8',

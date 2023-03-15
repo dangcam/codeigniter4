@@ -6,8 +6,9 @@ namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Entities\UserEntity;
 
-class User extends BaseController
+class UserController extends BaseController
 {
     private $users;
 
@@ -19,11 +20,12 @@ class User extends BaseController
     public function index()
     {
         $meta = array('page_title' => 'Danh Sách Người Dùng');
-        if($this->request->getMethod()=='post')
+        if($this->request->getPost())
         {
-            foreach ($_POST as $value) {
-                echo $value, "\n";
-            }
+            $data = $this->request->getPost();
+
+            $user = new UserEntity($data);
+            $this->users->insert($user);
         }
         $data['list_users'] = $this->users->findAll();
         return $this->page_construct('dashboard/user', $meta,$data);

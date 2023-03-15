@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
-class Login extends \App\Controllers\BaseController
+use App\Controllers\BaseController;
+class LoginController extends BaseController
 {
     public function index()
     {

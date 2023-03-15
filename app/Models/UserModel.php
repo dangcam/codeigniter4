@@ -6,5 +6,7 @@ class UserModel Extends Model
 {
     protected $table      = 'users';
     protected $primaryKey = 'user_id';
-    //protected $returnType    = \App\Entities\UserEntity::class;
+    protected $protectFields = false;
+    //protected $allowedFields =  ['user_id','username','password','gender','email','phonenumber','group_id','user_status'];
+    protected $returnType    = UserEntity::class;
 }
