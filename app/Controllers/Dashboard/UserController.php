@@ -6,7 +6,6 @@ namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
-use App\Entities\UserEntity;
 
 class UserController extends BaseController
 {
@@ -19,15 +18,21 @@ class UserController extends BaseController
 
     public function index()
     {
-        $meta = array('page_title' => 'Danh Sách Người Dùng');
-        if($this->request->getPost())
-        {
-            $data = $this->request->getPost();
-
-            $user = new UserEntity($data);
-            $this->users->insert($user);
-        }
-        $data['list_users'] = $this->users->findAll();
+        $data['result'] = null;
+        $data['message']= null;
+        $meta = array('page_title' => lang('AppLang.page_title_users'));
+        $data['list_users'] = $this->users->list_users();
         return $this->page_construct('dashboard/user', $meta,$data);
     }
+    public function create_user()
+    {
+        if($this->request->getPost())
+        {
+            $data_user = $this->request->getPost();
+            $data['result'] = ($this->users->create_user($data_user));
+            $data['message']= $this->users->get_messages();
+            echo json_encode(array_values($data));
+        }
+    }
+
 }

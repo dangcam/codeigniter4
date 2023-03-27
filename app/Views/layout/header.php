@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title><?=$page_title?> | QL Báo Cáo</title>
+    <title><?=$page_title?> | <?=lang('AppLang.page_title')?></title>
     <base href="<?=base_url()?>"/>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="vendor/toastr/css/toastr.min.css">
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        #response_danger{display: none}
+        #response_info{display: none}
+        #response_warning{display: none}
+        #response_success{display: none}
+    </style>
 
 </head>
 

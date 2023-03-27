@@ -3,7 +3,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Danh sách người dùng</h4>
+                    <h4><?=lang('UserLang.users_list')?></h4>
                 </div>
             </div>
         </div>
@@ -12,24 +12,54 @@
         <!---->
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Thông tin</h4>
+                        <h4 class="card-title"><?=lang('AppLang.info')?></h4>
                     </div>
                     <div class="card-body">
+                        <!---->
+
+                        <div class="alert alert-success alert-dismissible alert-alt"role="alert" id="response_success">
+                            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span>
+                                    <i class="mdi mdi-close"></i></span>
+                            </button>
+                            <strong>Success!</strong> Message has been sent.
+                        </div>
+                        <div class="alert alert-info alert-dismissible alert-alt"role="alert" id="response_info">
+                            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span>
+                                    <i class="mdi mdi-close"></i></span>
+                            </button>
+                            <strong>Info!</strong> You have got 5 new email.
+                        </div>
+                        <div class="alert alert-warning alert-dismissible alert-alt "role="alert" id="response_warning">
+                            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span>
+                                    <i class="mdi mdi-close"></i></span>
+                            </button>
+                            <strong>Warning!</strong> Something went wrong. Please check.
+                        </div>
+                        <div class="alert alert-danger alert-dismissible alert-alt" role="alert" id="response_danger">
+                            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span>
+                                    <i class="mdi mdi-close"></i></span>
+                            </button>
+                            <strong>Error!</strong> Message Sending failed.
+                        </div>
+
+
+
+                        <!---->
                         <div class="basic-form">
-                            <form method="post">
+                            <form method="post" id="create_user">
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.user_id')?></label>
-                                        <input type="text" name="user_id" class="form-control" placeholder="">
+                                        <input type="text" name="user_id" class="form-control" placeholder="<?=lang('UserLang.user_id')?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.username')?></label>
-                                        <input type="text" name="username" class="form-control" placeholder="">
+                                        <input type="text" name="username" class="form-control" placeholder="<?=lang('UserLang.username')?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.password')?></label>
-                                        <input type="password" name="password" class="form-control" placeholder="Password">
+                                        <input type="password" name="password" class="form-control" placeholder="<?=lang('UserLang.password')?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Email</label>
@@ -39,7 +69,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label><?=lang('UserLang.phonenumber')?></label>
-                                        <input type="text" name="phonenumber" class="form-control">
+                                        <input type="text" name="phonenumber" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label><?=lang('UserLang.gender')?></label>
@@ -60,7 +90,7 @@
                                     </div>
                                     <input hidden name="group_id" value="1">
                                 </div>
-                                <button type="submit" class="btn btn-primary"><?=lang('UserLang.user_create')?></button>
+                                <button type="submit" class="btn btn-primary "><?=lang('UserLang.user_create')?></button>
                             </form>
                         </div>
                     </div>
@@ -70,7 +100,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Danh sách</h4>
+                    <h4 class="card-title"><?=lang('AppLang.list')?></h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -88,13 +118,13 @@
                             <tbody>
                             <?php foreach ($list_users as $user) : ?>
                             <tr>
-                                <td><?php echo $user->user_id;//$user['user_id']; //$user->user_id; ?></td>
-                                <td><?php echo $user->username;//$user['username']; $user->username; ?></td>
-                                <td><?= $user->gender==1?'Nam':($user->gender==2?'Nữ':'Khác' )
-                                    //$user['gender']==1?'Nam':($user['gender']==2?'Nữ':'Khác' )
+                                <td><?php echo $user['user_id']; //$user->user_id; ?></td>
+                                <td><?php echo $user['username']; //$user->username; ?></td>
+                                <td><?= //$user->gender==1?'Nam':($user->gender==2?'Nữ':'Khác' )
+                                    $user['gender']==1?'Nam':($user['gender']==2?'Nữ':'Khác' )
                                     ?></td>
-                                <td><?php echo $user->phonenumber;//$user['phonenumber']; $user->phonenumber; ?></td>
-                                <td><?php echo $user->email;//$user['email'];//$user->email; ?></td>
+                                <td><?php echo $user['phonenumber']; //$user->phonenumber; ?></td>
+                                <td><?php echo $user['email'];//$user->email; ?></td>
                                 <td><span><a href="javascript:void()" class="mr-4" data-toggle="tooltip"
                                              data-placement="top" title="Edit"><i
                                                     class="fa fa-pencil color-muted"></i> </a><a
@@ -115,3 +145,37 @@
         </div>
     </div>
 </div>
+<script>
+    jQuery(document).ready(function($) {
+        $("#create_user").on('submit',function (event) {
+            event.preventDefault();
+            $("#response_success").hide('fast');
+            $("#response_danger").hide('fast');
+            var formData = $(this).serialize();
+            $.ajax({
+                url:"<?= base_url() ?>dashboard/user/create_user",
+                method:"POST",
+                data:formData,
+                dataType:"json",
+                success:function (data) {
+                    if(data[0]==0){
+                        $("#response_success").show('fast');
+                        $("#response_success").effect("shake");
+                        $("#response_success").html(data[1]);
+                        //userDataTable.ajax.reload();
+                    }else {
+                        $("#response_danger").show('fast');
+                        $("#response_danger").effect("shake");
+                        $("#response_danger").html(data[1]);
+                    }
+                },
+                error:function (data) {
+                    $("#response_danger").show('fast');
+                    $("#response_danger").effect("shake");
+                    $("#response_danger").html(data);
+                }
+            })
+        });
+    });
+</script>
+
