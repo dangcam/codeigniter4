@@ -19,7 +19,8 @@
         #response_warning{display: none}
         #response_success{display: none}
     </style>
-
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
 </head>
 
 <body>

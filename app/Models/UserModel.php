@@ -46,7 +46,7 @@ class UserModel Extends BaseModel
             }
             return 3;
         }
-        if($this->insert($data_user))
+        if(!$this->insert($data_user))
         {
             $this->set_message("UserLang.user_creation_successful");
             return 0;
