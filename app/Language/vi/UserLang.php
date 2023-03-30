@@ -1,6 +1,5 @@
 <?php
 return [
-    'users_list'=>'Danh sách người dùng',
     'user_id' => 'Mã người dùng',
     'username' => 'Tên người dùng',
     'password' => 'Mật khẩu',

@@ -37,6 +37,8 @@ $routes->group('dashboard', static function ($routes) {
     $routes->group('user',static function($routers){
         $routers->post('create_user','Dashboard\UserController::create_user');
     });
+    $routes->get('group','Dashboard\GroupController::index');
+
 });
 //$routes->post('login', 'Login::index');
 

@@ -3,7 +3,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4><?=lang('UserLang.users_list')?></h4>
+                    <h4><?=lang('AppLang.page_title_users')?></h4>
                 </div>
             </div>
         </div>
@@ -39,19 +39,19 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.user_id')?></label>
-                                        <input type="text" name="user_id" class="form-control" placeholder="<?=lang('UserLang.user_id')?>">
+                                        <input type="text" name="user_id" class="form-control" placeholder="<?=lang('UserLang.user_id')?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.username')?></label>
-                                        <input type="text" name="username" class="form-control" placeholder="<?=lang('UserLang.username')?>">
+                                        <input type="text" name="username" class="form-control" placeholder="<?=lang('UserLang.username')?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.password')?></label>
-                                        <input type="password" name="password" class="form-control" placeholder="<?=lang('UserLang.password')?>">
+                                        <input type="password" name="password" class="form-control" placeholder="<?=lang('UserLang.password')?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Email</label>
-                                        <input type="email" name="email" class="form-control" placeholder="Email">
+                                        <input type="email" name="email" class="form-control" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -133,6 +133,8 @@
         </div>
     </div>
 </div>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
 <script>
     jQuery(document).ready(function($) {
         $("#create_user").on('submit',function (event) {
@@ -153,7 +155,7 @@
                         //userDataTable.ajax.reload();
                     }else {
                         $("#response_danger").show('fast');
-                        //$("#response_danger").effect("shake");
+                        $("#response_danger").effect("shake");
                         $("#response_danger").html(data[1]);
                     }
                 },
