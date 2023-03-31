@@ -33,12 +33,15 @@ $routes->addRedirect('/','login');
 $routes->get('login', 'LoginController::index');
 $routes->group('dashboard', static function ($routes) {
     $routes->get('/', 'Dashboard\HomeController::index');
-    $routes->get('user','Dashboard\UserController::index');
-    $routes->group('user',static function($routers){
-        $routers->post('create_user','Dashboard\UserController::create_user');
-    });
-    $routes->get('group','Dashboard\GroupController::index');
 
+    $routes->group('user',static function($routes){
+        $routes->get('/','Dashboard\UserController::index');
+        $routes->post('create_user','Dashboard\UserController::create_user');
+    });
+    $routes->group('group',static function($routes){
+        $routes->get('/','Dashboard\GroupController::index');
+        $routes->post('group_ajax','Dashboard\GroupController::group_ajax');
+    });
 });
 //$routes->post('login', 'Login::index');
 

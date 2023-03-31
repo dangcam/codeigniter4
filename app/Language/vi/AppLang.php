@@ -7,6 +7,9 @@ return[
     'page_title_users'=>'Danh sách người dùng',
     'info' =>'Thông tin',
     'list'=>'Danh sách',
-    'page_title_groups' => 'Danh sách chi nhánh'
-
+    'page_title_groups' => 'Danh sách chi nhánh',
+    'active' => 'Bật',
+    'inactive' => 'Tắt',
+    'save' => 'Lưu',
+    'close' => 'Đóng',
 ];
