@@ -41,6 +41,7 @@ $routes->group('dashboard', static function ($routes) {
     $routes->group('group',static function($routes){
         $routes->get('/','Dashboard\GroupController::index');
         $routes->post('group_ajax','Dashboard\GroupController::group_ajax');
+        $routes->post('add_group','Dashboard\GroupController::add_group');
     });
 });
 //$routes->post('login', 'Login::index');

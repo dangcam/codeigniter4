@@ -9,8 +9,21 @@ class GroupModel extends BaseModel
     protected $table      = 'groups';
     protected $primaryKey = 'group_id';
     protected $protectFields = false;
-
-    function getGoups($postData=null){
+    protected $validationRules = [
+        'group_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[groups.group_id]',
+        'group_name'     => 'required|max_length[50]'
+    ];
+    protected $validationMessages = [
+        'group_id' => [
+            'is_unique' => 'Mã chi nhánh {field} đã tồn tại, vui lòng kiểm tra lại.',
+            'min_length' =>'Mã chi nhánh quá ngắn (ít nhất {param} ký tự).',
+            'max_length'=>'Mã chi nhánh quá dài (nhiều nhất {param} ký tự).'
+        ],
+        'group_name' =>[
+            'max_length' =>'Tên chi nhánh quá dài (nhiều nhất {param} ký tự).'
+        ]
+    ];
+    function getGroups($postData=null){
 
         $response = array();
         ## Read value
@@ -41,7 +54,7 @@ class GroupModel extends BaseModel
                 "group_id"=>$record['group_id'],
                 "group_name"=>$record['group_name'],
                 "group_parent"=>$record['group_parent'],
-                "group_status"=>$record['group_status	']==1?'<div class="badge badge-success">'.lang('active').'</div>':
+                "group_status"=>$record['group_status']==1?'<div class="badge badge-success">'.lang('active').'</div>':
                     '<div class="badge badge-danger">'.lang('inactive').'</div>',
                 "active"=>''//$this->add_active_source($record)
             );
@@ -80,5 +93,26 @@ class GroupModel extends BaseModel
             return $data;
         }
         return $listGroup;
+    }
+    public function add_group($data)
+    {
+        unset($data['add']);
+        if(!$this->validate($data))
+        {
+            foreach ($this->errors() as $error) {
+                $this->set_message($error);
+            }
+            return 3;
+        }
+
+        if(!$this->insert($data))
+        {
+            $this->set_message("GroupLang.group_creation_successful");
+            return 0;
+        }else
+        {
+            $this->set_message("GroupLang.group_creation_unsuccessful");
+            return 3;
+        }
     }
 }

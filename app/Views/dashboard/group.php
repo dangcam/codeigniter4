@@ -1,3 +1,6 @@
+<style>
+    #response_danger_modal{display: none}
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
@@ -17,11 +20,21 @@
                     <div class="card-header">
                         <h4 class="card-title"><?=lang('AppLang.page_title_groups')?></h4>
                         <button type="button" class="btn btn-rounded btn-info"
-                                data-toggle="modal" data-target="#myModal" data-whatever="add">
+                                data-toggle="modal" data-target=".modal-add-edit" data-whatever="add">
                             <span class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
                                     </span>Add</button>
                     </div>
                     <div class="card-body">
+                        <!---->
+                        <div class="alert alert-success alert-alt"role="alert" id="response_success">
+                            <strong>Success!</strong> Message has been sent.                        </div>
+                        <div class="alert alert-info alert-alt"role="alert" id="response_info">
+                            <strong>Info!</strong> You have got 5 new email.                        </div>
+                        <div class="alert alert-warning alert-alt "role="alert" id="response_warning">
+                            <strong>Warning!</strong> Something went wrong. Please check.                        </div>
+                        <div class="alert alert-danger alert-alt" role="alert" id="response_danger">
+                            <strong>Error!</strong> Message Sending failed.                        </div>
+                        <!---->
                         <div class="table-responsive">
                             <table id="data-table" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
@@ -59,36 +72,45 @@
         </div>
     </div>
 </div>
+
+<link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/moment/moment.min.js"></script>
 <script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
 <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="js/plugins-init/datatables.init.js"></script>
-<link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script src="vendor/moment/moment.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+
 <!---->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade modal-add-edit" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <div class="alert alert-danger" role="alert" id="response_danger_modal">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
             <div class="modal-header">
                 <h5 class="modal-title" id="myModalLabel">Group</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="close_modal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post">
+            <form method="post" id="form_id">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label"><?=lang('GroupLang.group_id')?></label>
-                        <input type="text" name="data[group_id]" class="form-control" id="group_id" required placeholder="<?=lang('GroupLang.group_id')?>">
+                        <input type="text" name="group_id" class="form-control" id="group_id" required placeholder="<?=lang('GroupLang.group_id')?>">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label"><?=lang('GroupLang.group_name')?></label>
-                        <input type="text" name="data[group_name]" class="form-control" id="group_name" required placeholder="<?=lang('GroupLang.group_name')?>">
+                        <input type="text" name="group_name" class="form-control" id="group_name" required placeholder="<?=lang('GroupLang.group_name')?>">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label"><?=lang('GroupLang.group_parent')?></label>
-                        <select class="custom-select" id="group_parent" name ="data[group_parent]">
+                        <select class="custom-select" id="group_parent" name ="group_parent">
                             <?php if (isset($list_group) && count($list_group)) :
                                 foreach ($list_group as $key => $item) : ?>
                                     <option value="<?=$item['group_id']?>"><?=$item['group_name']?></option>
@@ -99,7 +121,7 @@
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label"><?=lang('GroupLang.group_status')?></label>
-                        <select id="group_status" class="form-control"name ="data[group_status]">
+                        <select id="group_status" class="form-control"name ="group_status">
                             <option value="1"><?=lang('AppLang.active')?></option>
                             <option value="2"><?=lang('AppLang.inactive')?></option>
                         </select>
@@ -137,31 +159,62 @@
                 {data: 'active'}
             ]
         });
-    });
-    jQuery('#myModal').on('show.bs.modal', function (event) {
-        alert('hi');
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var recipient = button.data('whatever'); // Extract info from data-* attributes
-        var group_id = button.data('group_id')
-        var group_name = button.data('group_name')
-        var group_parent = button.data('group_parent')
-        var group_status = button.data('group_status')
-        var field = document.getElementById("add_edit");
-        field.setAttribute("name",recipient);
-        $('#group_id').val(group_id);
-        $('#group_name').val(group_name);
-        $('#group_parent').val(group_parent);
-        $('#group_status').val(group_status);
-        if(recipient=="add"){
-            $('#myModalLabel').text("<?=lang('GroupLang.add_group')?>");
-            $('#group_id').prop("readonly",false);
-            $('#group_status').val(1);
-        }else {
-            $('#myModalLabel').text("<?=lang('GroupLang.edit_group')?>");
-            $('#group_id').prop("readonly",true);
-            $('#group_status').val(group_status);
-        }
-    });
 
+        $('#myModal').on('shown.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var recipient = button.data('whatever'); // Extract info from data-* attributes
+            var group_id = button.data('group_id')
+            var group_name = button.data('group_name')
+            var group_parent = button.data('group_parent')
+            var group_status = button.data('group_status')
+            var field = document.getElementById("add_edit");
+            field.setAttribute("name",recipient);
+            $('#group_id').val(group_id);
+            $('#group_name').val(group_name);
+            $('#group_parent').val(group_parent);
+            $('#group_status').val(group_status);
+            if(recipient=="add"){
+                $('#myModalLabel').text("<?=lang('GroupLang.add_group')?>");
+                $('#group_id').prop("readonly",false);
+                $('#group_status').val(1);
+            }else {
+                $('#myModalLabel').text("<?=lang('GroupLang.edit_group')?>");
+                $('#group_id').prop("readonly",true);
+                $('#group_status').val(group_status);
+            }
+        });
+
+
+        $('#form_id').on('submit', function (event) {
+            event.preventDefault();
+            $("#response_success").hide('fast');
+            $("#response_danger").hide('fast');
+            $("#response_danger_modal").hide('fast');
+            var name = $("#add_edit").attr("name");
+            var formData = $(this).serialize();
+            $.ajax({
+                url: "<?= base_url() ?>dashboard/group/"+name+"_group",
+                method: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data[0]==0) {
+                        $("#response_success").show('fast');
+                        $("#response_success").html(data[1]);
+                        $( "#close_modal" ).click();
+                        $('#myModal').modal('hide');
+                        userDataTable.ajax.reload();
+                    } else {
+                        $("#response_danger_modal").show('fast');
+                        $("#response_danger_modal").html(data[1]);
+                    }
+                },
+                error: function (data) {
+                    $("#response_danger_modal").show('fast');
+                    $("#response_danger_modal").html(data);
+                }
+            });
+        });
+    });
 </script>
 

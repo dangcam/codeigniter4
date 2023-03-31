@@ -18,15 +18,25 @@ class GroupController extends BaseController
     public function index()
     {
         $meta = array('page_title' => lang('AppLang.page_title_groups'));
-        $this->data['list_group'] = $this->group_model->getGroupParent('');
-        return $this->page_construct('dashboard/group', $meta);
+        $data['list_group'] = $this->group_model->getGroupParent('');
+        return $this->page_construct('dashboard/group', $meta,$data);
     }
     public function group_ajax()
     {
         if($this->request->getPost())
         {
-            $data = $this->group_model->getGoups($this->request->getPost());
+            $data = $this->group_model->getGroups($this->request->getPost());
             echo json_encode($data);
+        }
+    }
+    public function add_group()
+    {
+        if($this->request->getPost())
+        {
+            $data_group = $this->request->getPost();
+            $data['result'] = ($this->group_model->add_group($data_group));
+            $data['message']= $this->group_model->get_messages();
+            echo json_encode(array_values($data));
         }
     }
 }
