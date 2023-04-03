@@ -19,10 +19,9 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title"><?=lang('AppLang.page_title_groups')?></h4>
-                        <button type="button" class="btn btn-rounded btn-info"
-                                data-toggle="modal" data-target=".modal-add-edit" data-whatever="add">
+                        <a href="#" type="button" class="btn btn-rounded btn-info" data-toggle="modal" data-target="#myModal" data-whatever="add">
                             <span class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
-                                    </span>Add</button>
+                                    </span>Add</a>
                     </div>
                     <div class="card-body">
                         <!---->
@@ -64,27 +63,29 @@
 
 
 
-
-
-
                 <!---->
             </div>
         </div>
     </div>
 </div>
+<!-- Required vendors -->
+<script src="vendor/global/global.min.js"></script>
+<script src="js/quixnav-init.js"></script>
+<script src="js/custom.min.js"></script>
+<!--<script src="vendor/jquery/jquery.min.js"></script>-->
 
-<link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/moment/moment.min.js"></script>
 <script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
-<script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/moment/moment.min.js"></script>
 
+<script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+<link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<script src="vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="js/plugins-init/datatables.init.js"></script>
 
 
 <!---->
-<div class="modal fade modal-add-edit" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="alert alert-danger" role="alert" id="response_danger_modal">
@@ -160,7 +161,7 @@
             ]
         });
 
-        $('#myModal').on('shown.bs.modal', function (event) {
+        $('#myModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var recipient = button.data('whatever'); // Extract info from data-* attributes
             var group_id = button.data('group_id')
@@ -201,8 +202,8 @@
                     if (data[0]==0) {
                         $("#response_success").show('fast');
                         $("#response_success").html(data[1]);
-                        $( "#close_modal" ).click();
-                        $('#myModal').modal('hide');
+                        //$('#myModal').modal('hide');
+                        $('#myModal').modal('toggle');
                         userDataTable.ajax.reload();
                     } else {
                         $("#response_danger_modal").show('fast');
