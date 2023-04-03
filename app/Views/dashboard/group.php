@@ -68,10 +68,7 @@
         </div>
     </div>
 </div>
-<!-- Required vendors -->
-<script src="vendor/global/global.min.js"></script>
-<script src="js/quixnav-init.js"></script>
-<script src="js/custom.min.js"></script>
+
 <!--<script src="vendor/jquery/jquery.min.js"></script>-->
 
 <script src="vendor/jqueryui/js/jquery-ui.min.js"></script>

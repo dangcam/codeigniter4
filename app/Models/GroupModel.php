@@ -36,7 +36,7 @@ class GroupModel extends BaseModel
 
         ## Total number of records without filtering
         $this->select('count(*) as allcount');
-        $records = $this->findAll();
+        $records = $this->find();
         $totalRecords = $records[0]['allcount'];
 
         ## Fetch records
@@ -44,7 +44,7 @@ class GroupModel extends BaseModel
         $this->orderBy($columnName, $columnSortOrder);
         if($rowperpage!=-1)
             $this->limit($rowperpage, $start);
-        $records = $this->findAll();
+        $records = $this->find();
 
         $data = array();
 
@@ -56,7 +56,7 @@ class GroupModel extends BaseModel
                 "group_parent"=>$record['group_parent'],
                 "group_status"=>$record['group_status']==1?'<div class="badge badge-success">'.lang('active').'</div>':
                     '<div class="badge badge-danger">'.lang('inactive').'</div>',
-                "active"=>''//$this->add_active_source($record)
+                "active"=>$this->add_active_source($record)
             );
         }
 
@@ -69,6 +69,22 @@ class GroupModel extends BaseModel
         );
 
         return $response;
+    }
+    public function add_active_source($record)
+    {
+        $string ='
+                <div class="dropdown show">
+					<a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-cog text-success"></i>
+					</a>
+					<div class="dropdown-menu">
+        <span><a href="#" class="mr-4" data-toggle="modal" data-target="#myModal" data-whatever="edit" 
+        title="'.lang('App.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
+               <a href="#" data-toggle="tooltip"
+                                                data-placement="top" title="Close"><i
+                                                    class="fa fa-close color-danger"></i></a></span>
+                </div></div>';
+        return $string;
     }
     public function getGroupParent($group_id='')
     {

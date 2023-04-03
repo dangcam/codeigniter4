@@ -32,13 +32,6 @@
 
 
 
-
-<!-- Toastr -->
-<script src="vendor/toastr/js/toastr.min.js"></script>
-
-<!-- All init script -->
-<script src="js/plugins-init/toastr-init.js"></script>
-
 </body>
 
 </html>

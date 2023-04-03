@@ -12,4 +12,6 @@ return[
     'inactive' => 'Tắt',
     'save' => 'Lưu',
     'close' => 'Đóng',
+    'delete' => 'Xoá',
+    'edit' => 'Sửa'
 ];
