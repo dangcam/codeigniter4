@@ -39,4 +39,14 @@ class GroupController extends BaseController
             echo json_encode(array_values($data));
         }
     }
+    public function edit_group()
+    {
+        if($this->request->getPost())
+        {
+            $data_group = $this->request->getPost();
+            $data['result'] = ($this->group_model->edit_group($data_group));
+            $data['message']= $this->group_model->get_messages();
+            echo json_encode(array_values($data));
+        }
+    }
 }

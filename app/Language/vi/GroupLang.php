@@ -7,5 +7,7 @@ return[
     'add_group'=>'Thêm mới chi nhánh',
     'edit_group' => 'Sửa thông tin chi nhánh',
     'group_creation_successful' => 'Tạo chi nhánh thành công',
-    'group_creation_unsuccessful' => 'Tạo chi nhánh không thành công'
+    'group_creation_unsuccessful' => 'Tạo chi nhánh không thành công',
+    'group_update_successful' => 'Cập nhật chi nhánh thành công',
+    'group_update_unsuccessful' => 'Cập nhật chi nhánh không thành công'
 ];

@@ -35,7 +35,7 @@
                             <strong>Error!</strong> Message Sending failed.                        </div>
                         <!---->
                         <div class="table-responsive">
-                            <table id="data-table" class="table table-striped table-bordered" style="width:100%">
+                            <table id="data-table" class="table table-bordered table-striped verticle-middle table-responsive-sm" style="width:100%">
                                 <thead>
                                 <tr>
                                     <th><?=lang('GroupLang.group_id')?></th>
@@ -109,6 +109,7 @@
                     <div class="form-group">
                         <label for="message-text" class="col-form-label"><?=lang('GroupLang.group_parent')?></label>
                         <select class="custom-select" id="group_parent" name ="group_parent">
+                            <option value="1">1</option>
                             <?php if (isset($list_group) && count($list_group)) :
                                 foreach ($list_group as $key => $item) : ?>
                                     <option value="<?=$item['group_id']?>"><?=$item['group_name']?></option>
@@ -159,6 +160,7 @@
         });
 
         $('#myModal').on('show.bs.modal', function (event) {
+            $("#response_danger_modal").hide('fast');
             var button = $(event.relatedTarget); // Button that triggered the modal
             var recipient = button.data('whatever'); // Extract info from data-* attributes
             var group_id = button.data('group_id')
@@ -204,7 +206,7 @@
                         userDataTable.ajax.reload();
                     } else {
                         $("#response_danger_modal").show('fast');
-                        $("#response_danger_modal").html(data[1]);
+                        $("#response_danger_modal").html(data);
                     }
                 },
                 error: function (data) {

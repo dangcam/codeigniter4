@@ -4,11 +4,15 @@
 namespace App\Models;
 
 
+use App\Entities\GroupEntity;
+
 class GroupModel extends BaseModel
 {
     protected $table      = 'groups';
     protected $primaryKey = 'group_id';
-    protected $protectFields = false;
+    protected $useAutoIncrement = true;
+    protected $allowedFields = ['group_id', 'group_name', 'group_parent','group_status'];
+    protected $returnType = GroupEntity::class;
     protected $validationRules = [
         'group_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[groups.group_id]',
         'group_name'     => 'required|max_length[50]'
@@ -37,7 +41,7 @@ class GroupModel extends BaseModel
         ## Total number of records without filtering
         $this->select('count(*) as allcount');
         $records = $this->find();
-        $totalRecords = $records[0]['allcount'];
+        $totalRecords = $records[0]->allcount;
 
         ## Fetch records
         $this->select('*');
@@ -51,10 +55,10 @@ class GroupModel extends BaseModel
         foreach($records as $record ){
 
             $data[] = array(
-                "group_id"=>$record['group_id'],
-                "group_name"=>$record['group_name'],
-                "group_parent"=>$record['group_parent'],
-                "group_status"=>$record['group_status']==1?'<div class="badge badge-success">'.lang('active').'</div>':
+                "group_id"=>$record->group_id,
+                "group_name"=>$record->group_name,
+                "group_parent"=>$record->group_parent,
+                "group_status"=>$record->group_status==1?'<div class="badge badge-success">'.lang('active').'</div>':
                     '<div class="badge badge-danger">'.lang('inactive').'</div>',
                 "active"=>$this->add_active_source($record)
             );
@@ -72,18 +76,23 @@ class GroupModel extends BaseModel
     }
     public function add_active_source($record)
     {
-        $string ='
-                <div class="dropdown show">
-					<a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fa fa-cog text-success"></i>
-					</a>
+        $string ='<div class="dropdown show">
+					<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                           <i class="fa fa-bars"></i>
+                    </button>
 					<div class="dropdown-menu">
-        <span><a href="#" class="mr-4" data-toggle="modal" data-target="#myModal" data-whatever="edit" 
-        title="'.lang('App.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
-               <a href="#" data-toggle="tooltip"
-                                                data-placement="top" title="Close"><i
-                                                    class="fa fa-close color-danger"></i></a></span>
-                </div></div>';
+						<a class="dropdown-item" data-toggle="modal" data-target="#myModal" data-whatever="edit"
+						 	data-group_id="'.$record->group_id.'" href="#" data-group_name="'.$record->group_name.'"
+							data-group_parent="'.$record->group_parent.'" data-group_status="'.$record->group_status.'">
+							<i class="fa fa-pencil color-muted"></i>
+								<span class="align-middle">'.lang('AppLang.edit').'</span>
+						</a>
+					  	<a class="dropdown-item text-danger" data-toggle="modal" data-target="#smallModal" data-group_id="'.$record->group_id.'"href="#">
+							<i class="fa fa-close color-danger"></i>
+								<span class="align-middle">'.lang('AppLang.delete').'</span>
+						</a>
+					</div>
+				</div>';
         return $string;
     }
     public function getGroupParent($group_id='')
@@ -91,18 +100,18 @@ class GroupModel extends BaseModel
         /*if(!isset($group_id)){
             $group_id = $this->session->userdata('group_id');
         }*/
-        $listGroup = $this->where('group_id',$group_id)->findAll();
+        $listGroup = $this->where('group_id',$group_id)->find();
         if(count($listGroup)) {
             $data[] = $listGroup[0];
-            $parent[] = $listGroup[0]['group_id'];
+            $parent[] = $listGroup[0]->group_id;
             while (count($parent)) {
                 $p = $parent[0];
                 array_splice($parent, 0, 1);
-                $list = $this->where('group_parent', $p)->findAll();
+                $list = $this->where('group_parent', $p)->find();
                 if (count($list)) {
                     foreach ($list as $key => $value) {
                         $data[] = $value;
-                        $parent[] = $value['group_id'];
+                        $parent[] = $value->group_id;
                     }
                 }
             }
@@ -113,6 +122,7 @@ class GroupModel extends BaseModel
     public function add_group($data)
     {
         unset($data['add']);
+        $group = new GroupEntity($data);
         if(!$this->validate($data))
         {
             foreach ($this->errors() as $error) {
@@ -121,13 +131,28 @@ class GroupModel extends BaseModel
             return 3;
         }
 
-        if(!$this->insert($data))
+        if(!$this->insert($group))
         {
             $this->set_message("GroupLang.group_creation_successful");
             return 0;
         }else
         {
             $this->set_message("GroupLang.group_creation_unsuccessful");
+            return 3;
+        }
+    }
+    public function edit_group($data)
+    {
+        unset($data['edit']);
+        $group = new GroupEntity($data);
+
+        if(!$this->update('vpdd',$group))
+        {
+            $this->set_message("GroupLang.group_update_successful");
+            return 0;
+        }else
+        {
+            $this->set_message("GroupLang.group_update_unsuccessful");
             return 3;
         }
     }
