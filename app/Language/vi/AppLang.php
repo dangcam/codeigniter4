@@ -13,5 +13,9 @@ return[
     'save' => 'Lưu',
     'close' => 'Đóng',
     'delete' => 'Xoá',
-    'edit' => 'Sửa'
+    'edit' => 'Sửa',
+    'notify' => 'Thông báo',
+    'are_you_sure' => 'Bạn có chắc không?',
+    'yes' => 'Có',
+    'no' => 'Không'
 ];

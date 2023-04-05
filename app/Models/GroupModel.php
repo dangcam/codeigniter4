@@ -11,7 +11,7 @@ class GroupModel extends BaseModel
     protected $table      = 'groups';
     protected $primaryKey = 'group_id';
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['group_id', 'group_name', 'group_parent','group_status'];
+    protected $protectFields = false;
     protected $returnType = GroupEntity::class;
     protected $validationRules = [
         'group_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[groups.group_id]',
@@ -37,7 +37,7 @@ class GroupModel extends BaseModel
         $columnIndex = $postData['order'][0]['column']; // Column index
         $columnName = $postData['columns'][$columnIndex]['data']; // Column name
         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-
+        $strInput=$postData['search']['value'];
         ## Total number of records without filtering
         $this->select('count(*) as allcount');
         $records = $this->find();
@@ -45,6 +45,7 @@ class GroupModel extends BaseModel
 
         ## Fetch records
         $this->select('*');
+        $this->like('group_name',$strInput);
         $this->orderBy($columnName, $columnSortOrder);
         if($rowperpage!=-1)
             $this->limit($rowperpage, $start);
@@ -95,6 +96,39 @@ class GroupModel extends BaseModel
 				</div>';
         return $string;
     }
+    public function getTreeGroupParent($group_id='')
+    {
+        $listGroup = $this->getGroupParent($group_id);
+        if (count($listGroup)) {
+            foreach ($listGroup as $key => $item) {
+                $sub_data["id"] = $item->group_id;
+                $sub_data["name"] = $item->group_name;
+                $sub_data["text"] = $item->group_name;
+                $sub_data["parent_id"] = $item->group_parent;
+                $data[] = $sub_data;
+            }
+            foreach($data as $key => &$value)
+            {
+                $output[$value["id"]] = &$value;
+            }
+            foreach($data as $key => &$value)
+            {
+                if($value["parent_id"] && isset($output[$value["parent_id"]]))
+                {
+                    $output[$value["parent_id"]]["nodes"][] = &$value;
+                }
+            }
+            foreach($data as $key => &$value)
+            {
+                if($value["parent_id"] && isset($output[$value["parent_id"]]))
+                {
+                    unset($data[$key]);
+                }
+            }
+            return $data;
+        }
+        return $listGroup;
+    }
     public function getGroupParent($group_id='')
     {
         /*if(!isset($group_id)){
@@ -130,7 +164,6 @@ class GroupModel extends BaseModel
             }
             return 3;
         }
-
         if(!$this->insert($group))
         {
             $this->set_message("GroupLang.group_creation_successful");
@@ -143,16 +176,31 @@ class GroupModel extends BaseModel
     }
     public function edit_group($data)
     {
+        $group_id = $data['group_id'];
         unset($data['edit']);
-        $group = new GroupEntity($data);
-
-        if(!$this->update('vpdd',$group))
+        unset($data['group_id']);
+        $result = $this->update($group_id,$data);
+        if($result)
         {
             $this->set_message("GroupLang.group_update_successful");
             return 0;
         }else
         {
             $this->set_message("GroupLang.group_update_unsuccessful");
+            return 3;
+        }
+    }
+    public function delete_group($data)
+    {
+        $group_id = $data['group_id'];
+
+        if($this->where('group_id',$group_id)->delete())
+        {
+            $this->set_message("GroupLang.group_delete_successful");
+            return 0;
+        }else
+        {
+            $this->set_message("GroupLang.group_delete_unsuccessful");
             return 3;
         }
     }

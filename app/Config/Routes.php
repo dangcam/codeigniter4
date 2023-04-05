@@ -43,6 +43,9 @@ $routes->group('dashboard', static function ($routes) {
         $routes->post('group_ajax','Dashboard\GroupController::group_ajax');
         $routes->post('add_group','Dashboard\GroupController::add_group');
         $routes->post('edit_group','Dashboard\GroupController::edit_group');
+        $routes->post('delete_group','Dashboard\GroupController::delete_group');
+        $routes->post('tree_group','Dashboard\GroupController::tree_group');
+
     });
 });
 //$routes->post('login', 'Login::index');

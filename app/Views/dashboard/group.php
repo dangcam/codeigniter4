@@ -12,7 +12,12 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"><?=lang('GroupLang.diagram')?></h4>
+                    </div>
+                    <div id="treeview"></div>
+                </div>
             </div>
             <div class="col-lg-8">
                 <!---->
@@ -75,10 +80,20 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/moment/moment.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" rel="stylesheet">
+
 <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
 <link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <script src="vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="js/plugins-init/datatables.init.js"></script>
+
+<!--
+<script src="vendor/bootstrap-tree/js/bootstrap-treeview.js"></script>
+<link href="vendor/bootstrap-tree/css/bootstrap-treeview.css" rel="stylesheet">
+-->
+
+
 
 
 <!---->
@@ -109,10 +124,9 @@
                     <div class="form-group">
                         <label for="message-text" class="col-form-label"><?=lang('GroupLang.group_parent')?></label>
                         <select class="custom-select" id="group_parent" name ="group_parent">
-                            <option value="1">1</option>
                             <?php if (isset($list_group) && count($list_group)) :
                                 foreach ($list_group as $key => $item) : ?>
-                                    <option value="<?=$item['group_id']?>"><?=$item['group_name']?></option>
+                                    <option value="<?=$item->group_id?>"><?=$item->group_name?></option>
                                 <?php
                                 endforeach;
                             endif ?>
@@ -132,6 +146,26 @@
                     <input id="add_edit" type="submit" class="btn btn-primary" name="" value="<?=lang('AppLang.save')?>">
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="smallModalLabel"><?=lang('AppLang.notify')?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?=lang('AppLang.are_you_sure')?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="modal-btn-no" class="btn btn-white" data-dismiss="modal"><?=lang('AppLang.no')?></button>
+                <button type="button" id="modal-btn-yes" class="btn btn-primary"><?=lang('AppLang.yes')?></button>
+            </div>
         </div>
     </div>
 </div>
@@ -158,7 +192,35 @@
                 {data: 'active'}
             ]
         });
-
+        $(document).ready(function(){
+            $.ajax({
+                url: "<?= base_url() ?>dashboard/group/tree_group",
+                method:"POST",
+                dataType: "json",
+                success: function(data)
+                {
+                    $('#treeview').treeview({
+                        data: data,
+                        // enables links
+                        enableLinks: true,
+                        // highlights selected items
+                        highlightSelected: true,
+                        // highlights search results
+                        highlightSearchResults: true,
+                        // shows borders
+                        showBorder: true,
+                        // shows icons
+                        showIcon: true,
+                        // shows checkboxes
+                        showCheckbox: true,
+                        // shows tags
+                        showTags: false,
+                        // enables multi select
+                        multiSelect: false
+                    });
+                }
+            });
+        });
         $('#myModal').on('show.bs.modal', function (event) {
             $("#response_danger_modal").hide('fast');
             var button = $(event.relatedTarget); // Button that triggered the modal
@@ -183,7 +245,37 @@
                 $('#group_status').val(group_status);
             }
         });
-
+        // Delete
+        $('#smallModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('group_id') // Extract info from data-* attributes
+            $("#modal-btn-yes").on("click", function(event){
+                $("#smallModal").modal('hide');
+                event.preventDefault();
+                $("#response_success").hide('fast');
+                $("#response_danger").hide('fast');
+                $.ajax({
+                    url: '<?= base_url() ?>dashboard/group/delete_group',
+                    type: 'POST',
+                    data: { group_id:recipient },
+                    dataType:"json",
+                    success:function (data) {
+                        if(data[0]==0){
+                            $("#response_success").show('fast');
+                            $("#response_success").html(data[1]);
+                            userDataTable.ajax.reload();
+                        }else {
+                            $("#response_danger").show('fast');
+                            $("#response_danger").html(data[1]);
+                        }
+                    },
+                    error:function (data) {
+                        $("#response_danger").show('fast');
+                        $("#response_danger").html(data);
+                    }
+                });
+            });
+        });
 
         $('#form_id').on('submit', function (event) {
             event.preventDefault();
@@ -206,7 +298,7 @@
                         userDataTable.ajax.reload();
                     } else {
                         $("#response_danger_modal").show('fast');
-                        $("#response_danger_modal").html(data);
+                        $("#response_danger_modal").html(data[1]);
                     }
                 },
                 error: function (data) {

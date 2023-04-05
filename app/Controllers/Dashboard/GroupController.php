@@ -18,7 +18,7 @@ class GroupController extends BaseController
     public function index()
     {
         $meta = array('page_title' => lang('AppLang.page_title_groups'));
-        $data['list_group'] = $this->group_model->getGroupParent('');
+        $data['list_group'] = $this->group_model->getGroupParent('vpddt');
         return $this->page_construct('dashboard/group', $meta,$data);
     }
     public function group_ajax()
@@ -48,5 +48,22 @@ class GroupController extends BaseController
             $data['message']= $this->group_model->get_messages();
             echo json_encode(array_values($data));
         }
+    }
+    public function delete_group()
+    {
+        if($this->request->getPost())
+        {
+            $data_group = $this->request->getPost();
+            $data['result'] = ($this->group_model->delete_group($data_group));
+            $data['message']= $this->group_model->get_messages();
+            echo json_encode(array_values($data));
+        }
+    }
+    public function tree_group()
+    {
+        $data = $this->group_model->getTreeGroupParent('vpddt');
+
+        echo json_encode(array_values($data),JSON_UNESCAPED_UNICODE);
+
     }
 }
