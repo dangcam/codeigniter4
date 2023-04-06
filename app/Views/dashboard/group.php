@@ -80,8 +80,9 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/moment/moment.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" rel="stylesheet">
+
+<script src="vendor/bootstrap-tree/js/bootstrap-treeview.js"></script>
+<link href="vendor/bootstrap-tree/css/bootstrap-treeview.css" rel="stylesheet">
 
 <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
 <link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -91,6 +92,9 @@
 <!--
 <script src="vendor/bootstrap-tree/js/bootstrap-treeview.js"></script>
 <link href="vendor/bootstrap-tree/css/bootstrap-treeview.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" rel="stylesheet">
 -->
 
 
@@ -192,35 +196,20 @@
                 {data: 'active'}
             ]
         });
-        $(document).ready(function(){
+
+        function treeGroup() {
             $.ajax({
                 url: "<?= base_url() ?>dashboard/group/tree_group",
-                method:"POST",
+                method: "POST",
                 dataType: "json",
-                success: function(data)
-                {
+                success: function (data) {
                     $('#treeview').treeview({
                         data: data,
-                        // enables links
-                        enableLinks: true,
-                        // highlights selected items
-                        highlightSelected: true,
-                        // highlights search results
-                        highlightSearchResults: true,
-                        // shows borders
-                        showBorder: true,
-                        // shows icons
-                        showIcon: true,
-                        // shows checkboxes
-                        showCheckbox: true,
-                        // shows tags
-                        showTags: false,
-                        // enables multi select
-                        multiSelect: false
                     });
                 }
             });
-        });
+        };
+        treeGroup();
         $('#myModal').on('show.bs.modal', function (event) {
             $("#response_danger_modal").hide('fast');
             var button = $(event.relatedTarget); // Button that triggered the modal
@@ -264,6 +253,7 @@
                             $("#response_success").show('fast');
                             $("#response_success").html(data[1]);
                             userDataTable.ajax.reload();
+                            treeGroup();
                         }else {
                             $("#response_danger").show('fast');
                             $("#response_danger").html(data[1]);
@@ -296,6 +286,7 @@
                         //$('#myModal').modal('hide');
                         $('#myModal').modal('toggle');
                         userDataTable.ajax.reload();
+                        treeGroup();
                     } else {
                         $("#response_danger_modal").show('fast');
                         $("#response_danger_modal").html(data[1]);

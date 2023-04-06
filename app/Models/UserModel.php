@@ -31,7 +31,6 @@ class UserModel Extends BaseModel
             'min_length' => 'Mật khẩu phải it nhất {param} ký tự.'
         ]
     ];
-
     public function list_users()
     {
         return $this->findAll();
@@ -57,5 +56,30 @@ class UserModel Extends BaseModel
         }
         //$user = new UserEntity($data);
         //$this->save($user);
+    }
+    public function getGroupParent($group_id='')
+    {
+        $tbgroup = $this->db->table('groups');
+        /*if(!isset($group_id)){
+            $group_id = $this->session->userdata('group_id');
+        }*/
+        $listGroup = $tbgroup->where('group_id',$group_id)->get()->getResult();
+        if(count($listGroup)) {
+            $data[] = $listGroup[0];
+            $parent[] = $listGroup[0]->group_id;
+            while (count($parent)) {
+                $p = $parent[0];
+                array_splice($parent, 0, 1);
+                $list = $tbgroup->where('group_parent', $p)->get()->getResult();
+                if (count($list)) {
+                    foreach ($list as $key => $value) {
+                        $data[] = $value;
+                        $parent[] = $value->group_id;
+                    }
+                }
+            }
+            return $data;
+        }
+        return $listGroup;
     }
 }

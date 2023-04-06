@@ -67,7 +67,17 @@
                                             <option value="3"><?=lang('UserLang.other')?></option>
                                         </select>
                                     </div>
-
+                                    <div class="form-group col-md-6">
+                                        <label><?=lang('UserLang.list_group')?></label>
+                                        <select class="custom-select" id="group_id" name ="group_id">
+                                            <?php if (isset($list_group) && count($list_group)) :
+                                                foreach ($list_group as $key => $item) : ?>
+                                                    <option value="<?=$item->group_id?>"><?=$item->group_name?></option>
+                                                <?php
+                                                endforeach;
+                                            endif ?>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-check">
@@ -76,7 +86,7 @@
                                             <?=lang('UserLang.user_status')?>
                                         </label>
                                     </div>
-                                    <input hidden name="group_id" value="1">
+
                                 </div>
                                 <button type="submit" class="btn btn-primary "><?=lang('UserLang.user_create')?></button>
                             </form>
