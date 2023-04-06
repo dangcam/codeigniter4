@@ -9,7 +9,7 @@ return [
     'female'=>'Nữ',
     'other' => 'Khác',
     'user_status'=>'Tình trạng',
-    'list_group' => 'Danh sách chi nhánh',
+    'group' => 'Chi nhánh',
     'user_create'=> 'Tạo người dùng',
     'user_creation_successful' => 'Tạo người dùng thành công',
     'user_creation_unsuccessful' => 'Tạo người dùng không thành công'

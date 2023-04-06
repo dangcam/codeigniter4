@@ -37,6 +37,7 @@ $routes->group('dashboard', static function ($routes) {
     $routes->group('user',static function($routes){
         $routes->get('/','Dashboard\UserController::index');
         $routes->post('create_user','Dashboard\UserController::create_user');
+        $routes->post('user_ajax','Dashboard\UserController::user_ajax');
     });
     $routes->group('group',static function($routes){
         $routes->get('/','Dashboard\GroupController::index');

@@ -177,7 +177,7 @@
 
 <script>
     jQuery(document).ready(function($) {
-        var userDataTable = $('#data-table').DataTable({
+        var groupDataTable = $('#data-table').DataTable({
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -252,7 +252,7 @@
                         if(data[0]==0){
                             $("#response_success").show('fast');
                             $("#response_success").html(data[1]);
-                            userDataTable.ajax.reload();
+                            groupDataTable.ajax.reload();
                             treeGroup();
                         }else {
                             $("#response_danger").show('fast');
