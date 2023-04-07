@@ -24,7 +24,7 @@ class UserController extends BaseController
         //$data['list_users'] = $this->user_model->list_users();
         $data['list_group'] = $this->user_model->getGroupParent('vpddt');
         //var_dump($this->user_model->getGroupParent('vpddt'));
-        return $this->page_construct('dashboard/user', $meta,$data);
+        return $this->page_construct('dashboard/user_view', $meta,$data);
     }
     public function create_user()
     {

@@ -17,7 +17,7 @@ class UserModel Extends BaseModel
         'password'     => 'required|min_length[8]',
         //'pass_confirm' => 'required_with[password]|matches[password]',
     ];
-    protected $validationMessages = [
+    /*protected $validationMessages = [
         'user_id' => [
             'is_unique' => 'Tài khoản {field} đã tồn tại, vui lòng kiểm tra lại.',
             'min_length' =>'Tài khoản quá ngắn (ít nhất {param} ký tự).',
@@ -32,7 +32,7 @@ class UserModel Extends BaseModel
         'password' =>[
             'min_length' => 'Mật khẩu phải it nhất {param} ký tự.'
         ]
-    ];
+    ];*/
     public function list_users()
     {
         return $this->findAll();

@@ -17,16 +17,17 @@ class GroupModel extends BaseModel
         'group_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[groups.group_id]',
         'group_name'     => 'required|max_length[50]'
     ];
+    /*
     protected $validationMessages = [
         'group_id' => [
-            'is_unique' => 'Mã chi nhánh {field} đã tồn tại, vui lòng kiểm tra lại.',
+            'is_unique' => 'Mã chi nhánh {value} đã tồn tại, vui lòng kiểm tra lại.',
             'min_length' =>'Mã chi nhánh quá ngắn (ít nhất {param} ký tự).',
             'max_length'=>'Mã chi nhánh quá dài (nhiều nhất {param} ký tự).'
         ],
         'group_name' =>[
             'max_length' =>'Tên chi nhánh quá dài (nhiều nhất {param} ký tự).'
         ]
-    ];
+    ];*/
     function getGroups($postData=null){
 
         $response = array();

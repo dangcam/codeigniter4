@@ -19,7 +19,7 @@ class GroupController extends BaseController
     {
         $meta = array('page_title' => lang('AppLang.page_title_groups'));
         $data['list_group'] = $this->group_model->getGroupParent('vpddt');
-        return $this->page_construct('dashboard/group', $meta,$data);
+        return $this->page_construct('dashboard/group_view', $meta,$data);
     }
     public function group_ajax()
     {

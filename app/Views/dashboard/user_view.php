@@ -30,8 +30,6 @@
                             <strong>Error!</strong> Message Sending failed.
                         </div>
 
-
-
                         <!---->
                         <div class="basic-form">
                             <form method="post" id="create_user">
@@ -86,7 +84,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary "><?=lang('UserLang.user_create')?></button>
+                                <button type="submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                             </form>
                         </div>
                     </div>
@@ -133,6 +131,11 @@
 
 <script>
     jQuery(document).ready(function($) {
+
+        function reset_form(){
+
+        };
+
         var userDataTable = $('#data-table').DataTable({
             'processing': true,
             'serverSide': true,
