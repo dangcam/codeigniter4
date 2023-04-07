@@ -60,6 +60,20 @@ class UserModel Extends BaseModel
         //$user = new UserEntity($data);
         //$this->save($user);
     }
+    public function delete_user($data)
+    {
+        $user_id = $data['user_id'];
+
+        if($this->where('user_id',$user_id)->delete())
+        {
+            $this->set_message("UserLang.user_delete_successful");
+            return 0;
+        }else
+        {
+            $this->set_message("UserLang.user_delete_unsuccessful");
+            return 3;
+        }
+    }
     public function getGroupParent($group_id='')
     {
         $tbgroup = $this->db->table('groups');
@@ -123,13 +137,12 @@ class UserModel Extends BaseModel
                 "user_status"=>$record->user_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
                     '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
                 "active"=>' <span>
-                                                        <a href="javascript:void()" class="mr-4" data-toggle="tooltip"
-                                                            data-placement="top" title="Edit"><i
-                                                                class="fa fa-pencil color-muted"></i> </a>
-                                                        <a href="javascript:void()" data-toggle="tooltip"
-                                                            data-placement="top" title="Close"><i
-                                                                class="fa fa-close color-danger"></i></a>
-                                                    </span>'
+                            <a href="javascript:void()" class="mr-4" data-toggle="tooltip"
+                                data-placement="top" title="Edit"><i class="fa fa-pencil color-muted"></i> </a>
+                            <a href="#" data-toggle="modal" data-target="#smallModal"
+                                data-placement="top" title="Close" data-user_id="'.$record->user_id.'">
+                                <i class="fa fa-close color-danger"></i></a>
+                            </span>'
             );
         }
 

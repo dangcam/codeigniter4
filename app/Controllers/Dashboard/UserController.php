@@ -36,6 +36,16 @@ class UserController extends BaseController
             echo json_encode(array_values($data));
         }
     }
+    public function delete_user()
+    {
+        if($this->request->getPost())
+        {
+            $data_user = $this->request->getPost();
+            $data['result'] = ($this->user_model->delete_user($data_user));
+            $data['message']= $this->user_model->get_messages();
+            echo json_encode(array_values($data));
+        }
+    }
     public function user_ajax()
     {
         if($this->request->getPost())

@@ -40,3 +40,12 @@ WHERE `group_id` = :group_id:', [...], false)
  7 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  8 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
  9 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('FCPATH\\index.php')
+CRITICAL - 2023-04-07 14:53:32 --> Undefined array key "user_id"
+in APPPATH\Models\UserModel.php on line 65.
+ 1 APPPATH\Models\UserModel.php(65): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "user_id"', 'APPPATH\\Models\\UserModel.php', 65)
+ 2 APPPATH\Controllers\Dashboard\UserController.php(44): App\Models\UserModel->delete_user([...])
+ 3 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Dashboard\UserController->delete_user()
+ 4 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard\UserController))
+ 5 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('FCPATH\\index.php')

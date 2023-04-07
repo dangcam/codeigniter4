@@ -12,5 +12,9 @@ return [
     'group' => 'Chi nhánh',
     'user_create'=> 'Tạo người dùng',
     'user_creation_successful' => 'Tạo người dùng thành công',
-    'user_creation_unsuccessful' => 'Tạo người dùng không thành công'
+    'user_creation_unsuccessful' => 'Tạo người dùng không thành công',
+    'user_edit_successful'=>'Sửa thông tin người dùng thành công',
+    'user_edit_unsuccessful'=>'Sửa thông tin người dùng không thành công',
+    'user_delete_successful'=>'Xoá người dùng thành công',
+    'user_delete_unsuccessful'=>'Xoá người dùng không thành công',
 ];

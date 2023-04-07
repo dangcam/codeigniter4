@@ -89,7 +89,7 @@ class GroupModel extends BaseModel
 							<i class="fa fa-pencil color-muted"></i>
 								<span class="align-middle">'.lang('AppLang.edit').'</span>
 						</a>
-					  	<a class="dropdown-item text-danger" data-toggle="modal" data-target="#smallModal" data-group_id="'.$record->group_id.'"href="#">
+					  	<a class="dropdown-item text-danger" data-toggle="modal" data-target="#smallModal" data-group_id="'.$record->group_id.'" href="#">
 							<i class="fa fa-close color-danger"></i>
 								<span class="align-middle">'.lang('AppLang.delete').'</span>
 						</a>

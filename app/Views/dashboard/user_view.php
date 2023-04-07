@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
-                                <button type="button" class="btn btn-warning"><?=lang('AppLang.cancel')?></button>
+                                <button type="button" id="btn_cancel" class="btn btn-warning"><?=lang('AppLang.cancel')?></button>
                             </form>
                         </div>
                     </div>
@@ -124,6 +124,28 @@
         </div>
     </div>
 </div>
+<!---->
+<div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="smallModalLabel"><?=lang('AppLang.notify')?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?=lang('AppLang.are_you_sure')?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="modal-btn-no" class="btn btn-white" data-dismiss="modal"><?=lang('AppLang.no')?></button>
+                <button type="button" id="modal-btn-yes" class="btn btn-primary"><?=lang('AppLang.yes')?></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+
 <script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
 <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
 <link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -198,6 +220,41 @@
                     $("#response_danger").html(data);
                 }
             })
+        });
+        // Delete
+        $('#smallModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('user_id') // Extract info from data-* attributes
+            $("#modal-btn-yes").on("click", function(event){
+                $("#smallModal").modal('hide');
+                event.preventDefault();
+                $("#response_success").hide('fast');
+                $("#response_danger").hide('fast');
+                $.ajax({
+                    url: '<?= base_url() ?>dashboard/user/delete_user',
+                    type: 'POST',
+                    data: { user_id:recipient },
+                    dataType:"json",
+                    success:function (data) {
+                        if(data[0]==0){
+                            $("#response_success").show('fast');
+                            $("#response_success").html(data[1]);
+                            userDataTable.ajax.reload();
+                        }else {
+                            $("#response_danger").show('fast');
+                            $("#response_danger").html(data[1]);
+                        }
+                    },
+                    error:function (data) {
+                        $("#response_danger").show('fast');
+                        $("#response_danger").html(data);
+                    }
+                });
+            });
+        });
+
+        $("#btn_cancel").click(function(){
+            reset_form();
         });
     });
 </script>
