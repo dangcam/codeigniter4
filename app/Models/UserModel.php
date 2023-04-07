@@ -120,8 +120,8 @@ class UserModel Extends BaseModel
                 "email"=>$record->email,
                 "phonenumber"=>$record->phonenumber,
                 "group_id"=>$record->group_id,
-                "user_status"=>$record->user_status==1?'<div class="badge badge-success">'.lang('active').'</div>':
-                    '<div class="badge badge-danger">'.lang('inactive').'</div>',
+                "user_status"=>$record->user_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
+                    '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
                 "active"=>' <span>
                                                         <a href="javascript:void()" class="mr-4" data-toggle="tooltip"
                                                             data-placement="top" title="Edit"><i

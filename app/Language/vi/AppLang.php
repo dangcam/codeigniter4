@@ -14,8 +14,10 @@ return[
     'close' => 'Đóng',
     'delete' => 'Xoá',
     'edit' => 'Sửa',
+    'cancel' => 'Huỷ',
     'notify' => 'Thông báo',
     'are_you_sure' => 'Bạn có chắc không?',
     'yes' => 'Có',
-    'no' => 'Không'
+    'no' => 'Không',
+
 ];

@@ -60,8 +60,8 @@ class GroupModel extends BaseModel
                 "group_id"=>$record->group_id,
                 "group_name"=>$record->group_name,
                 "group_parent"=>$record->group_parent,
-                "group_status"=>$record->group_status==1?'<div class="badge badge-success">'.lang('active').'</div>':
-                    '<div class="badge badge-danger">'.lang('inactive').'</div>',
+                "group_status"=>$record->group_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
+                    '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
                 "active"=>$this->add_active_source($record)
             );
         }

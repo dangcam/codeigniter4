@@ -37,29 +37,29 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.user_id')?></label>
-                                        <input type="text" name="user_id" class="form-control" placeholder="<?=lang('UserLang.user_id')?>" required>
+                                        <input type="text" name="user_id" id="user_id" class="form-control" placeholder="<?=lang('UserLang.user_id')?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.username')?></label>
-                                        <input type="text" name="username" class="form-control" placeholder="<?=lang('UserLang.username')?>" required>
+                                        <input type="text" name="username" id="username" class="form-control" placeholder="<?=lang('UserLang.username')?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label><?=lang('UserLang.password')?></label>
-                                        <input type="password" name="password" class="form-control" placeholder="<?=lang('UserLang.password')?>" required>
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="<?=lang('UserLang.password')?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Email</label>
-                                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                        <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label><?=lang('UserLang.phonenumber')?></label>
-                                        <input type="text" name="phonenumber" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
+                                        <input type="text" name="phonenumber" id="phonenumber" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label><?=lang('UserLang.gender')?></label>
-                                        <select id="inputState" name="gender" class="form-control">
+                                        <select id="gender" name="gender" class="form-control">
                                             <option value="1"><?=lang('UserLang.male')?></option>
                                             <option value="2"><?=lang('UserLang.female')?></option>
                                             <option value="3"><?=lang('UserLang.other')?></option>
@@ -77,7 +77,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label><?=lang('GroupLang.group_status')?></label>
+                                        <label><?=lang('UserLang.user_status')?></label>
                                         <select id="user_status" class="form-control"name ="user_status">
                                             <option value="1"><?=lang('AppLang.active')?></option>
                                             <option value="2"><?=lang('AppLang.inactive')?></option>
@@ -85,6 +85,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
+                                <button type="button" class="btn btn-warning"><?=lang('AppLang.cancel')?></button>
                             </form>
                         </div>
                     </div>
@@ -98,7 +99,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="data-table" class="table table-bordered verticle-middle table-responsive-sm">
+                        <table id="data-table" class="table table-bordered verticle-middle table-responsive-sm" style="width:100%">
                             <thead>
                             <tr>
                                 <th scope="col"><?=lang('UserLang.user_id')?></th>
@@ -133,7 +134,14 @@
     jQuery(document).ready(function($) {
 
         function reset_form(){
-
+            $('#user_id').val('');
+            $('#username').val('');
+            $('#password').val('');
+            $('#gender').val(1);
+            $('#email').val('');
+            $('#phonenumber').val('');
+            $('#user_status').val(1);
+            $('#group_id').val('');
         };
 
         var userDataTable = $('#data-table').DataTable({
@@ -177,6 +185,7 @@
                         $("#response_success").effect("shake");
                         $("#response_success").html(data[1]);
                         userDataTable.ajax.reload();
+                        reset_form();
                     }else {
                         $("#response_danger").show('fast');
                         $("#response_danger").effect("shake");
