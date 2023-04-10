@@ -137,7 +137,7 @@ class UserModel Extends BaseModel
                 "user_status"=>$record->user_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
                     '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
                 "active"=>' <span>
-                            <a href="javascript:void()" class="mr-4" data-toggle="tooltip"
+                            <a href="javascript:void(0)" class="mr-4 update" data-toggle="tooltip"
                                 data-placement="top" title="Edit"><i class="fa fa-pencil color-muted"></i> </a>
                             <a href="#" data-toggle="modal" data-target="#smallModal"
                                 data-placement="top" title="Close" data-user_id="'.$record->user_id.'">

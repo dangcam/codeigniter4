@@ -256,6 +256,9 @@
         $("#btn_cancel").click(function(){
             reset_form();
         });
+        $("#data-table").on('click', '.update', function(){
+           alert('update');
+        });
     });
 </script>
 

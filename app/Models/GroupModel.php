@@ -55,7 +55,6 @@ class GroupModel extends BaseModel
         $data = array();
 
         foreach($records as $record ){
-
             $data[] = array(
                 "group_id"=>$record->group_id,
                 "group_name"=>$record->group_name,
