@@ -84,7 +84,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
+                                <button type="submit" id="btn_submit" name="create_user" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                                 <button type="button" id="btn_cancel" class="btn btn-warning"><?=lang('AppLang.cancel')?></button>
                             </form>
                         </div>
@@ -163,7 +163,11 @@
             $('#email').val('');
             $('#phonenumber').val('');
             $('#user_status').val(1);
-            $('#group_id').val('');
+            //
+            var field = document.getElementById("btn_submit");
+            field.setAttribute("name","create_user");
+            $('#password').prop("required", true);
+            $('#user_id').prop("readonly", false);
         };
 
         var userDataTable = $('#data-table').DataTable({
@@ -195,9 +199,10 @@
             event.preventDefault();
             $("#response_success").hide('fast');
             $("#response_danger").hide('fast');
+            var name = $("#btn_submit").attr("name");
             var formData = $(this).serialize();
             $.ajax({
-                url:"<?= base_url() ?>dashboard/user/create_user",
+                url:"<?= base_url() ?>dashboard/user/"+name,
                 method:"POST",
                 data:formData,
                 dataType:"json",
@@ -219,7 +224,7 @@
                     $("#response_danger").effect("shake");
                     $("#response_danger").html(data);
                 }
-            })
+            });
         });
         // Delete
         $('#smallModal').on('show.bs.modal', function (event) {
@@ -254,10 +259,31 @@
         });
 
         $("#btn_cancel").click(function(){
+            $("#response_success").hide('fast');
+            $("#response_danger").hide('fast');
+            //
             reset_form();
         });
-        $("#data-table").on('click', '.update', function(){
-           alert('update');
+        $("#data-table").on('click', '.update', function(event){
+            var user_id =  $(this).attr("user_id");
+            var username =  $(this).attr("username");
+            var gender =  $(this).attr("gender");
+            var email =  $(this).attr("email");
+            var phonenumber =  $(this).attr("phonenumber");
+            var group_id =  $(this).attr("group_id");
+            var user_status =  $(this).attr("user_status");
+            $('#user_id').val(user_id);
+            $('#username').val(username);
+            $('#gender').val(gender);
+            $('#email').val(email);
+            $('#phonenumber').val(phonenumber);
+            $('#user_status').val(user_status);
+            $('#group_id').val(group_id);
+            //
+            var field = document.getElementById("btn_submit");
+            field.setAttribute("name","update_user");
+            $('#password').prop("required", false);
+            $('#user_id').prop("readonly", true);
         });
     });
 </script>

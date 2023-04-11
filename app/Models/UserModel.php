@@ -33,6 +33,10 @@ class UserModel Extends BaseModel
             'min_length' => 'Mật khẩu phải it nhất {param} ký tự.'
         ]
     ];*/
+
+    private $salt_length = 10;
+    private $store_salt = false;
+    private $hash_method = 'sha1';
     public function list_users()
     {
         return $this->findAll();
@@ -55,6 +59,40 @@ class UserModel Extends BaseModel
         }else
         {
             $this->set_message("UserLang.user_creation_unsuccessful");
+            return 3;
+        }
+        //$user = new UserEntity($data);
+        //$this->save($user);
+    }
+    public function update_user($data_user)
+    {
+        // 0. success 1. info 2. warning 3. error
+        $user_id = $data_user['user_id'];
+        unset($data_user['user_id']);
+        $password = $data_user['password'];
+        $reset_password = true;
+        if(strlen($password)==0)
+        {
+            $reset_password = false;
+            unset($data_user['password']);
+        }
+        if(!$this->validate($data_user))
+        {
+            foreach ($this->errors() as $error) {
+                $this->set_message($error);
+            }
+            return 3;
+        }
+        if($reset_password){
+            $data_user['password'] = $this->hash_password($data_user['password']);
+        }
+        if($this->update($user_id,$data_user))
+        {
+            $this->set_message("UserLang.user_edit_successful");
+            return 0;
+        }else
+        {
+            $this->set_message("UserLang.user_edit_unsuccessful");
             return 3;
         }
         //$user = new UserEntity($data);
@@ -137,10 +175,12 @@ class UserModel Extends BaseModel
                 "user_status"=>$record->user_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
                     '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
                 "active"=>' <span>
-                            <a href="javascript:void(0)" class="mr-4 update" data-toggle="tooltip"
-                                data-placement="top" title="Edit"><i class="fa fa-pencil color-muted"></i> </a>
+                            <a href="#" class="mr-4 update" data-toggle="modal"  user_id="'.$record->user_id.'" username ="'.$record->username.'"
+                            gender ="'.$record->gender.'" email ="'.$record->email.'" phonenumber ="'.$record->phonenumber.'" group_id ="'.$record->group_id.'"
+                            user_status ="'.$record->user_status.'"
+                                data-placement="top" title="'.lang('AppLang.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
                             <a href="#" data-toggle="modal" data-target="#smallModal"
-                                data-placement="top" title="Close" data-user_id="'.$record->user_id.'">
+                                data-placement="top" title="'.lang('AppLang.delete').'" data-user_id="'.$record->user_id.'">
                                 <i class="fa fa-close color-danger"></i></a>
                             </span>'
             );
@@ -157,7 +197,7 @@ class UserModel Extends BaseModel
         return $response;
     }
 
-
+    // hash password
     public function hash_password($password, $salt = false, $use_sha1_override = FALSE)
     {
         if (empty($password)) {
@@ -178,4 +218,62 @@ class UserModel Extends BaseModel
     {
         return substr(md5(uniqid(rand(), true)), 0, $this->salt_length);
     }
+    public function hash_password_db($password_db,$password,$salt_db ='', $use_sha1_override = FALSE)
+    {
+        if (empty($password_db) || empty($password)) {
+            return FALSE;
+        }
+        // bcrypt
+        if ($use_sha1_override === FALSE && $this->hash_method == 'bcrypt') {
+            if ($this->bcrypt->verify($password, $password_db)) {
+                return TRUE;
+            }
+            return FALSE;
+        }
+        // sha1
+        if ($this->store_salt) {
+            $db_password = sha1($password . $salt_db);
+
+        } else {
+            $salt = substr($password_db, 0, $this->salt_length);
+            $db_password = $salt . substr(sha1($salt . $password), 0, -$this->salt_length);
+        }
+        if ($db_password == $password_db) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    // login
+    public function login($data)
+    {
+        $user_id = $data['user_id'];
+        $password = $data['password'];
+        $remember =isset( $data['remember']);
+
+        if(empty($user_id)||empty($password))
+        {
+            $this->set_message("UserLang.user_password_empty");
+            return 3;
+        }
+        $records = $this->where('user_id',$user_id)->where('user_status',1)->first();
+        if(!$records)
+        {
+            $this->set_message("UserLang.wrong_user_id");
+            return 3;
+        }else
+        {
+            if(!$this->hash_password_db($records->password,$password))
+            {
+                $this->set_message("UserLang.wrong_password");
+                return 3;
+            }
+        }
+        $this->session->set('user_id',$user_id);
+        $this->session->set('group_id',$records->group_id);
+        $this->session->set('user_id',$user_id);
+        $this->set_message($this->session->get('user_id'));
+        return 0;
+    }
+
 }

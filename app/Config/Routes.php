@@ -31,6 +31,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->addRedirect('/','login');
 $routes->get('login', 'LoginController::index');
+$routes->post('login_ajax', 'LoginController::login_ajax');
 $routes->group('dashboard', static function ($routes) {
     $routes->get('/', 'Dashboard\HomeController::index');
 
@@ -39,6 +40,7 @@ $routes->group('dashboard', static function ($routes) {
         $routes->post('create_user','Dashboard\UserController::create_user');
         $routes->post('user_ajax','Dashboard\UserController::user_ajax');
         $routes->post('delete_user','Dashboard\UserController::delete_user');
+        $routes->post('update_user','Dashboard\UserController::update_user');
     });
     $routes->group('group',static function($routes){
         $routes->get('/','Dashboard\GroupController::index');

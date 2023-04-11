@@ -11,6 +11,7 @@ class BaseModel extends Model
         $this->infos = array();
         $this->warnings = array();
         $this->errors = array();
+        $this->session = session();
     }
     public function set_info($info)
     {
