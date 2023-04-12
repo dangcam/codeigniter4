@@ -32,9 +32,9 @@ $routes->set404Override();
 $routes->addRedirect('/','login');
 $routes->get('login', 'LoginController::index');
 $routes->post('login_ajax', 'LoginController::login_ajax');
-$routes->group('dashboard', static function ($routes) {
+$routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) {
     $routes->get('/', 'Dashboard\HomeController::index');
-
+    $routes->get('logout', 'Dashboard\HomeController::logout');
     $routes->group('user',static function($routes){
         $routes->get('/','Dashboard\UserController::index');
         $routes->post('create_user','Dashboard\UserController::create_user');

@@ -81,7 +81,8 @@
                 dataType:"json",
                 success:function (data) {
                     if(data[0]==0){
-                      alert(data);
+                        window.location.href = '<?php echo base_url() ?>dashboard';
+                        //alert(formData);
                     }else {
                         $("#response_danger").show('fast');
                         $("#response_danger").effect("shake");

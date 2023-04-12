@@ -10,4 +10,9 @@ class HomeController extends BaseController
         $meta = array('page_title'=>lang('AppLang.page_title_home'));
         return $this->page_construct('dashboard/home_view',$meta);
     }
+    public function logout()
+    {
+        session()->destroy();
+        return redirect('/');
+    }
 }

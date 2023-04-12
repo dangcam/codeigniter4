@@ -4,6 +4,11 @@ use CodeIgniter\Model;
 
 class BaseModel extends Model
 {
+    public $session;
+    private $messages;
+    private $infos;
+    private $warnings;
+    private $errors;
     function __construct()
     {
         parent::__construct();

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 use App\Entities\UserEntity;
+use CodeIgniter\Cookie\Cookie;
 
 class UserModel Extends BaseModel
 {
@@ -249,7 +250,7 @@ class UserModel Extends BaseModel
     {
         $user_id = $data['user_id'];
         $password = $data['password'];
-        $remember =isset( $data['remember']);
+        $remember =isset($data['remember']);
 
         if(empty($user_id)||empty($password))
         {
@@ -271,8 +272,12 @@ class UserModel Extends BaseModel
         }
         $this->session->set('user_id',$user_id);
         $this->session->set('group_id',$records->group_id);
-        $this->session->set('user_id',$user_id);
-        $this->set_message($this->session->get('user_id'));
+        if($remember)
+        {
+            cookie('user_id',$user_id,['expires' => COOKIE_EXPIRY]);
+            cookie('group_id',$records->group_id,['expires' => COOKIE_EXPIRY]);
+
+        }
         return 0;
     }
 
