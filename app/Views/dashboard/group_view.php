@@ -285,7 +285,7 @@
                         $("#response_success").html(data[1]);
                         //$('#myModal').modal('hide');
                         $('#myModal').modal('toggle');
-                        userDataTable.ajax.reload();
+                        groupDataTable.ajax.reload();
                         treeGroup();
                     } else {
                         $("#response_danger_modal").show('fast');

@@ -62,8 +62,6 @@ class UserModel Extends BaseModel
             $this->set_message("UserLang.user_creation_unsuccessful");
             return 3;
         }
-        //$user = new UserEntity($data);
-        //$this->save($user);
     }
     public function update_user($data_user)
     {
