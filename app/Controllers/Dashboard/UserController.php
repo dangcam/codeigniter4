@@ -21,7 +21,7 @@ class UserController extends BaseController
         $data['result'] = null;
         $data['message']= null;
         $meta = array('page_title' => lang('AppLang.page_title_users'));
-        $data['list_group'] = $this->user_model->getGroupParent('vpddt');
+        $data['list_group'] = $this->user_model->getGroupParent();
         return $this->page_construct('dashboard/user_view', $meta,$data);
     }
     public function create_user()

@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use App\Libraries\lib_auth;
 
 /**
  * Class BaseController
@@ -35,7 +36,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = [];
+    protected $helpers = ['cookie'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -46,13 +47,13 @@ abstract class BaseController extends Controller
     /**
      * Constructor.
      */
+    public $libauth;
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-
+        $this->libauth = new lib_auth();
         // Preload any models, libraries, etc, here.
-        $session = \Config\Services::session();
         $language = \Config\Services::language();
         $language->setLocale('vi');
         // E.g.: $this->session = \Config\Services::session();

@@ -29,8 +29,7 @@ class GroupModel extends BaseModel
         ]
     ];*/
     function getGroups($postData=null){
-
-        $response = array();
+        $data_group_parent[] = array($this->getGroupIdParent());
         ## Read value
         $draw = $postData['draw'];
         $start = $postData['start'];
@@ -40,12 +39,12 @@ class GroupModel extends BaseModel
         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
         $strInput=$postData['search']['value'];
         ## Total number of records without filtering
-        $this->select('count(*) as allcount');
+        $this->select('count(*) as allcount');//->whereIn('group_id',$data_group_parent);
         $records = $this->find();
         $totalRecords = $records[0]->allcount;
 
         ## Fetch records
-        $this->select('*');
+        $this->select('*');//->whereIn('group_id',$data_group_parent);;
         $this->like('group_name',$strInput);
         $this->orderBy($columnName, $columnSortOrder);
         if($rowperpage!=-1)
@@ -67,7 +66,7 @@ class GroupModel extends BaseModel
 
         ## Response
         $response = array(
-            "draw" => intval($draw),
+            //"draw" => intval($draw),
             "iTotalRecords" => $totalRecords,
             "iTotalDisplayRecords" => $totalRecords,
             "aaData" => $data
@@ -96,9 +95,9 @@ class GroupModel extends BaseModel
 				</div>';
         return $string;
     }
-    public function getTreeGroupParent($group_id='')
+    public function getTreeGroupParent()
     {
-        $listGroup = $this->getGroupParent($group_id);
+        $listGroup = $this->getGroupParent();
         if (count($listGroup)) {
             foreach ($listGroup as $key => $item) {
                 $sub_data["id"] = $item->group_id;
@@ -129,11 +128,9 @@ class GroupModel extends BaseModel
         }
         return $listGroup;
     }
-    public function getGroupParent($group_id='')
+    public function getGroupParent()
     {
-        /*if(!isset($group_id)){
-            $group_id = $this->session->userdata('group_id');
-        }*/
+        $group_id = $this->session->get('group_id');
         $listGroup = $this->where('group_id',$group_id)->find();
         if(count($listGroup)) {
             $data[] = $listGroup[0];
@@ -152,6 +149,29 @@ class GroupModel extends BaseModel
             return $data;
         }
         return $listGroup;
+    }
+    public function getGroupIdParent()
+    {
+        $data[] = array();
+        $group_id = $this->session->get('group_id');
+        $listGroup = $this->select('group_id')->where('group_id',$group_id)->find();
+        if(count($listGroup)){
+            $data[] = $listGroup[0]->group_id;
+            $parent[] = $listGroup[0]->group_id;
+            while (count($parent)) {
+                $p = $parent[0];
+                array_splice($parent, 0, 1);
+                $list = $this->select('group_id')->where('group_parent', $p)->find();
+                if (count($list)) {
+                    foreach ($list as $key => $value) {
+                        $data[] = $value->group_id;
+                        $parent[] = $value->group_id;
+                    }
+                }
+            }
+            return $data;
+        }
+        return $data;
     }
     public function add_group($data)
     {

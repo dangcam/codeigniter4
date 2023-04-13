@@ -8,9 +8,14 @@ use App\Libraries\lib_auth;
 
 class AuthFilters implements FilterInterface
 {
-    public function before(RequestInterface $request, $arguments = null)
+    public function __construct()
     {
         $this->libauth = new lib_auth();
+    }
+
+    public function before(RequestInterface $request, $arguments = null)
+    {
+
         if(!$this->libauth->check())
         {
             return redirect()->to(site_url('/'));

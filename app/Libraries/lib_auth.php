@@ -7,23 +7,24 @@ class lib_auth
     public function __construct()
     {
         $this->session = session();
+        helper('cookie');
     }
 
     public function check()
     {
         if($this->session->get('user_id'))
             return true;
-        if(isset($_COOKIE['user_id'])){
-            $this->session->set('user_id',$_COOKIE['user_id']);
-            $this->session->set('group_id',$_COOKIE['group_id']);
+        if(get_cookie('user_id')){
+            $this->session->set('user_id',get_cookie('user_id'));
+            $this->session->set('group_id',get_cookie('group_id'));
             return true;
         }
         return false;
     }
     public function logout(){
-
         $this->session->destroy();
-        //setcookie('username', '', -1, '/');
-        //setcookie('group_id', '', -1, '/');
+        delete_cookie('user_id');
+        delete_cookie('group_id');
+        return redirect()->to(base_url('auth/login'))->withCookies();
     }
 }

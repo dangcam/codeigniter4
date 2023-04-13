@@ -111,12 +111,10 @@ class UserModel Extends BaseModel
             return 3;
         }
     }
-    public function getGroupParent($group_id='')
+    public function getGroupParent()
     {
         $tbgroup = $this->db->table('groups');
-        /*if(!isset($group_id)){
-            $group_id = $this->session->userdata('group_id');
-        }*/
+        $group_id = $this->session->get('group_id');
         $listGroup = $tbgroup->where('group_id',$group_id)->get()->getResult();
         if(count($listGroup)) {
             $data[] = $listGroup[0];
@@ -270,10 +268,11 @@ class UserModel Extends BaseModel
         }
         $this->session->set('user_id',$user_id);
         $this->session->set('group_id',$records->group_id);
+
         if($remember)
         {
-            cookie('user_id',$user_id,['expires' => COOKIE_EXPIRY]);
-            cookie('group_id',$records->group_id,['expires' => COOKIE_EXPIRY]);
+            set_cookie('user_id',$user_id,COOKIE_EXPIRY);
+            set_cookie('group_id',$records->group_id,COOKIE_EXPIRY);
 
         }
         return 0;

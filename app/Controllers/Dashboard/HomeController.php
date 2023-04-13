@@ -12,7 +12,7 @@ class HomeController extends BaseController
     }
     public function logout()
     {
-        session()->destroy();
+        $this->libauth->logout();
         return redirect('/');
     }
 }
