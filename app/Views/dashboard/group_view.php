@@ -47,7 +47,7 @@
                                     <th><?=lang('GroupLang.group_name')?></th>
                                     <th><?=lang('GroupLang.group_parent')?></th>
                                     <th><?=lang('GroupLang.group_status')?></th>
-                                    <th>#</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -58,7 +58,7 @@
                                     <th><?=lang('GroupLang.group_name')?></th>
                                     <th><?=lang('GroupLang.group_parent')?></th>
                                     <th><?=lang('GroupLang.group_status')?></th>
-                                    <th>#</th>
+                                    <th>Action</th>
                                 </tr>
                                 </tfoot>
                             </table>

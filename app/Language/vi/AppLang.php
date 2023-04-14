@@ -7,12 +7,10 @@ return[
     'page_title_groups' => 'Danh sách chi nhánh',
     'page_title_functions' => 'Danh sách chức năng',
     'page_title_users'=>'Danh sách người dùng',
-    // Chức năng
-    'user_manager'=>'Quản lý người dùng',
-    'function_manager' => 'Quản lý chức năng',
-    'group_manager' => 'Quản lý chi nhánh',
+    'page_user_function' => 'Phân quyền người dùng',
 
-    //
+
+    // form
     'all' => 'Tất cả',
     'info' =>'Thông tin',
     'list'=>'Danh sách',
@@ -27,5 +25,14 @@ return[
     'are_you_sure' => 'Bạn có chắc không?',
     'yes' => 'Có',
     'no' => 'Không',
-
+    // menu
+    'dashboard' => 'Dashboard',
+    'management' => 'Quản lý',
+    'system' => 'Hệ thống',
+    'users' => 'Người dùng',
+    // Chức năng
+    'user_function' => 'Phân quyền người dùng',
+    'user_manager'=>'Quản lý người dùng',
+    'function_manager' => 'Quản lý chức năng',
+    'group_manager' => 'Quản lý chi nhánh',
 ];

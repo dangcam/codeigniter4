@@ -25,6 +25,6 @@ class lib_auth
         $this->session->destroy();
         delete_cookie('user_id');
         delete_cookie('group_id');
-        return redirect()->to(base_url('auth/login'))->withCookies();
+        return redirect()->to(base_url('/'))->withCookies();
     }
 }

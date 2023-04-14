@@ -38,7 +38,7 @@
                                     <th scope="col"><?=lang('FunctionLang.function_id')?></th>
                                     <th scope="col"><?=lang('FunctionLang.function_name')?></th>
                                     <th scope="col"><?=lang('FunctionLang.function_status')?></th>
-                                    <th scope="col">#</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -48,7 +48,7 @@
                                     <th><?=lang('FunctionLang.function_id')?></th>
                                     <th><?=lang('FunctionLang.function_name')?></th>
                                     <th><?=lang('FunctionLang.function_status')?></th>
-                                    <th>#</th>
+                                    <th>Action</th>
                                 </tr>
                                 </tfoot>
                             </table>

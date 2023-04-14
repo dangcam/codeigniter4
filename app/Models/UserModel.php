@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 use App\Entities\UserEntity;
-use CodeIgniter\Cookie\Cookie;
 
 class UserModel Extends BaseModel
 {
