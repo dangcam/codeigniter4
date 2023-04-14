@@ -12,6 +12,9 @@ class LoginController extends BaseController
     }
     public function index()
     {
+        if($this->libauth->check()){
+            return redirect()->to('dashboard');
+        }
         return view('login_view');
     }
     public function login_ajax()

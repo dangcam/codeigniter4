@@ -1,8 +1,5 @@
 <?php
-
-
 namespace App\Controllers\Dashboard;
-
 
 use App\Controllers\BaseController;
 use App\Models\GroupModel;
@@ -18,8 +15,6 @@ class GroupController extends BaseController
     public function index()
     {
         $meta = array('page_title' => lang('AppLang.page_title_groups'));
-        //$data['list_group'] = $this->group_model->getGroupParent();
-        //var_dump(($this->group_model->getGroups()));
         return $this->page_construct('dashboard/group_view', $meta);
     }
     public function group_ajax()

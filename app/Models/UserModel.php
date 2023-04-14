@@ -145,12 +145,32 @@ class UserModel Extends BaseModel
         $columnName = $postData['columns'][$columnIndex]['data']; // Column name
         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
         $strInput=$postData['search']['value'];
+
+        // lọc nhóm chi nhánh theo user
+        $listGroup = $this->getGroupParent();
+        $listGroupParent = array();
+        if(count($listGroup)){
+            foreach ($listGroup as $key => $item) {
+                $listGroupParent[] = $item->group_id;
+            }
+        }
+        $search_arr = array();
+        $array_parent ="";
+        if(count($listGroupParent)>0){
+            $array_parent = implode("','",$listGroupParent);
+            $search_arr[] = " group_id in ('". $array_parent ."') ";
+        }
+        //
+        if($array_parent!='')
+            $this->where(" group_id in ('". $array_parent ."')");
         ## Total number of records without filtering
         $this->select('count(*) as allcount');
         $records = $this->find();
         $totalRecords = $records[0]->allcount;
 
         ## Fetch records
+        if($array_parent!='')
+            $this->where(" group_id in ('". $array_parent ."')");
         $this->select('*');
         $this->like('username',$strInput);
         $this->orderBy($columnName, $columnSortOrder);

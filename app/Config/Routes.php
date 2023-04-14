@@ -51,6 +51,14 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('tree_group','Dashboard\GroupController::tree_group');
 
     });
+    $routes->group('function',static function($routes){
+        $routes->get('/','Dashboard\FunctionController::index');
+        $routes->post('function_ajax','Dashboard\FunctionController::function_ajax');
+        $routes->post('add_function','Dashboard\FunctionController::add_function');
+        $routes->post('edit_function','Dashboard\FunctionController::edit_function');
+        $routes->post('delete_function','Dashboard\FunctionController::delete_function');
+
+    });
 });
 //$routes->post('login', 'Login::index');
 

@@ -7,7 +7,7 @@ class lib_auth
     public function __construct()
     {
         $this->session = session();
-        helper('cookie');
+        //helper('cookie');
     }
 
     public function check()

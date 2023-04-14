@@ -15,7 +15,7 @@ class GroupModel extends BaseModel
     protected $returnType = GroupEntity::class;
     protected $validationRules = [
         'group_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[groups.group_id]',
-        'group_name'     => 'required|max_length[50]'
+        'group_name'     => 'required|max_length[50]|alpha_dash'
     ];
     /*
     protected $validationMessages = [
@@ -29,7 +29,6 @@ class GroupModel extends BaseModel
         ]
     ];*/
     function getGroups($postData=null){
-        $data_group_parent[] = array($this->getGroupIdParent());
         ## Read value
         $draw = $postData['draw'];
         $start = $postData['start'];
@@ -38,13 +37,31 @@ class GroupModel extends BaseModel
         $columnName = $postData['columns'][$columnIndex]['data']; // Column name
         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
         $strInput=$postData['search']['value'];
+
+        // lọc nhóm chi nhánh theo user
+        $listGroup = $this->getGroupParent();
+        $listGroupParent = array();
+        if(count($listGroup)){
+            foreach ($listGroup as $key => $item) {
+                $listGroupParent[] = $item->group_id;
+            }
+        }
+        $search_arr = array();
+        $array_parent ="";
+        if(count($listGroupParent)>0){
+            $array_parent = implode("','",$listGroupParent);
+            $search_arr[] = " group_id in ('". $array_parent ."') ";
+        }
+        //
+        if($array_parent!='')
+            $this->where(" group_id in ('". $array_parent ."')");
         ## Total number of records without filtering
         $this->select('count(*) as allcount');//->whereIn('group_id',$data_group_parent);
         $records = $this->find();
         $totalRecords = $records[0]->allcount;
-
         ## Fetch records
-        $this->select('*');//->whereIn('group_id',$data_group_parent);;
+        if($array_parent!='')
+            $this->where(" group_id in ('". $array_parent ."')");
         $this->like('group_name',$strInput);
         $this->orderBy($columnName, $columnSortOrder);
         if($rowperpage!=-1)
@@ -66,7 +83,7 @@ class GroupModel extends BaseModel
 
         ## Response
         $response = array(
-            //"draw" => intval($draw),
+            "draw" => intval($draw),
             "iTotalRecords" => $totalRecords,
             "iTotalDisplayRecords" => $totalRecords,
             "aaData" => $data
@@ -150,29 +167,7 @@ class GroupModel extends BaseModel
         }
         return $listGroup;
     }
-    public function getGroupIdParent()
-    {
-        $data[] = array();
-        $group_id = $this->session->get('group_id');
-        $listGroup = $this->select('group_id')->where('group_id',$group_id)->find();
-        if(count($listGroup)){
-            $data[] = $listGroup[0]->group_id;
-            $parent[] = $listGroup[0]->group_id;
-            while (count($parent)) {
-                $p = $parent[0];
-                array_splice($parent, 0, 1);
-                $list = $this->select('group_id')->where('group_parent', $p)->find();
-                if (count($list)) {
-                    foreach ($list as $key => $value) {
-                        $data[] = $value->group_id;
-                        $parent[] = $value->group_id;
-                    }
-                }
-            }
-            return $data;
-        }
-        return $data;
-    }
+
     public function add_group($data)
     {
         unset($data['add']);

@@ -1,13 +1,21 @@
 <?php
 
 return[
+    // Tiêu đề
     'page_title'=>'Quản lý báo cáo',
     'page_title_home'=>'Trang chủ',
-    'all' => 'Tất cả',
+    'page_title_groups' => 'Danh sách chi nhánh',
+    'page_title_functions' => 'Danh sách chức năng',
     'page_title_users'=>'Danh sách người dùng',
+    // Chức năng
+    'user_manager'=>'Quản lý người dùng',
+    'function_manager' => 'Quản lý chức năng',
+    'group_manager' => 'Quản lý chi nhánh',
+
+    //
+    'all' => 'Tất cả',
     'info' =>'Thông tin',
     'list'=>'Danh sách',
-    'page_title_groups' => 'Danh sách chi nhánh',
     'active' => 'Bật',
     'inactive' => 'Tắt',
     'save' => 'Lưu',
