@@ -10,4 +10,11 @@ class UserFunctionModel Extends BaseModel
     protected $useAutoIncrement = true;
     protected $returnType = UserFunctionEntity::class;
 
+    public function getListUserFunction()
+    {
+        $user_id = $this->session->get('user_id');
+        $this->where('user_id',$user_id);
+        $this->join('functions','functions.function_id = user_function.function_id','right');
+        return $this->findAll();
+    }
 }

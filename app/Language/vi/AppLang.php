@@ -31,7 +31,7 @@ return[
     'system' => 'Hệ thống',
     'users' => 'Người dùng',
     // Chức năng
-    'user_function' => 'Phân quyền người dùng',
+    'user_function_manager' => 'Phân quyền người dùng',
     'user_manager'=>'Quản lý người dùng',
     'function_manager' => 'Quản lý chức năng',
     'group_manager' => 'Quản lý chi nhánh',

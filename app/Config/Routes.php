@@ -49,7 +49,6 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('edit_group','Dashboard\GroupController::edit_group');
         $routes->post('delete_group','Dashboard\GroupController::delete_group');
         $routes->post('tree_group','Dashboard\GroupController::tree_group');
-
     });
     $routes->group('function',static function($routes){
         $routes->get('/','Dashboard\FunctionController::index');
@@ -57,7 +56,9 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('add_function','Dashboard\FunctionController::add_function');
         $routes->post('edit_function','Dashboard\FunctionController::edit_function');
         $routes->post('delete_function','Dashboard\FunctionController::delete_function');
-
+    });
+    $routes->group('userfunction',static function($routes){
+        $routes->get('/','Dashboard\UserFunctionController::index');
     });
 });
 //$routes->post('login', 'Login::index');

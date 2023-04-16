@@ -22,6 +22,7 @@
                         class="icon icon icon-single-04"></i><span class="nav-text"><?=lang('AppLang.users')?></span></a>
                 <ul aria-expanded="false">
                     <li><a href="<?= base_url()?>dashboard/user"><?=lang('AppLang.user_manager')?></a></li>
+                    <li><a href="<?= base_url()?>dashboard/userfunction"><?=lang('AppLang.user_function_manager')?></a></li>
                 </ul>
             </li>
 
