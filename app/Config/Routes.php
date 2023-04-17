@@ -58,7 +58,8 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('delete_function','Dashboard\FunctionController::delete_function');
     });
     $routes->group('userfunction',static function($routes){
-        $routes->get('/','Dashboard\UserFunctionController::index');
+        $routes->post('/','Dashboard\UserFunctionController::index');
+        $routes->post('update','Dashboard\UserFunctionController::update');
     });
 });
 //$routes->post('login', 'Login::index');

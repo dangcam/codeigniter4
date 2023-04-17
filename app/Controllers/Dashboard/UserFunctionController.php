@@ -18,12 +18,20 @@ class UserFunctionController extends BaseController
 
     public function index()
     {
-        $data['result'] = null;
-        $data['message']= null;
-        $meta = array('page_title' => lang('AppLang.page_user_function'));
-        $data['$listUserFunction'] =  $this->userfunction_model->getListUserFunction();
-        var_dump( $data['$listUserFunction']);
-        return $this->page_construct('dashboard/user_function_view', $meta,$data);
+        if ($this->request->getPost()) {
+            $user_id = $this->request->getPost()['user_id'];
+            echo $this->userfunction_model->getListUserFunction($user_id);
+        }
+    }
+    public function update()
+    {
+        if($this->request->getPost())
+        {
+            $data_uf = $this->request->getPost()['data'];
+            $data['result'] = ($this->userfunction_model->update_uf($data_uf));
+            $data['message']= $this->userfunction_model->get_messages();
+            echo json_encode(array_values($data));
+        }
     }
 
 

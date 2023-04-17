@@ -20,6 +20,7 @@ return[
     'close' => 'Đóng',
     'delete' => 'Xoá',
     'edit' => 'Sửa',
+    'user_function' => 'Phân quyền',
     'cancel' => 'Huỷ',
     'notify' => 'Thông báo',
     'are_you_sure' => 'Bạn có chắc không?',

@@ -1,3 +1,6 @@
+<style>
+    #response_danger_modal{display: none}
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
@@ -144,6 +147,51 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="userFunctionModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="alert alert-danger" role="alert" id="response_danger_modal">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="smallModalLabel"><?=lang('AppLang.page_user_function')?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="form_userFunction">
+                <div class="modal-body">
+                    <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table header-border table-hover verticle-middle">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col"><?=lang('FunctionLang.function_name')?></th>
+                                        <th scope="col"><?=lang('FunctionLang.view')?></th>
+                                        <th scope="col"><?=lang('FunctionLang.add')?></th>
+                                        <th scope="col"><?=lang('FunctionLang.edit')?></th>
+                                        <th scope="col"><?=lang('FunctionLang.delete')?></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="data_table">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?=lang('AppLang.close')?></button>
+                    <input id="userFunctionUpdate" type="submit" class="btn btn-primary" value="<?=lang('AppLang.save')?>">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!---->
 
 <script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
@@ -192,7 +240,6 @@
                 {data: 'active'}
             ]
         });
-
 
 
         $("#create_user").on('submit',function (event) {
@@ -284,6 +331,52 @@
             field.setAttribute("name","update_user");
             $('#password').prop("required", false);
             $('#user_id').prop("readonly", true);
+        });
+        $("#data-table").on('click', '.user_function', function(event){
+            var user_id =  $(this).attr("user_id");
+            $.ajax({
+                url: '<?= base_url() ?>dashboard/userfunction',
+                type: 'post',
+                data: {user_id: user_id},
+                success: function(response){
+                    // Add response in Modal body
+                    $('.data_table').html(response);
+                    // Display Modal
+                    $('#userFunctionModal').modal('show');
+                }
+            });
+        });
+
+        $('#form_userFunction').on('submit', function (event) {
+            event.preventDefault();
+            $("#response_success").hide('fast');
+            var formData = $(this).serialize();
+            $.ajax({
+                url:"<?= base_url() ?>dashboard/userfunction/update",
+                method:"POST",
+                data:formData,
+                dataType:"json",
+                success:function (data) {
+                    if(data[0]==0){
+                        $('#userFunctionModal').modal('toggle');
+                        $("#response_success").show('fast');
+                        $("#response_success").html(data[1]);
+                    }else {
+                        $("#response_danger_modal").show('fast');
+                        $("#response_danger_modal").effect("shake");
+                        $("#response_danger_modal").html(data);
+                    }
+                },
+                error:function (data) {
+                    $("#response_danger_modal").show('fast');
+                    $("#response_danger_modal").effect("shake");
+                    $("#response_danger_modal").html(data);
+                }
+            });
+
+        });
+        $('#userFunctionModal').on('show.bs.modal', function (event) {
+            $("#response_danger_modal").hide('fast');
         });
     });
 </script>

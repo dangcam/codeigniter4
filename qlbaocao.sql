@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 31, 2023 lúc 11:18 AM
+-- Thời gian đã tạo: Th4 17, 2023 lúc 11:30 AM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -33,6 +33,15 @@ CREATE TABLE `functions` (
   `function_status` tinyint(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `functions`
+--
+
+INSERT INTO `functions` (`function_id`, `function_name`, `function_status`) VALUES
+('function', 'function_manager', 1),
+('group', 'group_manager', 1),
+('user', 'user_manager', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +54,24 @@ CREATE TABLE `groups` (
   `group_parent` varchar(20) NOT NULL,
   `group_status` tinyint(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `groups`
+--
+
+INSERT INTO `groups` (`group_id`, `group_name`, `group_parent`, `group_status`) VALUES
+('vpddbd', 'Chi nhánh Bù Đăng', 'vpddt', 1),
+('vpddbdp', 'Chi nhánh Bù Đốp', 'vpddt', 1),
+('vpddbgm', 'Chi nhánh Bù Gia Mập', 'vpddt', 1),
+('vpddbl', 'Chi nhán Bình Long', 'vpddt', 1),
+('vpddct', 'Chi nhánh Chơn Thành', 'vpddt', 1),
+('vpdddp', 'Chi nhánh Đồng Phú', 'vpddt', 1),
+('vpdddx', 'Chi nhánh Đồng Xoài', 'vpddt', 2),
+('vpddhq', 'Chi nhánh Hớn Quảng', 'vpddt', 1),
+('vpddln', 'Chi nhánh Lộc Ninh', 'vpddt', 1),
+('vpddpl', 'Chi nhánh Phước Long', 'vpddt', 1),
+('vpddpr', 'Chi nhánh Phú Riềng', 'vpddt', 1),
+('vpddt', 'Văn phòng ĐK ĐĐ Tỉnh', '', 1);
 
 -- --------------------------------------------------------
 
@@ -68,10 +95,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `gender`, `email`, `phonenumber`, `group_id`, `user_status`) VALUES
-('admin', 'Admin', '123456', 1, 'admin@gmail.com', '012345678', '', 0),
-('admin1', 'Admin1', '123456', 2, 'admin1@gmail.com', '0123456789', '1', 0),
-('admin2', 'ubnt', '21635646+51', 1, 'dangcam.pr@gmail.com', '', '1', 0),
-('admin3', 'camtuyet.pr@gmail.com', '316131654651', 1, 'dangcam.pr@gmail.com', '2345', '1', 0);
+('admin', 'Đăng Cẩm', '8aee4a3c7c6d3b9bc83dedf0b42bdff0edac7ccd', 1, 'dangcam.pr@gmail.com', '0979371093', 'vpddt', 1),
+('admin1', 'Admin1', '8b2a31ad260da1ddd9e026d88d72dbfe42276f72', 1, 'admin1@gmail.com', '0979371093', 'vpddpr', 1),
+('admin2', 'Admin2', '2e7c8260125e7cdc02300c9ee56be000fad6ab52', 2, 'dangcam.pr@gmail.com', '0979371093', 'vpdddx', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `user_function`
+--
+
+CREATE TABLE `user_function` (
+  `user_id` varchar(20) NOT NULL,
+  `function_id` varchar(20) NOT NULL,
+  `function_view` tinyint(4) NOT NULL,
+  `function_add` tinyint(4) NOT NULL,
+  `function_edit` tinyint(4) NOT NULL,
+  `function_delete` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -94,6 +135,12 @@ ALTER TABLE `groups`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- Chỉ mục cho bảng `user_function`
+--
+ALTER TABLE `user_function`
+  ADD PRIMARY KEY (`user_id`,`function_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

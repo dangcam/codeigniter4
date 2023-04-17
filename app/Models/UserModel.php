@@ -191,10 +191,12 @@ class UserModel Extends BaseModel
                 "user_status"=>$record->user_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
                     '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
                 "active"=>' <span>
-                            <a href="#" class="mr-4 update" data-toggle="modal"  user_id="'.$record->user_id.'" username ="'.$record->username.'"
+                            <a href="#" class="mr-2 update" data-toggle="modal"  user_id="'.$record->user_id.'" username ="'.$record->username.'"
                             gender ="'.$record->gender.'" email ="'.$record->email.'" phonenumber ="'.$record->phonenumber.'" group_id ="'.$record->group_id.'"
                             user_status ="'.$record->user_status.'"
                                 data-placement="top" title="'.lang('AppLang.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
+                            <a href="#" class="mr-2 user_function" user_id="'.$record->user_id.'" data-toggle="modal" data-placement="top" title="'.lang('AppLang.user_function').'">
+                            <i class="fa fa-gear color-muted"></i></a>
                             <a href="#" data-toggle="modal" data-target="#smallModal"
                                 data-placement="top" title="'.lang('AppLang.delete').'" data-user_id="'.$record->user_id.'">
                                 <i class="fa fa-close color-danger"></i></a>
