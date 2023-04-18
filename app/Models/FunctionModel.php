@@ -12,10 +12,8 @@ class FunctionModel extends BaseModel
     protected $returnType = FunctionEntity::class;
     protected $validationRules = [
         'function_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[functions.function_id]',
-        'function_name'     => 'required|max_length[50]'
+        'function_name'     => 'required|max_length[50]|alpha_dash'
     ];
-
-
     //
     public function add_function($data)
     {

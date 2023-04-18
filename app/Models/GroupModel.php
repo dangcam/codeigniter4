@@ -15,7 +15,7 @@ class GroupModel extends BaseModel
     protected $returnType = GroupEntity::class;
     protected $validationRules = [
         'group_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[groups.group_id]',
-        'group_name'     => 'required|max_length[50]|alpha_dash'
+        'group_name'     => 'required|max_length[50]'
     ];
     /*
     protected $validationMessages = [

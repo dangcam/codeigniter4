@@ -62,7 +62,7 @@ class lib_auth
     public function getError()
     {
         $data['result'] = 2;
-        $data['message']= lang('App.do_not_have_permission');
+        $data['message']= lang('AppLang.do_not_have_permission');
         return $data;
     }
 }

@@ -294,7 +294,6 @@ class UserModel Extends BaseModel
         {
             set_cookie('user_id',$user_id,COOKIE_EXPIRY);
             set_cookie('group_id',$records->group_id,COOKIE_EXPIRY);
-
         }
         return 0;
     }

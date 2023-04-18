@@ -14,8 +14,12 @@ class GroupController extends BaseController
 
     public function index()
     {
-        $meta = array('page_title' => lang('AppLang.page_title_groups'));
-        return $this->page_construct('dashboard/group_view', $meta);
+        if($this->libauth->checkFunction('group','view')) {
+            $meta = array('page_title' => lang('AppLang.page_title_groups'));
+            $data['list_group'] = $this->group_model->getGroupParent();
+            return $this->page_construct('dashboard/group_view', $meta, $data);
+        }else
+            return view('errors/html/error_403');
     }
     public function group_ajax()
     {
@@ -27,32 +31,38 @@ class GroupController extends BaseController
     }
     public function add_group()
     {
-        if($this->request->getPost())
+        if($this->request->getPost()&&($this->libauth->checkFunction('group','add')))
         {
             $data_group = $this->request->getPost();
             $data['result'] = ($this->group_model->add_group($data_group));
             $data['message']= $this->group_model->get_messages();
             echo json_encode(array_values($data));
+        }else {
+            echo json_encode(array_values($this->libauth->getError()));
         }
     }
     public function edit_group()
     {
-        if($this->request->getPost())
+        if($this->request->getPost()&&($this->libauth->checkFunction('group','edit')))
         {
             $data_group = $this->request->getPost();
             $data['result'] = ($this->group_model->edit_group($data_group));
             $data['message']= $this->group_model->get_messages();
             echo json_encode(array_values($data));
+        }else {
+            echo json_encode(array_values($this->libauth->getError()));
         }
     }
     public function delete_group()
     {
-        if($this->request->getPost())
+        if($this->request->getPost()&&($this->libauth->checkFunction('group','delete')))
         {
             $data_group = $this->request->getPost();
             $data['result'] = ($this->group_model->delete_group($data_group));
             $data['message']= $this->group_model->get_messages();
             echo json_encode(array_values($data));
+        }else {
+            echo json_encode(array_values($this->libauth->getError()));
         }
     }
     public function tree_group()
