@@ -9,6 +9,8 @@ return[
     'page_title_users'=>'Danh sách người dùng',
     'page_user_function' => 'Phân quyền người dùng',
 
+    'do_not_have_permission' => 'Bạn không có quyền thực hiện chức năng này!',
+
 
     // form
     'all' => 'Tất cả',

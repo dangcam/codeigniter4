@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\UserFunctionModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -36,7 +37,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = [];
+    protected $helpers = ['lib_auth'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -52,17 +53,41 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-        $this->libauth = new lib_auth();
         // Preload any models, libraries, etc, here.
+        $this->libauth = new lib_auth();
         $language = \Config\Services::language();
         $language->setLocale('vi');
-        // E.g.: $this->session = \Config\Services::session();
     }
     public function page_construct($page,$meta = array(),$data = array())
     {
         return view('layout/header',$meta).
-            view('layout/silebar').
+            view('layout/silebar',$this->silebar_view()).
             view($page,$data).
             view('layout/footer');
+    }
+
+    public function silebar_view()
+    {
+        $response = '<li class="nav-label">'.lang('management').'</li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-settings-gear-64"></i><span class="nav-text">'.lang('AppLang.system').'</span></a>
+                <ul aria-expanded="false">';
+        if($this->libauth->checkFunction('function','view'))
+            $response .= '<li><a href="'.base_url().'dashboard/function">'.lang('AppLang.function_manager').'</a></li>';
+        if($this->libauth->checkFunction('group','view'))
+            $response .= '<li><a href="'.base_url().'dashboard/group">'.lang('AppLang.group_manager').'</a></li>';
+        $response .='
+                </ul>
+            </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon icon-single-04"></i><span class="nav-text">'.lang('AppLang.users').'</span></a>
+                <ul aria-expanded="false">';
+        if($this->libauth->checkFunction('user','view'))
+            $response .= '<li><a href="'.base_url().'dashboard/user">'.lang('AppLang.user_manager').'</a></li>';
+        $response .='            
+                </ul>
+            </li>';
+        $data['silebar_menu'] = $response;
+        return $data;
     }
 }

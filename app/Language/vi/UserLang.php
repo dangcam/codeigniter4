@@ -18,6 +18,8 @@ return [
     'user_delete_successful'=>'Xoá người dùng thành công',
     'user_delete_unsuccessful'=>'Xoá người dùng không thành công',
 
+    'user_function_successful' => 'Phân quyền người dùng thành công',
+    'user_function_unsuccessful' => 'Phân quyền người dùng không thành công',
     //
     'sign_in_your_account' => 'Thông tin đăng nhập',
     'remember_me' => 'Ghi nhớ tôi',
