@@ -64,6 +64,9 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('/','Dashboard\UserFunctionController::index');
         $routes->post('update','Dashboard\UserFunctionController::update');
     });
+    $routes->group('report_group',static function($routes){
+        $routes->get('/','Dashboard\ReportGroupController::index');
+    });
 });
 //$routes->post('login', 'Login::index');
 
