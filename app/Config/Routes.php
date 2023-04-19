@@ -37,10 +37,12 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
     $routes->get('logout', 'Dashboard\HomeController::logout');
     $routes->group('user',static function($routes){
         $routes->get('/','Dashboard\UserController::index');
+        $routes->get('info','Dashboard\UserController::info');
         $routes->post('create_user','Dashboard\UserController::create_user');
         $routes->post('user_ajax','Dashboard\UserController::user_ajax');
         $routes->post('delete_user','Dashboard\UserController::delete_user');
         $routes->post('update_user','Dashboard\UserController::update_user');
+        $routes->post('change_password','Dashboard\UserController::change_password');
     });
     $routes->group('group',static function($routes){
         $routes->get('/','Dashboard\GroupController::index');

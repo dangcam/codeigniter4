@@ -123,7 +123,7 @@
                                 <i class="mdi mdi-account"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="./app-profile.html" class="dropdown-item">
+                                <a href="<?=base_url()?>dashboard/user/info" class="dropdown-item">
                                     <i class="icon-user"></i>
                                     <span class="ml-2"><?=session()->get('user_id')?> </span>
                                 </a>

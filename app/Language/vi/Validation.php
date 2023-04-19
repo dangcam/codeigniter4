@@ -7,5 +7,6 @@ return [
     'min_length' => 'Trường {field} quá ngắn (ít nhất {param} ký tự).',
     'valid_email' => 'Email không đúng định dạng, vui lòng kiểm tra lại.',
     'is_unique' => 'Trường {field}({value}) đã tồn tại, vui lòng kiểm tra lại.',
-    'alpha_dash' => 'Trường {field} chỉ chứa ký tự chữ và số, dấu gạch dưới hoặc dấu gạch ngang.'
+    'alpha_dash' => 'Trường {field} chỉ chứa ký tự chữ và số, dấu gạch dưới hoặc dấu gạch ngang.',
+    'required_with' => 'Mật khẩu xác nhận không khớp.'
 ];

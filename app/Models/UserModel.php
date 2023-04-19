@@ -15,7 +15,7 @@ class UserModel Extends BaseModel
         'username'     => 'required|max_length[50]',
         'email'        => 'required|valid_email',
         'password'     => 'required|min_length[8]',
-        //'pass_confirm' => 'required_with[password]|matches[password]',
+        'pass_confirm' => 'required_with[password]|matches[password]',
     ];
     /*protected $validationMessages = [
         'user_id' => [
@@ -65,9 +65,9 @@ class UserModel Extends BaseModel
     public function update_user($data_user)
     {
         // 0. success 1. info 2. warning 3. error
-        $user_id = $data_user['user_id'];
+        $user_id = isset($data_user['user_id'])?$data_user['user_id']:$this->session->get('user_id');
         unset($data_user['user_id']);
-        $password = $data_user['password'];
+        $password = isset($data_user['password'])?$data_user['password']:'';
         $reset_password = true;
         if(strlen($password)==0)
         {
@@ -133,7 +133,12 @@ class UserModel Extends BaseModel
         }
         return $listGroup;
     }
-    function getUsers($postData=null){
+    public function getUser()
+    {
+        $user_id = $this->session->get('user_id');
+        return $this->where('user_id',$user_id)->first();
+    }
+    public function getUsers($postData=null){
 
         $response = array();
         ## Read value
@@ -261,6 +266,47 @@ class UserModel Extends BaseModel
         } else {
             return FALSE;
         }
+    }
+    public function change_password($data_password)
+    {
+        $user_id = $this->session->get('user_id');
+        $old_password = $data_password['old_password'];
+        $new_password = $data_password['new_password'];
+        $new_password_confirm = $data_password['new_password_confirm'];
+        if(empty($old_password)||empty($new_password))
+        {
+            $this->set_message("UserLang.old_password_empty");
+            return 3;
+        }
+        if($new_password != $new_password_confirm)
+        {
+            $this->set_message("UserLang.password_confirm_wrong");
+            return 3;
+        }
+        $records = $this->where('user_id',$user_id)->where('user_status',1)->first();
+        if(!$records)
+        {
+            $this->set_message("UserLang.wrong_user_id");
+            return 3;
+        }else
+        {
+            if(!$this->hash_password_db($records->password,$old_password))
+            {
+                $this->set_message("UserLang.wrong_password");
+                return 3;
+            }
+        }
+        $data['password'] = $this->hash_password($new_password);
+        if($this->update($user_id,$data))
+        {
+            $this->set_message("UserLang.user_password_successful");
+            return 0;
+        }else
+        {
+            $this->set_message("UserLang.user_password_unsuccessful");
+            return 3;
+        }
+
     }
     // login
     public function login($data)

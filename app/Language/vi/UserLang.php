@@ -17,10 +17,20 @@ return [
     'user_edit_unsuccessful'=>'Sửa thông tin người dùng không thành công',
     'user_delete_successful'=>'Xoá người dùng thành công',
     'user_delete_unsuccessful'=>'Xoá người dùng không thành công',
-
+    'user_password_successful' => 'Thay đổi mật khẩu thành công',
+    'user_password_unsuccessful' => 'Thay đổi mật khẩu không thành công',
+    //
+    'old_password' => 'Mật khẩu cũ',
+    'new_password' => 'Mật khẩu mới',
+    'new_password_confirmation' => 'Xác nhận mật khẩu mới',
+    'password_hint' => 'Nhập mật khẩu mới',
+    'pw_not_same' => 'Nhập xác nhận mật khẩu',
+    'old_password_empty' =>'Nhập mật khẩu cũ và mật khẩu mới (Ký tự HOA, đặc biệt, ký tự số)',
+    'password_confirm_wrong' => 'Xác nhận mật khẩu không đúng',
+    // phân quyền
     'user_function_successful' => 'Phân quyền người dùng thành công',
     'user_function_unsuccessful' => 'Phân quyền người dùng không thành công',
-    //
+    //login
     'sign_in_your_account' => 'Thông tin đăng nhập',
     'remember_me' => 'Ghi nhớ tôi',
     'forgot_password'=>'Quên mật khẩu?',

@@ -27,6 +27,12 @@ class UserController extends BaseController
         }else
             return view('errors/html/error_403');
     }
+    public function info()
+    {
+        $data['user'] = $this->user_model->getUser();
+        $meta = array('page_title' => lang('AppLang.page_user_info'));
+        return $this->page_construct('dashboard/user_info_view', $meta,$data);
+    }
     public function create_user()
     {
         if($this->request->getPost()&&($this->libauth->checkFunction('user','add')))
@@ -53,7 +59,7 @@ class UserController extends BaseController
     }
     public function update_user()
     {
-        if($this->request->getPost()&&($this->libauth->checkFunction('user','delete')))
+        if($this->request->getPost()&&($this->libauth->checkFunction('user','edit')))
         {
             $data_user = $this->request->getPost();
             $data['result'] = ($this->user_model->update_user($data_user));
@@ -69,6 +75,16 @@ class UserController extends BaseController
         {
             $data = $this->user_model->getUsers($this->request->getPost());
             echo json_encode($data);
+        }
+    }
+    public function change_password()
+    {
+        if($this->request->getPost())
+        {
+            $data_password = $this->request->getPost();
+            $data['result'] = ($this->user_model->change_password($data_password));
+            $data['message']= $this->user_model->get_messages();
+            echo json_encode(array_values($data));
         }
     }
 
