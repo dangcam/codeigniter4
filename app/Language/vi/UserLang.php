@@ -23,9 +23,9 @@ return [
     'old_password' => 'Mật khẩu cũ',
     'new_password' => 'Mật khẩu mới',
     'new_password_confirmation' => 'Xác nhận mật khẩu mới',
-    'password_hint' => 'Nhập mật khẩu mới',
-    'pw_not_same' => 'Nhập xác nhận mật khẩu',
-    'old_password_empty' =>'Nhập mật khẩu cũ và mật khẩu mới (Ký tự HOA, đặc biệt, ký tự số)',
+    'password_hint' => 'Nhập mật khẩu mới (Ký tự HOA, đặc biệt, ký tự số)',
+    'pw_not_same' => 'Nhập xác nhận mật khẩu ',
+    'old_password_empty' =>'Nhập mật khẩu cũ và mật khẩu mới',
     'password_confirm_wrong' => 'Xác nhận mật khẩu không đúng',
     // phân quyền
     'user_function_successful' => 'Phân quyền người dùng thành công',

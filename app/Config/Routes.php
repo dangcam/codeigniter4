@@ -34,6 +34,7 @@ $routes->get('login', 'LoginController::index');
 $routes->post('login_ajax', 'LoginController::login_ajax');
 $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) {
     $routes->get('/', 'Dashboard\HomeController::index');
+    $routes->get('lang/{locale}', 'Dashboard\HomeController::lang');
     $routes->get('logout', 'Dashboard\HomeController::logout');
     $routes->group('user',static function($routes){
         $routes->get('/','Dashboard\UserController::index');

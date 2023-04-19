@@ -15,4 +15,12 @@ class HomeController extends BaseController
         $this->libauth->logout();
         return redirect('/');
     }
+    public function lang()
+    {
+        $locale = $this->request->getLocale();
+        $this->session->remove('lang');
+        $this->session->set('lang', $locale);
+        $url = base_url();
+        return redirect()->to($url);
+    }
 }

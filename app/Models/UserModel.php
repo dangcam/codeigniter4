@@ -15,7 +15,7 @@ class UserModel Extends BaseModel
         'username'     => 'required|max_length[50]',
         'email'        => 'required|valid_email',
         'password'     => 'required|min_length[8]',
-        'pass_confirm' => 'required_with[password]|matches[password]',
+        //'pass_confirm' => 'required_with[password]|matches[password]',
     ];
     /*protected $validationMessages = [
         'user_id' => [

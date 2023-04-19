@@ -43,20 +43,23 @@ abstract class BaseController extends Controller
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
-    // protected $session;
+     protected $session;
 
     /**
      * Constructor.
      */
     public $libauth;
+    public $language;
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
         // Preload any models, libraries, etc, here.
         $this->libauth = new lib_auth();
-        $language = \Config\Services::language();
-        $language->setLocale('vi');
+        $this->language = \Config\Services::language();
+        $this->session = \Config\Services::session();
+        $lang = $this->session->get('lang');
+        $this->language->setLocale($lang);
     }
     public function page_construct($page,$meta = array(),$data = array())
     {
