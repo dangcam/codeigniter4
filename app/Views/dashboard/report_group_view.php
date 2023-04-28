@@ -83,10 +83,10 @@
                                     <td><input type="number" name="data[I.1][value3_1]" class="form-control"></td>
                                     <td><input type="number" name="data[I.1][value3_2]" class="form-control"></td>
                                     <td><input type="text" name="data[I.1][value_per]" class="form-control"></td>
-                                </tr>  <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Cho thuê đất
-
                                         <input type="hidden" name="data[I.2][name_row]" value="">
                                     </td>
                                     <td><input type="number" name="data[I.2][value1_1]" class="form-control"></td>
@@ -101,6 +101,24 @@
                                     <td><input type="number" name="data[I.2][value3_1]" class="form-control"></td>
                                     <td><input type="number" name="data[I.2][value3_2]" class="form-control"></td>
                                     <td><input type="text" name="data[I.2][value_per]" class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Bán tài sản gắn liền với QSDĐ
+                                        <input type="hidden" name="data[I.3][name_row]" value="">
+                                    </td>
+                                    <td><input type="number" name="data[I.3][value1_1]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value1_2]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value1_3]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value1_total]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value2_total]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value2_1]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value2_2]" class="form-control"></td>
+                                    <td><input type="text" name="data[I.3][value2_per]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value3_total]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value3_1]" class="form-control"></td>
+                                    <td><input type="number" name="data[I.3][value3_2]" class="form-control"></td>
+                                    <td><input type="text" name="data[I.3][value_per]" class="form-control"></td>
                                 </tr>
                                 </tbody>
                             </table>
