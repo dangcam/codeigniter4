@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 27, 2023 lúc 11:56 AM
+-- Thời gian đã tạo: Th5 01, 2023 lúc 06:12 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -83,7 +83,7 @@ CREATE TABLE `report_group` (
   `report_month` int(11) NOT NULL,
   `report_year` int(11) NOT NULL,
   `group_id` varchar(20) NOT NULL,
-  `name_row` varchar(50) NOT NULL,
+  `row_id` varchar(50) NOT NULL,
   `value1_1` int(11) NOT NULL,
   `value1_2` int(11) NOT NULL,
   `value1_3` int(11) NOT NULL,
@@ -97,6 +97,90 @@ CREATE TABLE `report_group` (
   `value3_2` int(11) NOT NULL,
   `value_per` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `report_name`
+--
+
+CREATE TABLE `report_name` (
+  `row_id` varchar(50) NOT NULL,
+  `row_name` varchar(100) NOT NULL,
+  `row_parent` varchar(50) NOT NULL,
+  `row_number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `report_name`
+--
+
+INSERT INTO `report_name` (`row_id`, `row_name`, `row_parent`, `row_number`) VALUES
+('I', 'Thuộc thẩm quyền của UBND cấp huyện', '', 1),
+('I.1', 'Giao đất', 'I', 2),
+('I.2', 'Cho thuê đất ', 'I', 3),
+('I.3', 'Bán tài sản gắn liền với QSDĐ', 'I', 4),
+('I.4', 'Công nhận QSDĐ lần đầu', 'I', 5),
+('I.5', 'Chuyển mục đích phải xin phép', 'I', 6),
+('I.6', 'Đính chính GCN', 'I', 7),
+('I.7', 'Thu hồi GCN', 'I', 8),
+('I.8', 'Hồ sơ khác', 'I', 9),
+('II', 'Thuộc thẩm quyền của Chi nhánh', '', 10),
+('II.1', 'Cho thuê, cho thuê lại QSD đất', 'II', 11),
+('II.10', 'Xóa đăng ký góp vốn bằng QSDĐ', 'II', 20),
+('II.11', 'Chuyển QSD đất (theo kết quả giải quyết tranh chấp)', 'II', 21),
+('II.12', 'Chuyển QSD đất (theo quyết định giải quyết khiếu nại, tố cáo về đất đai)', 'II', 22),
+('II.13', 'Chuyển QSD đất (theo bản án, quyết định của tòa án, quyết định của cơ quan thi hành án)', 'II', 23),
+('II.14', 'Chuyển QSD đất (theo kết quả đấu giá đất)', 'II', 24),
+('II.15', 'Hợp nhất hoặc phân chia QSD đất', 'II', 25),
+('II.16', 'Thay đổi thông tin người sử dụng đất, chủ sở hữu tài sản gắn liền với đất (tên, giấy tờ pháp nhân, n', 'II', 26),
+('II.17', 'Xác lập hoặc thay đổi, chấm dứt quyền sử dụng hạn chế thửa đất liền kề', 'II', 27),
+('II.18', 'Thay đổi diện tích do sạt lở tự nhiên một phần thửa đất', 'II', 28),
+('II.19', 'Chuyển mục đích không', 'II', 29),
+('II.2', 'Xóa đăng ký cho thuê, cho thuê lại', 'II', 12),
+('II.20', 'Gia hạn sử dụng đất', 'II', 30),
+('II.21', 'Chuyển hình thức giao đất, thuê đất', 'II', 31),
+('II.22', 'Thay đổi thông tin về tài sản gắn liền với đất', 'II', 32),
+('II.23', 'Có thay đổi đối với những hạn chế về QSD đất, tài sản gắn liền với đất', 'II', 33),
+('II.24', 'Phát hiện sai sót, nhầm lẫn về nội dung thông tin trong hồ sơ địa chính và GCN QSD đất ', 'II', 34),
+('II.25', 'Thay đổi, điều chỉnh tên đơn vị, địa giới hành chính theo QĐ của cơ quan có thẩm quyền', 'II', 35),
+('II.26', 'Hồ sơ khác', 'II', 36),
+('II.3', 'Thế chấp hoặc thay đổi nội dung thế chấp', 'II', 13),
+('II.4', 'Xóa đăng ký thế chấp', 'II', 14),
+('II.5', 'Chuyển đổi QSD đất', 'II', 15),
+('II.6', 'Chuyển nhượng', 'II', 16),
+('II.7', 'Thừa kế', 'II', 17),
+('II.8', 'Tặng cho', 'II', 18),
+('II.9', 'Góp vốn bằng QSDĐ', 'II', 19),
+('III', 'Thuộc thẩm quyền của Sở Tài nguyên và Môi trường', '', 37),
+('III.1', 'Cho thuê, cho thuê lại QSD đất', 'III', 38),
+('III.10', 'Chuyển QSD đất (theo quyết định giải quyết khiếu nại, tố cáo về đất đai)', 'III', 47),
+('III.11', 'Chuyển QSD đất (theo bản án, quyết định của tòa án, quyết định của cơ quan thi hành án)', 'III', 48),
+('III.12', 'Chuyển QSD đất (theo kết quả đấu giá đất)', 'III', 49),
+('III.13', 'Hợp nhất hoặc phân chia QSD đất', 'III', 50),
+('III.14', 'Thay đổi thông tin người sử dụng đất, chủ sở hữu tài sản gắn liền với đất (tên, giấy tờ pháp nhân, n', 'III', 51),
+('III.15', 'Xác lập hoặc thay đổi, chấm dứt quyền sử dụng hạn chế thửa đất liền kề', 'III', 52),
+('III.16', 'Thay đổi diện tích do sạt lở tự nhiên một phần thửa đất', 'III', 53),
+('III.17', 'Chuyển mục đích không phải xin phép', 'III', 54),
+('III.18', 'Gia hạn sử dụng đất', 'III', 55),
+('III.19', 'Chuyển hình thức giao đất, thuê đất', 'III', 56),
+('III.2', 'Chuyển đổi QSD đất', 'III', 39),
+('III.20', 'Thay đổi thông tin về tài sản gắn liền với đất', 'III', 57),
+('III.21', 'Có thay đổi đối với những hạn chế về QSD đất, tài sản gắn liền với đất', 'III', 58),
+('III.22', 'Phát hiện sai sót, nhầm lẫn về nội dung thông tin trong hồ sơ địa chính và GCN QSD đất ', 'III', 59),
+('III.23', 'Tách thửa hoăc hợp thửa đất ', 'III', 60),
+('III.24', 'Cấp đổi hoặc cấp lại GCN bị mất', 'III', 61),
+('III.25', 'Đo đạc thay đổi diện tích, thửa đất, tờ bản đồ', 'III', 62),
+('III.26', 'Thay đổi, điều chỉnh tên đơn vị, địa giới hành chính', 'III', 63),
+('III.27', 'Đăng ký bổ sung tài sản gắn liền với đất', 'III', 64),
+('III.28', 'Hồ sơ khác', 'III', 65),
+('III.3', 'Chuyển nhượng', 'III', 40),
+('III.4', 'Thừa kế', 'III', 41),
+('III.5', 'Tặng cho', 'III', 42),
+('III.6', 'Góp vốn bằng QSDĐ', 'III', 43),
+('III.7', 'Xóa đăng ký góp vốn bằng QSDĐ', 'III', 44),
+('III.8', 'Chuyển QSD đất (theo thỏa thuận xử lý nợ thế chấp)', 'III', 45),
+('III.9', 'Chuyển quyền theo kết quả giải quyết tranh chấp', 'III', 46);
 
 -- --------------------------------------------------------
 
@@ -174,19 +258,43 @@ ALTER TABLE `groups`
 -- Chỉ mục cho bảng `report_group`
 --
 ALTER TABLE `report_group`
-  ADD PRIMARY KEY (`report_month`,`report_year`,`group_id`,`name_row`);
+  ADD PRIMARY KEY (`report_month`,`report_year`,`group_id`,`row_id`);
+
+--
+-- Chỉ mục cho bảng `report_name`
+--
+ALTER TABLE `report_name`
+  ADD PRIMARY KEY (`row_id`);
 
 --
 -- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `group_id` (`group_id`);
 
 --
 -- Chỉ mục cho bảng `user_function`
 --
 ALTER TABLE `user_function`
   ADD PRIMARY KEY (`user_id`,`function_id`);
+
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
+
+--
+-- Các ràng buộc cho bảng `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`);
+
+--
+-- Các ràng buộc cho bảng `user_function`
+--
+ALTER TABLE `user_function`
+  ADD CONSTRAINT `user_function_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `user_function_ibfk_2` FOREIGN KEY (`function_id`) REFERENCES `functions` (`function_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
