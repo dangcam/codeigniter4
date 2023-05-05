@@ -66,6 +66,8 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
     });
     $routes->group('report_group',static function($routes){
         $routes->get('/','Dashboard\ReportGroupController::index');
+        $routes->post('data_report_group','Dashboard\ReportGroupController::data_report_group');
+        $routes->post('save_report_group','Dashboard\ReportGroupController::save_report_group');
     });
 });
 //$routes->post('login', 'Login::index');

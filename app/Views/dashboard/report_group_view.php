@@ -11,13 +11,45 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Table Hover</h4>
+                        <h4 class="card-title">BIỂU 01: BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI</h4>
                     </div>
                     <div class="card-body">
+                        <div class="alert alert-success alert-alt"role="alert" id="response_success"></div>
+                        <div class="alert alert-danger alert-alt" role="alert" id="response_danger"></div>
                         <form method="post" id="form_id">
-                            <input type="hidden" name="group_id" value="">
-                            <input type="hidden" name="report_month" value="">
-                            <input type="hidden" name="report_year" value="">
+                            <!---->
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label" for="report_year">Năm</label>
+                                <div class="col-lg-2">
+                                    <select class="form-control" id="report_year" name="report_year">
+                                        <?php
+                                        $nowYear =2022;
+                                        foreach (range(date('Y'), $nowYear) as $i) {
+                                            echo "<option value=$i>$i</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <label class="col-lg-2 col-form-label" for="report_month">Tháng</label>
+                                <div class="col-lg-2">
+                                    <select class="form-control" id="report_month" name="report_month">
+                                        <option value="1" <?=date('m')=='01'? 'selected':''?> >1</option>
+                                        <option value="2" <?=date('m')=='02'? 'selected':''?> >2</option>
+                                        <option value="3" <?=date('m')=='03'? 'selected':''?> >3</option>
+                                        <option value="4" <?=date('m')=='04'? 'selected':''?> >4</option>
+                                        <option value="5" <?=date('m')=='05'? 'selected':''?> >5</option>
+                                        <option value="6" <?=date('m')=='06'? 'selected':''?>>6</option>
+                                        <option value="7" <?=date('m')=='07'? 'selected':''?>>7</option>
+                                        <option value="8" <?=date('m')=='08'? 'selected':''?>>8</option>
+                                        <option value="9" <?=date('m')=='09'? 'selected':''?>>9</option>
+                                        <option value="10" <?=date('m')=='10'? 'selected':''?>>10</option>
+                                        <option value="11" <?=date('m')=='11'? 'selected':''?>>11</option>
+                                        <option value="12" <?=date('m')=='12'? 'selected':''?>>12</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!---->
+                            <input type="hidden" name="group_id" id="group_id" value="<?=session()->get('group_id')?>">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered table-striped table-responsive-sm">
                                 <thead style="text-align:center" >
@@ -47,99 +79,12 @@
                                     <th>Trực tuyến</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <th>I</th>
-                                    <th>Thuộc thẩm quyền của UBND cấp huyện
-                                            <input type="hidden" name="data[1][name_row]" value="I">
-                                    </th>
-                                    <th><input type="number" name="data[I][value1_1]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value1_2]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value1_3]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value1_total]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value2_total]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value2_1]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value2_2]" class="form-control"></th>
-                                    <th><input type="text" name="data[I][value2_per]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value3_total]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value3_1]" class="form-control"></th>
-                                    <th><input type="number" name="data[I][value3_2]" class="form-control"></th>
-                                    <th><input type="text" name="data[I][value_per]" class="form-control"></th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Giao đất
-                                            <input type="hidden" name="data[I.1][name_row]" value="I1">
-                                    </td>
-                                    <td><input type="number" name="data[I.1][value1_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value1_2]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value1_3]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value1_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value2_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value2_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value2_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.1][value2_per]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value3_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value3_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.1][value3_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.1][value_per]" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Cho thuê đất
-                                        <input type="hidden" name="data[I.2][name_row]" value="I2">
-                                    </td>
-                                    <td><input type="number" name="data[I.2][value1_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value1_2]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value1_3]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value1_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value2_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value2_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value2_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.2][value2_per]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value3_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value3_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.2][value3_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.2][value_per]" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Bán tài sản gắn liền với QSDĐ
-                                        <input type="hidden" name="data[I.3][name_row]" value="I3">
-                                    </td>
-                                    <td><input type="number" name="data[I.3][value1_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value1_2]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value1_3]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value1_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value2_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value2_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value2_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.3][value2_per]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value3_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value3_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.3][value3_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.3][value_per]" class="form-control"></td>
-                                </tr><tr>
-                                    <td>4</td>
-                                    <td>Bán tài sản gắn liền với QSDĐ
-                                        <input type="hidden" name="data[I.4][name_row]" value="I4">
-                                    </td>
-                                    <td><input type="number" name="data[I.4][value1_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value1_2]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value1_3]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value1_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.44][value2_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value2_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value2_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.4][value2_per]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value3_total]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value3_1]" class="form-control"></td>
-                                    <td><input type="number" name="data[I.4][value3_2]" class="form-control"></td>
-                                    <td><input type="text" name="data[I.4][value_per]" class="form-control"></td>
-                                </tr>
+                                <tbody id ="data_table">
+                                <?php //echo $data_table?>
                                 </tbody>
                             </table>
                         </div>
+                            <button type="submit" id="btn_submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                         </form>
                     </div>
 
@@ -149,3 +94,65 @@
         </div>
     </div>
 </div>
+
+<script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
+<script>
+    jQuery(document).ready(function($) {
+        function loadDataTable() {
+            $.ajax({
+                url: "<?= base_url() ?>dashboard/report_group/data_report_group",
+                method: "POST",
+                dataType: "json",
+                data: {report_month: $('#report_month').val(),report_year: $('#report_year').val(),group_id: $('#group_id').val() },
+                success: function (data) {
+                    $("#data_table").html(data);
+                },
+                error: function (data) {
+                    $("#data_table").html(data);
+                }
+            });
+        };
+        loadDataTable();
+        $('#report_month,#report_year').change(function(){
+            loadDataTable();
+        });
+        $("#form_id").on('submit',function (event) {
+            event.preventDefault();
+            $("#response_success").hide('fast');
+            $("#response_danger").hide('fast');
+            var name = $("#btn_submit").attr("name");
+            var formData = $(this).serialize();
+            $.ajax({
+                url:"<?= base_url() ?>dashboard/report_group/save_report_group",
+                method:"POST",
+                data:formData,
+                dataType:"json",
+                success:function (data) {
+                    if(data[0]==0){
+                        $("#response_success").show('fast');
+                        $("#response_success").effect("shake");
+                        $("#response_success").html(data[1]);
+                        loadDataTable();
+                    }else {
+                        $("#response_danger").show('fast');
+                        $("#response_danger").effect("shake");
+                        $("#response_danger").html(data[1]);
+                    }
+                },
+                error:function (data) {
+                    $("#response_danger").show('fast');
+                    $("#response_danger").effect("shake");
+                    $("#response_danger").html(data);
+                }
+            });
+        });
+        function row_input(){
+            $("input").each(function () {
+                //$(this).attr("value", this.value);
+            })
+        }
+        $("input").change(function(){
+            alert("The text has been changed.");
+        });
+    });
+</script>

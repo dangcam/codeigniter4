@@ -43,4 +43,12 @@ return[
     'user_manager'=>'Quản lý người dùng',
     'function_manager' => 'Quản lý chức năng',
     'group_manager' => 'Quản lý chi nhánh',
+    'report_group_manager' => 'Báo cáo chi nhánh',
+
+    'add_data_unsuccessful' => 'Thêm dữ liệu không thành công',
+    'add_data_successful' => 'Thêm dữ liệu thành công',
+    'edit_data_unsuccessful' => 'Sửa dữ liệu không thành công',
+    'edit_data_successful' => 'Sửa dữ liệu thành công',
+    'save_data_successful' => 'Lưu dữ liệu thành công',
+    'save_data_unsuccessful' => 'Lưu dữ liệu không thành công',
 ];

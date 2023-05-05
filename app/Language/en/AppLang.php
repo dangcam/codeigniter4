@@ -42,4 +42,12 @@ return[
     'user_manager'=>'User Manager',
     'function_manager' => 'Function Management',
     'group_manager' => 'Group Management',
+    'report_group_manager' => 'Report Group',
+
+    'add_data_unsuccessful' => 'Add data unsuccessful',
+    'add_data_successful' => 'Add data successful',
+    'edit_data_unsuccessful' => 'Edit data unsuccessful',
+    'edit_data_successful' => 'Edit data successful',
+    'save_data_successful' => 'Save data successful',
+    'save_data_unsuccessful' => 'Save data unsuccessful',
 ];
