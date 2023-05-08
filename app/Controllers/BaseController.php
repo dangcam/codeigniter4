@@ -76,8 +76,9 @@ abstract class BaseController extends Controller
                             <i class="icon icon-book-open-2"></i><span class="nav-text">'.lang('AppLang.report').'</span>
                         </a>
                         <ul aria-expanded="false">';
-                        if($this->libauth->checkFunction('report_group','view'))
+                        if($this->libauth->checkFunction('report_group','add'))
                             $response .= '<li><a href="'.base_url().'dashboard/report_group">'.lang('AppLang.report_group_manager').'</a></li>';
+                            $response .= '<li><a href="'.base_url().'dashboard/report_group/print">'.lang('AppLang.report_group_print').'</a></li>';
         $response   .='</ul>
                        </li>';
         $response .= '<li class="nav-label">'.lang('management').'</li>

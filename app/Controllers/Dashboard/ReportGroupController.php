@@ -17,6 +17,9 @@ class ReportGroupController extends BaseController
         $meta = array('page_title'=>lang('AppLang.page_title_report_group'));
         return $this->page_construct('dashboard/report_group_view',$meta,$data);
     }
+    public function report_print(){
+
+    }
     public function data_report_group()
     {
         if($this->request->getPost())

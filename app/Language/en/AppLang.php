@@ -44,6 +44,8 @@ return[
     'function_manager' => 'Function Management',
     'group_manager' => 'Group Management',
     'report_group_manager' => 'Report Group',
+    'report_group_print' => 'Report Group View',
+
 
     'add_data_unsuccessful' => 'Add data unsuccessful',
     'add_data_successful' => 'Add data successful',
