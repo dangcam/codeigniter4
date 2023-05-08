@@ -19,7 +19,7 @@
                         <form method="post" id="form_id">
                             <!---->
                             <div class="form-group row">
-                                <label class="col-lg-2 col-form-label" for="report_year">Năm</label>
+                                <label class="col-lg-1 col-form-label" for="report_year">Năm</label>
                                 <div class="col-lg-2">
                                     <select class="form-control" id="report_year" name="report_year">
                                         <?php
@@ -30,7 +30,7 @@
                                         ?>
                                     </select>
                                 </div>
-                                <label class="col-lg-2 col-form-label" for="report_month">Tháng</label>
+                                <label class="col-lg-1 col-form-label" for="report_month">Tháng</label>
                                 <div class="col-lg-2">
                                     <select class="form-control" id="report_month" name="report_month">
                                         <option value="1" <?=date('m')=='01'? 'selected':''?> >1</option>
@@ -149,7 +149,7 @@
         function row_input(){
             $("input").each(function () {
                 //$(this).attr("value", this.value);
-            })
+            });
         }
         $("input").change(function(){
             alert("The text has been changed.");
