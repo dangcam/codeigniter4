@@ -37,6 +37,7 @@ return[
     'management' => 'Management',
     'system' => 'System',
     'users' => 'Users',
+    'report' => 'Report',
     // Chức năng
     'user_function_manager' => 'User Authorization',
     'user_manager'=>'User Manager',
