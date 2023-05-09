@@ -39,6 +39,8 @@ return[
     'system' => 'Hệ thống',
     'users' => 'Người dùng',
     'report' => 'Báo cáo',
+    'year' => 'Năm',
+    'month' => 'Tháng',
     // Chức năng
     'user_function_manager' => 'Phân quyền người dùng',
     'user_manager'=>'Quản lý người dùng',

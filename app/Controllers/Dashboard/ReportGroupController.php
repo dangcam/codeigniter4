@@ -3,22 +3,25 @@
 namespace App\Controllers\Dashboard;
 use App\Controllers\BaseController;
 use App\Models\ReportGroupModel;
+use App\Models\UserModel;
 
 class ReportGroupController extends BaseController
 {
     public function __construct()
     {
         $this->report_group_model = new ReportGroupModel();
+        $this->user_model = new UserModel();
     }
 
     public function index()
     {
-        $data['data_table'] = $this->report_group_model->getListReportGroup(5,2023,'vpddt');
         $meta = array('page_title'=>lang('AppLang.page_title_report_group'));
-        return $this->page_construct('dashboard/report_group_view',$meta,$data);
+        return $this->page_construct('dashboard/report_group_view',$meta);
     }
     public function report_print(){
-
+        $data['list_group'] = $this->user_model->getGroupParent();
+        $meta = array('page_title'=>lang('AppLang.page_title_report_group'));
+        return $this->page_construct('dashboard/report_print',$meta,$data);
     }
     public function data_report_group()
     {
