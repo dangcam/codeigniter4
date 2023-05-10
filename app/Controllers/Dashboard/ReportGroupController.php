@@ -10,7 +10,6 @@ class ReportGroupController extends BaseController
     public function __construct()
     {
         $this->report_group_model = new ReportGroupModel();
-        $this->user_model = new UserModel();
     }
 
     public function index()
@@ -19,7 +18,7 @@ class ReportGroupController extends BaseController
         return $this->page_construct('dashboard/report_group_view',$meta);
     }
     public function report_print(){
-        $data['list_group'] = $this->user_model->getGroupParent();
+        $data['list_group'] = $this->report_group_model->getGroupParent($this->session->get('group_id'));
         $meta = array('page_title'=>lang('AppLang.page_title_report_group'));
         return $this->page_construct('dashboard/report_print',$meta,$data);
     }
@@ -29,6 +28,17 @@ class ReportGroupController extends BaseController
         {
             $data = $this->request->getPost();
             $return_value = $this->report_group_model->getListReportGroup($data['report_month'],$data['report_year'],$data['group_id']);
+            echo json_encode($return_value);
+        }else {
+            echo json_encode('No Data');
+        }
+    }
+    public function data_report_group_print()
+    {
+        if($this->request->getPost())
+        {
+            $data = $this->request->getPost();
+            $return_value = $this->report_group_model->getListReportGroupPrint($data);
             echo json_encode($return_value);
         }else {
             echo json_encode('No Data');

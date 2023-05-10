@@ -61,12 +61,12 @@
                                     <option value="1" <?=round((date('m')-1)/3,0)==0? 'selected':''?> >I</option>
                                     <option value="2" <?=round((date('m')-1)/3,0)==1? 'selected':''?> >II</option>
                                     <option value="3" <?=round((date('m')-1)/3,0)==2? 'selected':''?> >III</option>
-                                    <option value="3" <?=round((date('m')-1)/3,0)==3? 'selected':''?> >IV</option>
+                                    <option value="4" <?=round((date('m')-1)/3,0)==3? 'selected':''?> >IV</option>
                                 </select>
                             </div>
                         </div>
                         <!---->
-                        <div class="col-12" id ="printReport">
+                        <div id ="printReport">
                             <h4  style="text-align:center">BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI</h4>
                             <h5  style="text-align:center"><i id="title_month_year">Tháng 5 Năm 2023</i></h5>
                             <div class="table-responsive">
@@ -116,7 +116,6 @@
         $('#report_month').show('fast');
         $('#report_quarter').hide();
         title_month_quarter();
-        loadDataTable();
         $('#quarter_month').change(function(){
             if(this.value == 1){
                 // tháng
@@ -139,10 +138,10 @@
             }else{
                 $('#title_month_year').html("<?=lang('ReportLang.quarter')?> "+ " "  + quarter + " " + "<?=lang('ReportLang.year')?> " + year);
             }
+            loadDataTable();
         }
         $('#report_year,#report_month,#report_quarter,#group_id').change(function () {
             title_month_quarter();
-            loadDataTable();
         });
         function loadDataTable() {
             var quarter_month = $('#quarter_month').val();
@@ -151,10 +150,10 @@
             var quarter = $('#report_quarter').val();
             var group_id = $('#group_id').val();
             $.ajax({
-                url: "<?= base_url() ?>dashboard/report_group/data_report_group",
+                url: "<?= base_url() ?>dashboard/report_group/data_report_group_print",
                 method: "POST",
                 dataType: "json",
-                data: {report_month: month,report_year: year,group_id: group_id},
+                data: {report_month: month,report_year: year,group_id: group_id,report_quarter: quarter,quarter_month:quarter_month},
                 success: function (data) {
                     $("#data_table").html(data);
                 },
