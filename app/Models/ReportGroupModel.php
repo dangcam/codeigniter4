@@ -65,39 +65,92 @@ class ReportGroupModel extends BaseModel
         $report_quarter = $data['report_quarter'];
         $report_year = $data['report_year'];
         $group_id = $data['group_id'];
-        if($quarter_month == 1){
+        if ($quarter_month == 1) {
             $list_month = $report_month;
-        }else{
-            if($report_quarter == 1){
+        } else {
+            if ($report_quarter == 1) {
                 $list_month = "1,2,3";
-            }elseif ($report_quarter == 2){
+            } elseif ($report_quarter == 2) {
                 $list_month = "4,5,6";
-            }elseif ($report_quarter == 3){
+            } elseif ($report_quarter == 3) {
                 $list_month = "7,8,9";
-            }else{
+            } else {
                 $list_month = "10,11,12";
             }
         }
         // lọc nhóm chi nhánh
         $listGroup = $this->getGroupParent($group_id);
         $listGroupParent = array();
-        if(count($listGroup)){
+        if (count($listGroup)) {
             foreach ($listGroup as $key => $item) {
                 $listGroupParent[] = $item->group_id;
             }
         }
-        $array_parent ="";
-        if(count($listGroupParent)>1){
-            $array_parent = implode("','",$listGroupParent);
+        $array_parent = "";
+        if (count($listGroupParent) > 1) {
+            $array_parent = implode("','", $listGroupParent);
         }
-        if($array_parent!=''){
-            // Nhóm chi nhánh
-        }
-        else{
-            // 1 chi nhánh
-        }
-        //
-        $sql = 'SELECT *,IF(value2_1>0,ROUND(value2_2/value2_1*100,2),0) as value2_per,
+        if ($array_parent != '') {
+            $sql = 'SELECT RGN.row_id,row_name, RGN.group_id, group_name, row_number,
+                            value1_1, value1_2, value1_3, value1_total, value2_total,
+                            value2_1, value2_2, value3_total, value3_1, value3_2,
+                            IF(value2_1>0,ROUND(value2_2/value2_1*100,2),0) as value2_per,
+                            IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
+                    FROM groups RIGHT JOIN
+                    (SELECT RN.row_id,row_number,row_name,row_parent, group_id,
+                        value1_1, value1_2, value1_3, value1_total, value2_total,
+                        value2_1, value2_2, value3_total, value3_1, value3_2
+                        FROM (SELECT row_id,group_id, SUM(value1_1) as value1_1, SUM(value1_2) as value1_2,
+                                    SUM(value1_3) as value1_3, SUM(value1_total) as value1_total,
+                                    SUM(value2_total) as value2_total, SUM(value2_1) as value2_1,
+                                    SUM(value2_2) as value2_2, SUM(value3_total) as value3_total,
+                                    SUM(value3_1) as value3_1, SUM(value3_2) as value3_2 
+                        FROM report_group WHERE report_month IN (' . $list_month . ') AND group_id IN (\''.$array_parent.'\') GROUP BY row_id,group_id) AS RG
+                    RIGHT JOIN (SELECT * FROM report_name WHERE row_parent = \'\') AS RN ON RG.row_id = RN.row_id) AS RGN
+                    ON groups.group_id = RGN.group_id';
+            $result = $this->db->query($sql)->getResult();
+            $i = 0;
+            $row_id = '';
+            $j = 0;
+            foreach ($result as $item){
+                if($row_id != $item->row_id) {
+                    $i = 0;
+                    $row_id = $item->row_id;
+                    $rp_row[$item->row_id]['row_id'] = $row_id;
+                    $rp_row[$item->row_id]['row_number'] = $j;
+                    $rp_row[$item->row_id]['row_sum'] = true;
+                    $rp_row[$item->row_id]['row_name'] = $item->row_name;
+                }
+                $i++;
+                $j++;
+
+                $rp_row[$item->row_id]['value1_1'] = isset($rp_row[$item->row_id]['value1_1'])?$rp_row[$item->row_id]['value1_1']+ $item->value1_1:$item->value1_1;
+                $rp_row[$item->row_id]['value1_2'] = isset($rp_row[$item->row_id]['value1_2'])?$rp_row[$item->row_id]['value1_2']+ $item->value1_2:$item->value1_2;
+                $rp_row[$item->row_id]['value1_3'] = isset($rp_row[$item->row_id]['value1_3'])?$rp_row[$item->row_id]['value1_3']+ $item->value1_3:$item->value1_3;
+                $rp_row[$item->row_id]['value2_1'] = isset($rp_row[$item->row_id]['value2_1'])?$rp_row[$item->row_id]['value2_1']+ $item->value2_1:$item->value2_1;
+                $rp_row[$item->row_id]['value2_2'] = isset($rp_row[$item->row_id]['value2_2'])?$rp_row[$item->row_id]['value2_2']+ $item->value2_2:$item->value2_2;
+                $rp_row[$item->row_id]['value3_1'] = isset($rp_row[$item->row_id]['value3_1'])?$rp_row[$item->row_id]['value3_1']+ $item->value3_1:$item->value3_1;
+                $rp_row[$item->row_id]['value3_2'] = isset($rp_row[$item->row_id]['value3_2'])?$rp_row[$item->row_id]['value3_2']+ $item->value3_2:$item->value3_2;
+
+                $rp_row[$item->row_id.'.'.$i]['row_number'] = $j;
+                $rp_row[$item->row_id.'.'.$i]['row_sum'] = false;
+                $rp_row[$item->row_id.'.'.+$i]['row_name'] = $item->group_name;
+                $rp_row[$item->row_id.'.'.+$i]['value1_1'] = $item->value1_1;
+                $rp_row[$item->row_id.'.'.+$i]['value1_2'] = $item->value1_2;
+                $rp_row[$item->row_id.'.'.+$i]['value1_3'] = $item->value1_3;
+                $rp_row[$item->row_id.'.'.+$i]['value1_total'] = $item->value1_total;
+                $rp_row[$item->row_id.'.'.+$i]['value2_1'] = $item->value2_1;
+                $rp_row[$item->row_id.'.'.+$i]['value2_2'] = $item->value2_2;
+                $rp_row[$item->row_id.'.'.+$i]['value2_total'] = $item->value2_total;
+                $rp_row[$item->row_id.'.'.+$i]['value2_per'] = $item->value2_per;
+                $rp_row[$item->row_id.'.'.+$i]['value3_1'] = $item->value3_1;
+                $rp_row[$item->row_id.'.'.+$i]['value3_2'] = $item->value3_2;
+                $rp_row[$item->row_id.'.'.+$i]['value3_total'] = $item->value3_total;
+                $rp_row[$item->row_id.'.'.+$i]['value3_per'] = $item->value3_per;
+            }
+            return 'OK';
+        } else {
+            $sql = 'SELECT *,IF(value2_1>0,ROUND(value2_2/value2_1*100,2),0) as value2_per,
                 IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
                 FROM (SELECT report_name.row_id,row_number,row_name,row_parent, 
                                 value1_1, value1_2, value1_3, value1_total, value2_total,
@@ -107,46 +160,43 @@ class ReportGroupModel extends BaseModel
                                   SUM(value2_total) as value2_total, SUM(value2_1) as value2_1,
                                   SUM(value2_2) as value2_2, SUM(value3_total) as value3_total,
                                   SUM(value3_1) as value3_1, SUM(value3_2) as value3_2
-                                  FROM report_group WHERE (report_month in ('.$list_month.')) AND report_year = ? AND group_id = ?
+                                  FROM report_group WHERE (report_month in (' . $list_month . ')) AND report_year = ? AND (group_id = ?)
                                  GROUP BY row_id) AS RG 
                         RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
+            $result = $this->db->query($sql, [$report_year, $group_id])->getResult();
+            $i = 0;
+            $response = '';
+            foreach ($result as $key) {
+                $response .= '<tr >';
+                if (strlen($key->row_parent) == 0) {
+                    $i = 0;
+                    $th_td = 'th';
+                    $response .= '<th>' . $key->row_id . '</th>';
+                    $readonly = true;
+                } else {
+                    $i++;
+                    $th_td = 'td';
+                    $response .= '<td>' . $i . '</td>';
+                }
+                $response .= '<' . $th_td . '>' . $key->row_name . '</' . $th_td . '>';
+                $response .= '<' . $th_td . '>' . $key->value1_1 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value1_2 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value1_3 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value1_total . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value2_total . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value2_1 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value2_2 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value2_per . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value3_total . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value3_1 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value3_2 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value3_per . '</' . $th_td . '>';
 
-        $result = $this->db->query($sql,[$report_year,$group_id])->getResult();
-        $i=0;
-        $response = '';
-        $th_td = 'th';
-        $readonly = false;
-        foreach ($result as $key) {
-            $response .= '<tr >';
-            if(strlen($key->row_parent) == 0){
-                $i = 0;
-                $th_td = 'th';
-                $response .= '<th>'.$key->row_id.'</th>';
-                $readonly = true;
-            }else
-            {
-                $i++;
-                $th_td = 'td';
-                $response .= '<td>'.$i.'</td>';
-                $readonly = false;
+                $response .= '</tr>';
             }
-            $response .= '<'.$th_td.'>'.$key->row_name.'</'.$th_td.'>';
-            $response .= '<'.$th_td.'>'.$key->value1_1.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value1_2.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value1_3.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value1_total.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value2_total.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value2_1.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value2_2.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value2_per.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value3_total.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value3_1.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value3_2.'</'.$th_td.'>
-                          <'.$th_td.'>'.$key->value3_per.'</'.$th_td.'>';
+            return $response;
 
-            $response .= '</tr>';
         }
-        return $response;
     }
     public function save_report_group($data)
     {
@@ -247,14 +297,14 @@ class ReportGroupModel extends BaseModel
     public function getGroupParent($group_id)
     {
         $tbgroup = $this->db->table('groups');
-        $listGroup = $tbgroup->where('group_id',$group_id)->get()->getResult();
+        $listGroup = $tbgroup->where('group_id',$group_id)->where('group_status',1)->get()->getResult();
         if(count($listGroup)) {
             $data[] = $listGroup[0];
             $parent[] = $listGroup[0]->group_id;
             while (count($parent)) {
                 $p = $parent[0];
                 array_splice($parent, 0, 1);
-                $list = $tbgroup->where('group_parent', $p)->get()->getResult();
+                $list = $tbgroup->where('group_parent', $p)->where('group_status',1)->get()->getResult();
                 if (count($list)) {
                     foreach ($list as $key => $value) {
                         $data[] = $value;

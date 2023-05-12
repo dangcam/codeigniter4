@@ -1,3 +1,8 @@
+<style type="text/css">
+
+
+
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
@@ -83,6 +88,7 @@
                                 <?php //echo $data_table?>
                                 </tbody>
                             </table>
+
                         </div>
                             <button type="submit" id="btn_submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                         </form>
@@ -94,8 +100,8 @@
         </div>
     </div>
 </div>
-
 <script src="vendor/jqueryui/js/jquery-ui.min.js"></script>
+
 <script>
     jQuery(document).ready(function($) {
         function loadDataTable() {

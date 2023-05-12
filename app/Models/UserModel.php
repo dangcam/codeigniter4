@@ -114,14 +114,14 @@ class UserModel Extends BaseModel
     {
         $tbgroup = $this->db->table('groups');
         $group_id = $this->session->get('group_id');
-        $listGroup = $tbgroup->where('group_id',$group_id)->get()->getResult();
+        $listGroup = $tbgroup->where('group_id',$group_id)->where('group_status',1)->get()->getResult();
         if(count($listGroup)) {
             $data[] = $listGroup[0];
             $parent[] = $listGroup[0]->group_id;
             while (count($parent)) {
                 $p = $parent[0];
                 array_splice($parent, 0, 1);
-                $list = $tbgroup->where('group_parent', $p)->get()->getResult();
+                $list = $tbgroup->where('group_parent', $p)->where('group_status',1)->get()->getResult();
                 if (count($list)) {
                     foreach ($list as $key => $value) {
                         $data[] = $value;
