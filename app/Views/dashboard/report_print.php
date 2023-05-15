@@ -67,8 +67,29 @@
                         </div>
                         <!---->
                         <div id ="printReport">
-                            <h4  style="text-align:center">BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI</h4>
-                            <h5  style="text-align:center"><i id="title_month_year">Tháng 5 Năm 2023</i></h5>
+                            <div class="row" style="text-align:center">
+                                <div class="col-md-6">
+                                    <h5>VĂN PHÒNG ĐĂNG KÝ ĐẤT ĐAI TỈNH BÌNH PHƯỚC</h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 id="title_group">Chi nhánh</h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Độc lập - Tự do - Hạnh phúc</h5>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row" style="text-align:center">
+                                <div class="col-md-12">
+                                    <h4 >BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI</h4>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 ><i id="title_month_year">Tháng 5 Năm 2023</i></h5>
+                                </div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered table-striped table-responsive-sm">
                                     <thead style="text-align:center" >
@@ -133,11 +154,13 @@
             var month = $('#report_month').val();
             var year = $('#report_year').val();
             var quarter = $('#report_quarter').val();
+            var name_group = $("#group_id  option:selected").text();
             if(quarter_month == 1){
                 $('#title_month_year').html("<?=lang('ReportLang.month')?> "  + month + " " + "<?=lang('ReportLang.year')?> " + year);
             }else{
                 $('#title_month_year').html("<?=lang('ReportLang.quarter')?> "+ " "  + quarter + " " + "<?=lang('ReportLang.year')?> " + year);
             }
+            $('#title_group').html(name_group);
             loadDataTable();
         }
         $('#report_year,#report_month,#report_quarter,#group_id').change(function () {

@@ -112,6 +112,7 @@ class ReportGroupModel extends BaseModel
             $i = 0;
             $row_id = '';
             $j = 0;
+            $rp_row = array();
             foreach ($result as $item){
                 if($row_id != $item->row_id) {
                     $i = 0;
@@ -147,8 +148,44 @@ class ReportGroupModel extends BaseModel
                 $rp_row[$item->row_id.'.'.+$i]['value3_2'] = $item->value3_2;
                 $rp_row[$item->row_id.'.'.+$i]['value3_total'] = $item->value3_total;
                 $rp_row[$item->row_id.'.'.+$i]['value3_per'] = $item->value3_per;
+
             }
-            return 'OK';
+            // chạy lại foreach và tính % mục I,II,III
+            $i = 0;
+            $response = '';
+            foreach ($rp_row as $key => $item ){
+                $response .= '<tr >';
+                if ($item['row_sum']) {
+                    $i = 0;
+                    $th_td = 'th';
+                    $response .= '<th>' . $item['row_id'] . '</th>';
+                    $item['value2_per'] = (int)$item['value2_1'] > 0 ? round(((int)$item['value2_2'] / (int)$item['value2_1']) * 100, 2) : 0;
+                    $item['value3_per'] = (int)$item['value3_1'] > 0 ? round(((int)$item['value3_2'] / (int)$item['value3_1']) * 100, 2) : 0;
+                    $item['value1_total'] = (int)$item['value1_1'] + (int)$item['value1_2'] + (int)$item['value1_3'];
+                    $item['value2_total'] = (int)$item['value2_1'] + (int)$item['value2_2'];
+                    $item['value3_total'] = (int)$item['value3_1'] + (int)$item['value3_2'];
+                } else {
+                    $i++;
+                    $th_td = 'td';
+                    $response .= '<td>' . $i . '</td>';
+                }
+                $response .= '<' . $th_td . '>' . $item['row_name'] . '</' . $th_td . '>';
+                $response .= '<' . $th_td . '>' . $item['value1_1'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value1_2'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value1_3'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value1_total'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value2_total'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value2_1'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value2_2'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value2_per'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value3_total'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value3_1'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value3_2'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value3_per'] . '</' . $th_td . '>';
+
+                $response .= '</tr>';
+            }
+            return $response;
         } else {
             $sql = 'SELECT *,IF(value2_1>0,ROUND(value2_2/value2_1*100,2),0) as value2_per,
                 IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
