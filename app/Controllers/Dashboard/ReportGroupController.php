@@ -39,9 +39,9 @@ class ReportGroupController extends BaseController
         {
             $data = $this->request->getPost();
             $return_value = $this->report_group_model->getListReportGroupPrint($data);
-            echo json_encode($return_value);
+            echo json_encode(array_values($return_value));
         }else {
-            echo json_encode('No Data');
+            echo json_encode(array_values('No Data'));
         }
     }
     public function save_report_group()

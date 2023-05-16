@@ -128,10 +128,17 @@ class ReportGroupModel extends BaseModel
                 $rp_row[$item->row_id]['value1_1'] = isset($rp_row[$item->row_id]['value1_1'])?$rp_row[$item->row_id]['value1_1']+ $item->value1_1:$item->value1_1;
                 $rp_row[$item->row_id]['value1_2'] = isset($rp_row[$item->row_id]['value1_2'])?$rp_row[$item->row_id]['value1_2']+ $item->value1_2:$item->value1_2;
                 $rp_row[$item->row_id]['value1_3'] = isset($rp_row[$item->row_id]['value1_3'])?$rp_row[$item->row_id]['value1_3']+ $item->value1_3:$item->value1_3;
+                $rp_row[$item->row_id]['value1_total'] = (int) $rp_row[$item->row_id]['value1_1']+(int) $rp_row[$item->row_id]['value1_2']+(int) $rp_row[$item->row_id]['value1_3'];
                 $rp_row[$item->row_id]['value2_1'] = isset($rp_row[$item->row_id]['value2_1'])?$rp_row[$item->row_id]['value2_1']+ $item->value2_1:$item->value2_1;
                 $rp_row[$item->row_id]['value2_2'] = isset($rp_row[$item->row_id]['value2_2'])?$rp_row[$item->row_id]['value2_2']+ $item->value2_2:$item->value2_2;
+                $rp_row[$item->row_id]['value2_total'] = (int) $rp_row[$item->row_id]['value2_1']+(int) $rp_row[$item->row_id]['value2_2'];
+                $rp_row[$item->row_id]['value2_per'] = (int) $rp_row[$item->row_id]['value2_1']>0 ?
+                    round((int) $rp_row[$item->row_id]['value2_2']/(int) $rp_row[$item->row_id]['value2_1'] * 100,2):0;
                 $rp_row[$item->row_id]['value3_1'] = isset($rp_row[$item->row_id]['value3_1'])?$rp_row[$item->row_id]['value3_1']+ $item->value3_1:$item->value3_1;
                 $rp_row[$item->row_id]['value3_2'] = isset($rp_row[$item->row_id]['value3_2'])?$rp_row[$item->row_id]['value3_2']+ $item->value3_2:$item->value3_2;
+                $rp_row[$item->row_id]['value3_total'] = (int) $rp_row[$item->row_id]['value3_1']+(int) $rp_row[$item->row_id]['value3_2'];
+                $rp_row[$item->row_id]['value3_per'] = (int) $rp_row[$item->row_id]['value3_1']>0 ?
+                    round((int) $rp_row[$item->row_id]['value3_2']/(int) $rp_row[$item->row_id]['value3_1'] * 100,2):0;
 
                 $rp_row[$item->row_id.'.'.$i]['row_number'] = $j;
                 $rp_row[$item->row_id.'.'.$i]['row_sum'] = false;
@@ -150,7 +157,6 @@ class ReportGroupModel extends BaseModel
                 $rp_row[$item->row_id.'.'.+$i]['value3_per'] = $item->value3_per;
 
             }
-            // chạy lại foreach và tính % mục I,II,III
             $i = 0;
             $response = '';
             foreach ($rp_row as $key => $item ){
@@ -159,11 +165,6 @@ class ReportGroupModel extends BaseModel
                     $i = 0;
                     $th_td = 'th';
                     $response .= '<th>' . $item['row_id'] . '</th>';
-                    $item['value2_per'] = (int)$item['value2_1'] > 0 ? round(((int)$item['value2_2'] / (int)$item['value2_1']) * 100, 2) : 0;
-                    $item['value3_per'] = (int)$item['value3_1'] > 0 ? round(((int)$item['value3_2'] / (int)$item['value3_1']) * 100, 2) : 0;
-                    $item['value1_total'] = (int)$item['value1_1'] + (int)$item['value1_2'] + (int)$item['value1_3'];
-                    $item['value2_total'] = (int)$item['value2_1'] + (int)$item['value2_2'];
-                    $item['value3_total'] = (int)$item['value3_1'] + (int)$item['value3_2'];
                 } else {
                     $i++;
                     $th_td = 'td';
@@ -185,7 +186,10 @@ class ReportGroupModel extends BaseModel
 
                 $response .= '</tr>';
             }
-            return $response;
+            $data_table['data_table'] = array_values($rp_row);
+            $data_table['response'] = $response;
+            return $data_table;
+            //return $response;
         } else {
             $sql = 'SELECT *,IF(value2_1>0,ROUND(value2_2/value2_1*100,2),0) as value2_per,
                 IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
@@ -231,7 +235,9 @@ class ReportGroupModel extends BaseModel
 
                 $response .= '</tr>';
             }
-            return $response;
+            $data_table['data_table'] = array_values($result);
+            $data_table['response'] = $response;
+            return $data_table;
 
         }
     }

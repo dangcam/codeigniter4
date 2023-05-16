@@ -10,9 +10,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-header">
                         <!---->
-                        <div class="form-group row">
+                        <div class="form-group row col-lg-12">
                             <label class="col-lg-1 col-form-label" for="report_year"><?=lang('ReportLang.group')?></label>
                             <div class="col-lg-3">
                                 <select class="custom-select" id="group_id" name ="group_id">
@@ -64,8 +64,16 @@
                                     <option value="4" <?=round((date('m')-1)/3,0)==3? 'selected':''?> >IV</option>
                                 </select>
                             </div>
+                            <div class="col-lg-2">
+                                <button type="button" id="export_excel" class="btn btn-rounded btn-success"><span class="btn-icon-left text-success"><i class="fa fa-upload color-success"></i>
+                                    </span>Excel</button>
+                            </div>
                         </div>
                         <!---->
+
+                    </div>
+                    <div class="card-body">
+
                         <div id ="printReport">
                             <div class="row" style="text-align:center">
                                 <div class="col-md-6">
@@ -131,9 +139,17 @@
 
     </div>
 </div>
-
+<script lang="javascript" src="js/exceljs.min.js"></script>
+<script lang="javascript" src="js/FileSaver.min.js"></script>
+<script lang="javascript" src="js/export2excel.js"></script>
 <script>
     jQuery(document).ready(function($) {
+        let myData = [];
+        $("#export_excel").on( "click", function() {
+            //exportToExcel('Users', 'Users', '',myData);
+            export_excel();
+            //getData();
+        });
         $('#report_month').show('fast');
         $('#report_quarter').hide();
         title_month_quarter();
@@ -178,10 +194,12 @@
                 dataType: "json",
                 data: {report_month: month,report_year: year,group_id: group_id,report_quarter: quarter,quarter_month:quarter_month},
                 success: function (data) {
-                    $("#data_table").html(data);
+                    $("#data_table").html(data[1]);
+                    myData = (data[0]);
+                    console.log(typeof data[0]);
                 },
                 error: function (data) {
-                    $("#data_table").html(data);
+                    $("#data_table").html(data[1]);
                 }
             });
         };
