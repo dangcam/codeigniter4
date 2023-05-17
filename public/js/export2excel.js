@@ -2,28 +2,45 @@
 let myHeader = [];
 let myFooter = [];
 
-async function export_excel(){
+async function export_excel(title_group,title_month_year,title_report,myData){
 	const title = {
 		border: false,
-		height: 25,
-		font: { size: 12, bold: false, color: { argb: '000000' } },
-		alignment: { horizontal: 'center', vertical: 'middle' },
+		height: 35,
+		font: { name: 'Times New Roman',size: 12, bold: true},
+		alignment: { horizontal: 'center', vertical: 'middle' , wrapText: true},
 	};
-
+	const data = {
+		border: true,
+		font: { name: 'Times New Roman',size: 12, bold: false, color: { argb: '000000' } },
+		alignment: null,
+		fill: null,
+	};
 	let wb = new ExcelJS.Workbook();
 	let ws = wb.addWorksheet('Export');
 
-	let row = addRow(ws, [''], title);
+	//
+	let row = ws.addRow();
 	mergeCells(ws, row, 1, 7);
-	row.getCell(1).value = "VĂN PHÒNG ĐĂNG KÝ ĐẤT ĐAI TỈNH BÌNH PHƯỚC";
+	row.getCell(1).value = title_report+"\n"+title_group;
 	mergeCells(ws, row, 8, 14);
-	row.getCell(8).value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM \n Độc lập - Tự do - Hạnh phúc";
-	//ws.mergeCells('A1:A3');
-	//ws.getCell('A1').value = 'This price list supercedes all prior price lists.';
-	//ws.getCell('A1').alignment = { horizontal:'center'} ;
-
+	row.getCell(8).value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc";
+	set_section(row,title);
+	row = ws.addRow();
+	mergeCells(ws, row, 1, 14);
+	row.getCell(1).value = "BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI";
+	set_section(row,title);
+	row.font = {name: 'Times New Roman', size: 14, bold: true};
+	row.alignment = {horizontal: 'center',vertical:'bottom'}
+	row = ws.addRow();
+	mergeCells(ws, row, 1, 14);
+	row.getCell(1).value = title_month_year;
+	row.font = {name: 'Times New Roman', size: 12, italic: true};
+	row.alignment = { horizontal: 'center', vertical: 'middle' , wrapText: true};
+	//
+	row = ws.addRow();
+	//
 	const buf = await wb.xlsx.writeBuffer();
-	saveAs(new Blob([buf]), `demo.xlsx`);
+	saveAs(new Blob([buf]), `${title_group}_${title_month_year}.xlsx`);
 }
 
 async function exportToExcel(fileName, sheetName, report,myData) {
@@ -176,6 +193,32 @@ function addRow(ws, data, section) {
 			cell.fill = section.fill;
 		}
 	});
+	if (section?.height > 0) {
+		row.height = section.height;
+	}
+	return row;
+}
+function set_section(row, section) {
+	const borderStyles = {
+		top: { style: 'thin' },
+		left: { style: 'thin' },
+		bottom: { style: 'thin' },
+		right: { style: 'thin' },
+	};
+	if (section?.border) {
+		row.border = borderStyles;
+	}
+	if (section?.alignment) {
+		row.alignment = section.alignment;
+	} else {
+		row.alignment = { vertical: 'middle' };
+	}
+	if (section?.font) {
+		row.font = section.font;
+	}
+	if (section?.fill) {
+		row.fill = section.fill;
+	}
 	if (section?.height > 0) {
 		row.height = section.height;
 	}

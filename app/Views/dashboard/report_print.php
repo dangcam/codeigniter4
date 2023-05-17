@@ -77,7 +77,7 @@
                         <div id ="printReport">
                             <div class="row" style="text-align:center">
                                 <div class="col-md-6">
-                                    <h5>VĂN PHÒNG ĐĂNG KÝ ĐẤT ĐAI TỈNH BÌNH PHƯỚC</h5>
+                                    <h5 id="title_report">VĂN PHÒNG ĐĂNG KÝ ĐẤT ĐAI TỈNH BÌNH PHƯỚC</h5>
                                 </div>
                                 <div class="col-md-6">
                                     <h5>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h5>
@@ -147,7 +147,10 @@
         let myData = [];
         $("#export_excel").on( "click", function() {
             //exportToExcel('Users', 'Users', '',myData);
-            export_excel();
+            var title_group = document.getElementById('title_group')
+            var title_month_year = document.getElementById('title_month_year')
+            var title_report = document.getElementById('title_report')
+            export_excel(title_group.innerText,title_month_year.innerText,title_report.innerText,myData);
             //getData();
         });
         $('#report_month').show('fast');
@@ -196,7 +199,6 @@
                 success: function (data) {
                     $("#data_table").html(data[1]);
                     myData = (data[0]);
-                    console.log(typeof data[0]);
                 },
                 error: function (data) {
                     $("#data_table").html(data[1]);
