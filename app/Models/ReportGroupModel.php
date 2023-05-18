@@ -119,7 +119,7 @@ class ReportGroupModel extends BaseModel
                     $row_id = $item->row_id;
                     $rp_row[$item->row_id]['row_id'] = $row_id;
                     $rp_row[$item->row_id]['row_number'] = $j;
-                    $rp_row[$item->row_id]['row_sum'] = true;
+                    $rp_row[$item->row_id]['row_parent'] = 1;
                     $rp_row[$item->row_id]['row_name'] = $item->row_name;
                 }
                 $i++;
@@ -141,7 +141,7 @@ class ReportGroupModel extends BaseModel
                     round((int) $rp_row[$item->row_id]['value3_2']/(int) $rp_row[$item->row_id]['value3_1'] * 100,2):0;
 
                 $rp_row[$item->row_id.'.'.$i]['row_number'] = $j;
-                $rp_row[$item->row_id.'.'.$i]['row_sum'] = false;
+                $rp_row[$item->row_id.'.'.$i]['row_parent'] = 0;
                 $rp_row[$item->row_id.'.'.+$i]['row_name'] = $item->group_name;
                 $rp_row[$item->row_id.'.'.+$i]['value1_1'] = $item->value1_1;
                 $rp_row[$item->row_id.'.'.+$i]['value1_2'] = $item->value1_2;
@@ -161,7 +161,7 @@ class ReportGroupModel extends BaseModel
             $response = '';
             foreach ($rp_row as $key => $item ){
                 $response .= '<tr >';
-                if ($item['row_sum']) {
+                if ($item['row_parent'] == 1) {
                     $i = 0;
                     $th_td = 'th';
                     $response .= '<th>' . $item['row_id'] . '</th>';
@@ -193,7 +193,7 @@ class ReportGroupModel extends BaseModel
         } else {
             $sql = 'SELECT *,IF(value2_1>0,ROUND(value2_2/value2_1*100,2),0) as value2_per,
                 IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
-                FROM (SELECT report_name.row_id,row_number,row_name,row_parent, 
+                FROM (SELECT report_name.row_id,row_number,row_name,IF(LENGTH(row_parent) > 0,0,1) AS row_parent, 
                                 value1_1, value1_2, value1_3, value1_total, value2_total,
                                 value2_1, value2_2, value3_total, value3_1, value3_2
                             FROM (SELECT row_id, SUM(value1_1) as value1_1, SUM(value1_2) as value1_2,
@@ -209,11 +209,10 @@ class ReportGroupModel extends BaseModel
             $response = '';
             foreach ($result as $key) {
                 $response .= '<tr >';
-                if (strlen($key->row_parent) == 0) {
+                if ($key->row_parent==1) {
                     $i = 0;
                     $th_td = 'th';
                     $response .= '<th>' . $key->row_id . '</th>';
-                    $readonly = true;
                 } else {
                     $i++;
                     $th_td = 'td';
