@@ -64,6 +64,12 @@
                                     <option value="4" <?=round((date('m')-1)/3,0)==3? 'selected':''?> >IV</option>
                                 </select>
                             </div>
+                            <div class="col-lg-1">
+                                <select class="form-control" id="report_detail">
+                                    <option value="1"  ><?=lang('ReportLang.detail')?></option>
+                                    <option value="2" ><?=lang('ReportLang.general')?></option>
+                                </select>
+                            </div>
                             <div class="col-lg-2">
                                 <button type="button" id="export_excel" class="btn btn-rounded btn-success"><span class="btn-icon-left text-success"><i class="fa fa-upload color-success"></i>
                                     </span>Excel</button>
@@ -168,6 +174,9 @@
             }
             title_month_quarter();
         });
+        $('#report_detail').change(function(){
+            title_month_quarter();
+        });
         function title_month_quarter(){
             var quarter_month = $('#quarter_month').val();
             var month = $('#report_month').val();
@@ -191,11 +200,13 @@
             var year = $('#report_year').val();
             var quarter = $('#report_quarter').val();
             var group_id = $('#group_id').val();
+            var report_detail = $('#report_detail').val();
+
             $.ajax({
                 url: "<?= base_url() ?>dashboard/report_group/data_report_group_print",
                 method: "POST",
                 dataType: "json",
-                data: {report_month: month,report_year: year,group_id: group_id,report_quarter: quarter,quarter_month:quarter_month},
+                data: {report_month: month,report_year: year,group_id: group_id,report_quarter: quarter,quarter_month:quarter_month,report_detail:report_detail},
                 success: function (data) {
                     $("#data_table").html(data[1]);
                     myData = (data[0]);

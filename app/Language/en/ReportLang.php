@@ -5,4 +5,6 @@ return[
     'quarter_month' => 'Quarter/Month',
     'quarter' => 'Quarter',
     'group' => 'Group',
+    'general' => 'General',
+    'detail' => 'Detail'
 ];
