@@ -12,6 +12,7 @@
                 <div class="card">
                     <div class="card-header">
                         <!---->
+                        <div class="card-body">
                         <div class="form-group row col-lg-12">
                             <label class="col-lg-1 col-form-label" for="report_year"><?=lang('ReportLang.group')?></label>
                             <div class="col-lg-3">
@@ -64,19 +65,25 @@
                                     <option value="4" <?=round((date('m')-1)/3,0)==3? 'selected':''?> >IV</option>
                                 </select>
                             </div>
-                            <div class="col-lg-1">
+                            <div class="col-lg-2">
                                 <select class="form-control" id="report_detail">
                                     <option value="1"  ><?=lang('ReportLang.detail')?></option>
                                     <option value="2" ><?=lang('ReportLang.general')?></option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-group row col-lg-12">
                             <div class="col-lg-2">
                                 <button type="button" id="export_excel" class="btn btn-rounded btn-success"><span class="btn-icon-left text-success"><i class="fa fa-upload color-success"></i>
-                                    </span>Excel</button>
+                                        </span>Excel</button>
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="button" id="export_word" class="btn btn-rounded btn-info"><span class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
+                                        </span>Word</button>
                             </div>
                         </div>
                         <!---->
-
+                        </div>
                     </div>
                     <div class="card-body">
 
@@ -152,12 +159,16 @@
     jQuery(document).ready(function($) {
         let myData = [];
         $("#export_excel").on( "click", function() {
-            //exportToExcel('Users', 'Users', '',myData);
             var title_group = document.getElementById('title_group')
             var title_month_year = document.getElementById('title_month_year')
             var title_report = document.getElementById('title_report')
             export_excel(title_group.innerText,title_month_year.innerText,title_report.innerText,myData);
-            //getData();
+        });
+        $("#export_word").on( "click", function() {
+            var title_group = document.getElementById('title_group')
+            var title_month_year = document.getElementById('title_month_year')
+            var title_report = document.getElementById('title_report')
+            export_word(title_group.innerText,title_month_year.innerText,title_report.innerText,myData);
         });
         $('#report_month').show('fast');
         $('#report_quarter').hide();
