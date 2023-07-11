@@ -7,30 +7,40 @@ async function export_word(title_group,title_month_year,title_report,myData){
 	let day = date.getDate();
 	let month = date.getMonth() + 1;
 	let year = date.getFullYear();
-	const rowValues = new Array();
+	const rowValues = [[]];
+	rowValues[0] = [0,0,0,0,0,0,0,0,0,0,0,0];
 	let i = 0;
 	myData.forEach((rowData) => {
-
 		if(rowData['row_parent'] == 1){
 			i++;
-			var cell = new Array();
-			cell[1] = rowData['value1_total']; // tiếp nhận
-			cell[2] = rowData['value2_total']; // đã giải quyết
-			cell[3] = rowData['value2_1']; // giải quyết trước, đúng hạn
-			cell[4] = rowData['value2_1']; // tỉ lệ giải quyết trước, đúng hạn
-			cell[5] = rowData['value2_2']; // trễ hạn
-			cell[6] = rowData['value2_per']; // tỉ lệ trễ hạn
-			cell[7] = rowData['value3_total']; // đang giải quyết
-			cell[8] = rowData['value3_1']; // trong hạn
-			cell[9] = rowData['value3_1']; // tỉ lệ trong hạn
-			cell[10] = rowData['value3_2']; // quá hạn
-			cell[11] = rowData['value3_per']; // tỉ lệ quá hạn
-			rowData[i] = cell;
+			rowValues[i] = [];
+			rowValues[i][1] = rowData['value1_total']; // tiếp nhận
+			rowValues[i][2] = rowData['value2_total']; // đã giải quyết
+			rowValues[i][3] = rowData['value2_1']; // giải quyết trước, đúng hạn
+			rowValues[i][4] = 100 - rowData['value2_per']; // tỉ lệ giải quyết trước, đúng hạn
+			rowValues[i][5] = rowData['value2_2']; // trễ hạn
+			rowValues[i][6] = rowData['value2_per']; // tỉ lệ trễ hạn
+			rowValues[i][7] = rowData['value3_total']; // đang giải quyết
+			rowValues[i][8] = rowData['value3_1']; // trong hạn
+			rowValues[i][9] = 100 - rowData['value3_per']; // tỉ lệ trong hạn
+			rowValues[i][10] = rowData['value3_2']; // quá hạn
+			rowValues[i][11] = rowData['value3_per']; // tỉ lệ quá hạn
+
+			rowValues[0][1] += Number(rowData['value1_total']); // tiếp nhận
+			rowValues[0][2] += Number(rowData['value2_total']); // đã giải quyết
+			rowValues[0][3] += Number(rowData['value2_1']); // giải quyết trước, đúng hạn
+			rowValues[0][4] = ((rowValues[0][3]/rowValues[0][2])*100).toFixed(2); // tỉ lệ giải quyết trước, đúng hạn
+			rowValues[0][5] += Number(rowData['value2_2']); // trễ hạn
+			rowValues[0][6] = ((rowValues[0][5]/rowValues[0][2])*100).toFixed(2); // tỉ lệ trễ hạn
+			rowValues[0][7] += Number(rowData['value3_total']); // đang giải quyết
+			rowValues[0][8] += Number(rowData['value3_1']); // trong hạn
+			rowValues[0][9] = ((rowValues[0][8]/rowValues[0][7])*100).toFixed(2); // tỉ lệ trong hạn
+			rowValues[0][10] += Number(rowData['value3_2']); // quá hạn
+			rowValues[0][11] = ((rowValues[0][10]/rowValues[0][7])*100).toFixed(2);  // tỉ lệ quá hạn
 
 		}
-
-
 	});
+
 	var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
 		"xmlns:w='urn:schemas-microsoft-com:office:word' "+
 		"xmlns='http://www.w3.org/TR/REC-html40'>"+
@@ -61,13 +71,13 @@ async function export_word(title_group,title_month_year,title_report,myData){
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>2.1. C&ocirc;ng t&aacute;c r&agrave; so&aacute;t, đơn giản h&oacute;a thủ tục h&agrave;nh ch&iacute;nh, cung cấp dịch vụ c&ocirc;ng;</span></p>\n" +
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>2.2. Kết quả giải quyết thủ tục h&agrave;nh ch&iacute;nh:</span></p>\n" +
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>2.2.1. C&ocirc;ng t&aacute;c cấp GCN</span></p>\n" +
-		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Tổng số hồ sơ đ&atilde; tiếp nhận v&agrave; phải giải quyết trong th&aacute;ng: "+rowValues[1]+" hồ sơ, đ&atilde; giải quyết được 16 hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn 8 hồ sơ, chiếm tỷ lệ &hellip;.. %; giải quyết trễ hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%)</em>, đang giải quyết &hellip;.. hồ sơ <em>(trong hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%; trễ hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;.. %)</em>. Trong đ&oacute;:</span></p>\n" +
-		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>-&nbsp;</span></strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Thuộc thẩm quyền giải quyết của cấp huyện: &hellip;.. hồ sơ, đ&atilde; giải quyết được &hellip;.. hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%; giải quyết trễ hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;.. %)</em>, đang giải quyết &hellip;.. hồ sơ <em>(trong hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%; trễ hạn &hellip;..3 hồ sơ, chiếm tỷ lệ &hellip;.. %)</em>;</span></p>\n" +
+		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Tổng số hồ sơ đ&atilde; tiếp nhận v&agrave; phải giải quyết trong th&aacute;ng: "+rowValues[0][1]+" hồ sơ, đ&atilde; giải quyết được "+rowValues[0][2]+" hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn "+rowValues[0][3]+" hồ sơ, chiếm tỷ lệ "+rowValues[0][4]+"%; giải quyết trễ hạn "+rowValues[0][5]+" hồ sơ, chiếm tỷ lệ "+rowValues[0][6]+"%)</em>, đang giải quyết "+rowValues[0][7]+" hồ sơ <em>(trong hạn "+rowValues[0][8]+" hồ sơ, chiếm tỷ lệ "+rowValues[0][9]+"%; trễ hạn "+rowValues[0][10]+" hồ sơ, chiếm tỷ lệ "+rowValues[0][11]+"%)</em>. Trong đ&oacute;:</span></p>\n" +
+		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>-&nbsp;</span></strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Thuộc thẩm quyền giải quyết của cấp huyện: "+rowValues[1][1]+" hồ sơ, đ&atilde; giải quyết được "+rowValues[1][2]+" hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn "+rowValues[1][3]+" hồ sơ, chiếm tỷ lệ "+rowValues[1][4]+"%; giải quyết trễ hạn "+rowValues[1][5]+" hồ sơ, chiếm tỷ lệ "+rowValues[1][6]+" %)</em>, đang giải quyết "+rowValues[1][7]+" hồ sơ <em>(trong hạn "+rowValues[1][8]+" hồ sơ, chiếm tỷ lệ "+rowValues[1][9]+"%; trễ hạn "+rowValues[1][10]+"3 hồ sơ, chiếm tỷ lệ "+rowValues[1][11]+" %)</em>;</span></p>\n" +
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>* L&yacute; do trễ hạn: (n&ecirc;u r&otilde; l&yacute; do trễ hạn v&agrave; tr&aacute;ch nhiệm của c&aacute;c đơn vị c&oacute; li&ecirc;n quan).</span></p>\n" +
-		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>-&nbsp;</span></strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Thuộc thẩm quyền giải quyết của Chi nh&aacute;nh: &hellip;.. hồ sơ, đ&atilde; giải quyết được &hellip;.. hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%; giải quyết trễ hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%),</em> đang giải quyết &hellip;.. hồ sơ <em>(trong hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%; trễ hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%)</em>;</span></p>\n" +
+		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>-&nbsp;</span></strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Thuộc thẩm quyền giải quyết của Chi nh&aacute;nh: "+rowValues[2][1]+" hồ sơ, đ&atilde; giải quyết được "+rowValues[2][2]+" hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn "+rowValues[2][3]+" hồ sơ, chiếm tỷ lệ "+rowValues[2][4]+"%; giải quyết trễ hạn "+rowValues[2][5]+" hồ sơ, chiếm tỷ lệ "+rowValues[2][6]+"%),</em> đang giải quyết "+rowValues[2][7]+" hồ sơ <em>(trong hạn "+rowValues[2][8]+" hồ sơ, chiếm tỷ lệ "+rowValues[2][9]+"%; trễ hạn "+rowValues[2][10]+" hồ sơ, chiếm tỷ lệ ;"+rowValues[2][11]+"%)</em>;</span></p>\n" +
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>* L&yacute; do trễ hạn: (n&ecirc;u r&otilde; l&yacute; do trễ hạn v&agrave; tr&aacute;ch nhiệm của c&aacute;c đơn vị c&oacute; li&ecirc;n quan).</span></p>\n" +
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>&nbsp;</span></p>\n" +
-		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>-&nbsp;</span></strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Thuộc thẩm quyền giải quyết của Sở: &hellip;.. hồ sơ, đ&atilde; giải quyết được &hellip;.. hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%; giải quyết trễ hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%),</em> đang giải quyết &hellip;.. hồ sơ <em>(trong hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;..%; trễ hạn &hellip;.. hồ sơ, chiếm tỷ lệ &hellip;&hellip;%)</em>;</span></p>\n" +
+		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>-&nbsp;</span></strong><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>Thuộc thẩm quyền giải quyết của Sở: "+rowValues[3][1]+" hồ sơ, đ&atilde; giải quyết được "+rowValues[3][2]+" hồ sơ <em>(giải quyết trước v&agrave; đ&uacute;ng hạn "+rowValues[3][3]+" hồ sơ, chiếm tỷ lệ "+rowValues[3][4]+"; giải quyết trễ hạn "+rowValues[3][5]+" hồ sơ, chiếm tỷ lệ "+rowValues[3][6]+"%),</em> đang giải quyết "+rowValues[3][7]+" hồ sơ <em>(trong hạn "+rowValues[3][8]+" hồ sơ, chiếm tỷ lệ "+rowValues[3][9]+"%; trễ hạn "+rowValues[3][10]+" hồ sơ, chiếm tỷ lệ "+rowValues[3][11]+"%)</em>;</span></p>\n" +
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>* L&yacute; do trễ hạn: (n&ecirc;u r&otilde; l&yacute; do trễ hạn v&agrave; tr&aacute;ch nhiệm của c&aacute;c đơn vị c&oacute; li&ecirc;n quan).</span></p>\n" +
 		"<p style=\"margin:0in;font-size:16px;font-family:VNI-Times;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;text-align:justify;text-indent:28.35pt;\"><span style='font-size:19px;font-family:\"Times New Roman\",serif;'>2.2.2 C&ocirc;ng t&aacute;c đo đạc bản đồ địa ch&iacute;nh:</span></p>\n" +
 		"<p style='margin:0in;text-align:justify;text-indent:28.35pt;font-size:19px;font-family:\"Times New Roman\",serif;margin-top:3.0pt;margin-right:0in;margin-bottom:3.0pt;margin-left:0in;'>Tổng số hồ sơ tiếp nhận: .... hồ sơ. <em>Trong đ&oacute;:</em></p>\n" +
