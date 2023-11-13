@@ -15,7 +15,8 @@ class ReportGroupModel extends BaseModel
         $sql = 'SELECT * FROM 
                 (SELECT report_name.row_id, row_name, row_parent, row_number, report_month, report_year,
                         group_id, value1_1, value1_2, value1_3, value1_total, value2_total,
-                        value2_1, value2_2, value2_per, value3_total, value3_1, value3_2, value3_per
+                        value2_1, value2_2, value2_per, value3_total, value3_1, value3_2, value3_per,
+                        value4_1, value4_2 
                     FROM (SELECT * FROM report_group WHERE report_month = ? AND report_year = ? AND group_id = ?) AS RG 
                 RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
 
@@ -52,7 +53,9 @@ class ReportGroupModel extends BaseModel
                           <'.$th_td.'><input type="number" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_total]" value="'.$key->value3_total.'" readonly class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="number" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_1]" value="'.$key->value3_1.'" '.($readonly==true?'readonly':'').' class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="number" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_2]" value="'.$key->value3_2.'" '.($readonly==true?'readonly':'').' class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_per]" value="'.$key->value3_per.'" readonly class="form-control"></'.$th_td.'>';
+                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_per]" value="'.$key->value3_per.'" readonly class="form-control"></'.$th_td.'>
+                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value4_1]" value="'.$key->value4_1.'" readonly class="form-control"></'.$th_td.'>
+                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value4_2]" value="'.$key->value4_1.'" readonly class="form-control"></'.$th_td.'>';
 
             $response .= '</tr>';
         }
@@ -99,7 +102,8 @@ class ReportGroupModel extends BaseModel
                             value1_1, value1_2, value1_3, value1_total, value2_total,
                             value2_1, value2_2, value3_total, value3_1, value3_2,
                             IF(value2_1>0,ROUND(value2_2/value2_1*100,2),0) as value2_per,
-                            IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
+                            IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per,
+                            value4_1, value4_2 
                     FROM groups RIGHT JOIN
                     (SELECT RN.row_id,row_number,row_name,row_parent, group_id,
                         value1_1, value1_2, value1_3, value1_total, value2_total,
@@ -108,7 +112,8 @@ class ReportGroupModel extends BaseModel
                                     SUM(value1_3) as value1_3, SUM(value1_total) as value1_total,
                                     SUM(value2_total) as value2_total, SUM(value2_1) as value2_1,
                                     SUM(value2_2) as value2_2, SUM(value3_total) as value3_total,
-                                    SUM(value3_1) as value3_1, SUM(value3_2) as value3_2 
+                                    SUM(value3_1) as value3_1, SUM(value3_2) as value3_2,
+                                    SUM(value4_1) as value4_1, SUM(value4_2) as value4_2  
                         FROM report_group WHERE report_month IN (' . $list_month . ') AND group_id IN (\'' . $array_parent . '\') AND report_year = ? GROUP BY row_id,group_id) AS RG
                     RIGHT JOIN (SELECT * FROM report_name WHERE row_parent = \'\') AS RN ON RG.row_id = RN.row_id) AS RGN
                     ON groups.group_id = RGN.group_id';
@@ -144,6 +149,9 @@ class ReportGroupModel extends BaseModel
                     $rp_row[$item->row_id]['value3_per'] = (int)$rp_row[$item->row_id]['value3_1'] > 0 ?
                         round((int)$rp_row[$item->row_id]['value3_2'] / (int)$rp_row[$item->row_id]['value3_1'] * 100, 2) : 0;
 
+                    $rp_row[$item->row_id]['value4_1'] = isset($rp_row[$item->row_id]['value4_1']) ? $rp_row[$item->row_id]['value4_1'] + $item->value4_1 : $item->value4_1;
+                    $rp_row[$item->row_id]['value4_2'] = isset($rp_row[$item->row_id]['value4_2']) ? $rp_row[$item->row_id]['value4_2'] + $item->value4_2 : $item->value4_2;
+
                     $rp_row[$item->row_id . '.' . $i]['row_number'] = $j;
                     $rp_row[$item->row_id . '.' . $i]['row_parent'] = 0;
                     $rp_row[$item->row_id . '.' . +$i]['row_name'] = $item->group_name;
@@ -159,6 +167,8 @@ class ReportGroupModel extends BaseModel
                     $rp_row[$item->row_id . '.' . +$i]['value3_2'] = $item->value3_2;
                     $rp_row[$item->row_id . '.' . +$i]['value3_total'] = $item->value3_total;
                     $rp_row[$item->row_id . '.' . +$i]['value3_per'] = $item->value3_per;
+                    $rp_row[$item->row_id . '.' . +$i]['value4_1'] = $item->value4_1;
+                    $rp_row[$item->row_id . '.' . +$i]['value4_2'] = $item->value4_2;
 
                 }
                 $i = 0;
@@ -186,7 +196,9 @@ class ReportGroupModel extends BaseModel
                           <' . $th_td . '>' . $item['value3_total'] . '</' . $th_td . '>
                           <' . $th_td . '>' . $item['value3_1'] . '</' . $th_td . '>
                           <' . $th_td . '>' . $item['value3_2'] . '</' . $th_td . '>
-                          <' . $th_td . '>' . $item['value3_per'] . '</' . $th_td . '>';
+                          <' . $th_td . '>' . $item['value3_per'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value4_1'] . '</' . $th_td . '>
+                          <' . $th_td . '>' . $item['value4_2'] . '</' . $th_td . '>';
 
                     $response .= '</tr>';
                 }
@@ -199,12 +211,14 @@ class ReportGroupModel extends BaseModel
                 IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
                 FROM (SELECT report_name.row_id,row_number,row_name,IF(LENGTH(row_parent) > 0,0,1) AS row_parent, 
                                 value1_1, value1_2, value1_3, value1_total, value2_total,
-                                value2_1, value2_2, value3_total, value3_1, value3_2
+                                value2_1, value2_2, value3_total, value3_1, value3_2, 
+                                value4_1, value4_2 
                             FROM (SELECT row_id, SUM(value1_1) as value1_1, SUM(value1_2) as value1_2,
                                   SUM(value1_3) as value1_3, SUM(value1_total) as value1_total,
                                   SUM(value2_total) as value2_total, SUM(value2_1) as value2_1,
                                   SUM(value2_2) as value2_2, SUM(value3_total) as value3_total,
-                                  SUM(value3_1) as value3_1, SUM(value3_2) as value3_2
+                                  SUM(value3_1) as value3_1, SUM(value3_2) as value3_2,
+                                  SUM(value4_1) as value4_1, SUM(value4_2) as value4_2 
                                   FROM report_group WHERE (report_month in (' . $list_month . ')) AND report_year = ? AND group_id IN (\'' . $array_parent . '\')
                                  GROUP BY row_id) AS RG 
                         RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
@@ -234,7 +248,9 @@ class ReportGroupModel extends BaseModel
                           <' . $th_td . '>' . $key->value3_total . '</' . $th_td . '>
                           <' . $th_td . '>' . $key->value3_1 . '</' . $th_td . '>
                           <' . $th_td . '>' . $key->value3_2 . '</' . $th_td . '>
-                          <' . $th_td . '>' . $key->value3_per . '</' . $th_td . '>';
+                          <' . $th_td . '>' . $key->value3_per . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value4_1 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value4_2 . '</' . $th_td . '>';
 
                     $response .= '</tr>';
                 }
@@ -247,12 +263,14 @@ class ReportGroupModel extends BaseModel
                 IF(value3_1>0,ROUND(value3_2/value3_1*100,2),0) as value3_per
                 FROM (SELECT report_name.row_id,row_number,row_name,IF(LENGTH(row_parent) > 0,0,1) AS row_parent, 
                                 value1_1, value1_2, value1_3, value1_total, value2_total,
-                                value2_1, value2_2, value3_total, value3_1, value3_2
+                                value2_1, value2_2, value3_total, value3_1, value3_2,
+                                value4_1, value4_2 
                             FROM (SELECT row_id, SUM(value1_1) as value1_1, SUM(value1_2) as value1_2,
                                   SUM(value1_3) as value1_3, SUM(value1_total) as value1_total,
                                   SUM(value2_total) as value2_total, SUM(value2_1) as value2_1,
                                   SUM(value2_2) as value2_2, SUM(value3_total) as value3_total,
-                                  SUM(value3_1) as value3_1, SUM(value3_2) as value3_2
+                                  SUM(value3_1) as value3_1, SUM(value3_2) as value3_2,
+                                  SUM(value4_1) as value4_1, SUM(value4_2) as value4_2  
                                   FROM report_group WHERE (report_month in (' . $list_month . ')) AND report_year = ? AND (group_id = ?)
                                  GROUP BY row_id) AS RG 
                         RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
@@ -282,7 +300,9 @@ class ReportGroupModel extends BaseModel
                           <' . $th_td . '>' . $key->value3_total . '</' . $th_td . '>
                           <' . $th_td . '>' . $key->value3_1 . '</' . $th_td . '>
                           <' . $th_td . '>' . $key->value3_2 . '</' . $th_td . '>
-                          <' . $th_td . '>' . $key->value3_per . '</' . $th_td . '>';
+                          <' . $th_td . '>' . $key->value3_per . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value4_1 . '</' . $th_td . '>
+                          <' . $th_td . '>' . $key->value4_2 . '</' . $th_td . '>';
 
                 $response .= '</tr>';
             }
@@ -321,6 +341,9 @@ class ReportGroupModel extends BaseModel
                 $update['value3_2'] = isset($item['value3_2']) ? $item['value3_2'] : 0;
                 $update['value3_total'] = (int)$update['value3_1'] + (int)$update['value3_2'];
                 $update['value3_per'] = (int)$update['value3_1'] > 0 ? round(((int)$update['value3_2'] / (int)$update['value3_1']) * 100, 2) : 0;
+                //
+                $update['value4_1'] = isset($item['value4_1']) ? $item['value4_1'] : 0;
+                $update['value4_2'] = isset($item['value4_2']) ? $item['value4_2'] : 0;
                 // total
                 $row_id = $group_row_id[0];
                 $update_total[$row_id]['value1_1'] += (int)$update['value1_1'];
@@ -330,6 +353,8 @@ class ReportGroupModel extends BaseModel
                 $update_total[$row_id]['value2_2'] += (int)$update['value2_2'];
                 $update_total[$row_id]['value3_1'] += (int)$update['value3_1'];
                 $update_total[$row_id]['value3_2'] += (int)$update['value3_2'];
+                $update_total[$row_id]['value4_1'] += (int)$update['value4_1'];
+                $update_total[$row_id]['value4_2'] += (int)$update['value4_2'];
                 //
                 $this->where('report_month', $update['report_month'])->where('report_year', $update['report_year'])
                     ->where('group_id', $update['group_id'])->where('row_id', $update['row_id']);
@@ -353,6 +378,8 @@ class ReportGroupModel extends BaseModel
                 $update_total[$item['row_id']]['value2_2'] = 0;
                 $update_total[$item['row_id']]['value3_1'] = 0;
                 $update_total[$item['row_id']]['value3_2'] = 0;
+                $update_total[$item['row_id']]['value4_1'] = 0;
+                $update_total[$item['row_id']]['value4_2'] = 0;
             }
         }
         // total
@@ -371,6 +398,8 @@ class ReportGroupModel extends BaseModel
             $update['value3_2'] = $item['value3_2'];
             $update['value3_total'] = (int)$update['value3_1'] + (int)$update['value3_2'];
             $update['value3_per'] = (int)$update['value3_1'] > 0 ? round(((int)$update['value3_2'] / (int)$update['value3_1']) * 100, 2) : 0;
+            $update['value4_1'] = $item['value4_1'];
+            $update['value4_2'] = $item['value4_2'];
             $this->where('report_month', $update['report_month'])->where('report_year', $update['report_year'])
                 ->where('group_id', $update['group_id'])->where('row_id', $update['row_id']);
             if ($this->find()) {

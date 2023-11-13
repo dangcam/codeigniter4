@@ -64,6 +64,7 @@
                                     <th colspan="4">Số hồ sơ phải giải quyết</th>
                                     <th colspan="4">Đã giải quyết</th>
                                     <th colspan="4">Đang giải quyết</th>
+                                    <th colspan="2">Số GCN đã cấp</th>
                                 </tr>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle">Kỳ trước chuyển sang</th>
@@ -78,6 +79,8 @@
                                     <th rowspan="2" style="vertical-align: middle">Trong hạn</th>
                                     <th rowspan="2" style="vertical-align: middle">Quá hạn</th>
                                     <th rowspan="2" style="vertical-align: middle">Tỷ lệ quá hạn (%)</th>
+                                    <th rowspan="2" style="vertical-align: middle">Cấp mới</th>
+                                    <th rowspan="2" style="vertical-align: middle">Chỉnh lý T3,4 GCN</th>
                                 </tr>
                                 <tr>
                                     <th>Trực tiếp</th>
