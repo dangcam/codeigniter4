@@ -44,8 +44,9 @@ return[
     'user_manager'=>'User Manager',
     'function_manager' => 'Function Management',
     'group_manager' => 'Group Management',
-    'report_group_manager' => 'Report Group',
-    'report_group_print' => 'Report Group View',
+    'report_group_manager' => 'Land records',
+    'report_group_print' => 'Report Land records',
+    'form_report' => 'Form Report',
 
 
     'add_data_unsuccessful' => 'Add data unsuccessful',

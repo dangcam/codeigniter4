@@ -68,16 +68,24 @@ abstract class BaseController extends Controller
             view($page,$data).
             view('layout/footer');
     }
-
+// https://www.industriavscovid.es/fonts/icon-font/demo.html
     public function silebar_view()
     {
         $response = '<li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon icon-single-content-03"></i><span class="nav-text">'.lang('AppLang.form_report').'</span>
+                        </a>
+                        <ul aria-expanded="false">';
+        if($this->libauth->checkFunction('report_group','add'))
+            $response .= '<li><a href="'.base_url().'dashboard/report_group">'.lang('AppLang.report_group_manager').'</a></li>';
+        $response   .='</ul>
+                       </li>';
+        $response .= '<li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon icon-book-open-2"></i><span class="nav-text">'.lang('AppLang.report').'</span>
                         </a>
                         <ul aria-expanded="false">';
-                        if($this->libauth->checkFunction('report_group','add'))
-                            $response .= '<li><a href="'.base_url().'dashboard/report_group">'.lang('AppLang.report_group_manager').'</a></li>';
+        if($this->libauth->checkFunction('report_group','view'))
                             $response .= '<li><a href="'.base_url().'dashboard/report_group/print">'.lang('AppLang.report_group_print').'</a></li>';
         $response   .='</ul>
                        </li>';

@@ -46,8 +46,9 @@ return[
     'user_manager'=>'Quản lý người dùng',
     'function_manager' => 'Quản lý chức năng',
     'group_manager' => 'Quản lý chi nhánh',
-    'report_group_manager' => 'Báo cáo chi nhánh',
-    'report_group_print' => 'Xem báo cáo',
+    'report_group_manager' => 'Hồ sơ đất đai',
+    'report_group_print' => 'BC Hồ sơ đất đai',
+    'form_report' => 'Biểu mẫu',
 
     'add_data_unsuccessful' => 'Thêm dữ liệu không thành công',
     'add_data_successful' => 'Thêm dữ liệu thành công',

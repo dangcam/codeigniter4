@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 13, 2023 lúc 10:33 AM
+-- Thời gian đã tạo: Th12 20, 2023 lúc 09:35 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -41,6 +41,7 @@ INSERT INTO `functions` (`function_id`, `function_name`, `function_status`) VALU
 ('function', 'function_manager', 1),
 ('group', 'group_manager', 1),
 ('report_group', 'report_group_manager', 1),
+('report_khac', 'report_khac', 1),
 ('user', 'user_manager', 1);
 
 -- --------------------------------------------------------
@@ -305,6 +306,31 @@ INSERT INTO `report_group` (`report_month`, `report_year`, `group_id`, `row_id`,
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `report_khac`
+--
+
+CREATE TABLE `report_khac` (
+  `report_month` int(11) NOT NULL,
+  `report_year` int(11) NOT NULL,
+  `group_id` varchar(20) NOT NULL,
+  `value1` int(11) NOT NULL,
+  `value2` int(11) NOT NULL,
+  `value3` int(11) NOT NULL,
+  `value4` int(11) NOT NULL,
+  `value5` int(11) NOT NULL,
+  `value6` int(11) NOT NULL,
+  `value7` int(11) NOT NULL,
+  `value8` int(11) NOT NULL,
+  `value9` int(11) NOT NULL,
+  `value10` int(11) NOT NULL,
+  `value11` int(11) NOT NULL,
+  `value12` int(11) NOT NULL,
+  `value13` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `report_name`
 --
 
@@ -468,6 +494,12 @@ ALTER TABLE `report_group`
   ADD PRIMARY KEY (`report_month`,`report_year`,`group_id`,`row_id`);
 
 --
+-- Chỉ mục cho bảng `report_khac`
+--
+ALTER TABLE `report_khac`
+  ADD PRIMARY KEY (`report_month`,`report_year`,`group_id`);
+
+--
 -- Chỉ mục cho bảng `report_name`
 --
 ALTER TABLE `report_name`
@@ -484,18 +516,11 @@ ALTER TABLE `users`
 -- Chỉ mục cho bảng `user_function`
 --
 ALTER TABLE `user_function`
-  ADD PRIMARY KEY (`user_id`,`function_id`),
-  ADD KEY `user_function_ibfk_2` (`function_id`);
+  ADD PRIMARY KEY (`user_id`,`function_id`);
 
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
-
---
--- Các ràng buộc cho bảng `functions`
---
-ALTER TABLE `functions`
-  ADD CONSTRAINT `function_user_function` FOREIGN KEY (`function_id`) REFERENCES `user_function` (`function_id`);
 
 --
 -- Các ràng buộc cho bảng `users`
