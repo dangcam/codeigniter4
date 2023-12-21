@@ -71,6 +71,13 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('data_report_group_print','Dashboard\ReportGroupController::data_report_group_print');
         $routes->post('save_report_group','Dashboard\ReportGroupController::save_report_group');
     });
+    $routes->group('report_khac',static function($routes){
+        $routes->get('/','Dashboard\ReportKhacController::index');
+        $routes->get('print','Dashboard\ReportKhacController::report_print');
+        $routes->post('data_report','Dashboard\ReportKhacController::data_report_group');
+        $routes->post('data_report_print','Dashboard\ReportKhacController::data_report__print');
+        $routes->post('save_report_group','Dashboard\ReportKhacController::save_report');
+    });
 });
 //$routes->post('login', 'Login::index');
 

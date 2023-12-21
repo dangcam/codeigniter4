@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 20, 2023 lúc 09:35 AM
+-- Thời gian đã tạo: Th12 21, 2023 lúc 10:21 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -461,6 +461,7 @@ INSERT INTO `user_function` (`user_id`, `function_id`, `function_view`, `functio
 ('admin', 'function', 1, 1, 1, 1),
 ('admin', 'group', 1, 1, 1, 1),
 ('admin', 'report_group', 1, 1, 1, 1),
+('admin', 'report_khac', 1, 1, 1, 1),
 ('admin', 'user', 1, 1, 1, 1),
 ('admin1', 'function', 0, 0, 0, 0),
 ('admin1', 'group', 0, 0, 0, 0),
@@ -517,24 +518,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_function`
   ADD PRIMARY KEY (`user_id`,`function_id`);
-
---
--- Các ràng buộc cho các bảng đã đổ
---
-
---
--- Các ràng buộc cho bảng `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `user_user_function` FOREIGN KEY (`user_id`) REFERENCES `user_function` (`user_id`),
-  ADD CONSTRAINT `users_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`);
-
---
--- Các ràng buộc cho bảng `user_function`
---
-ALTER TABLE `user_function`
-  ADD CONSTRAINT `user_function_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `user_function_ibfk_2` FOREIGN KEY (`function_id`) REFERENCES `functions` (`function_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

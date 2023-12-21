@@ -10,6 +10,7 @@ return[
     'page_user_function' => 'User Authorization',
     'page_user_info' => 'Info User',
     'page_title_report_group' => 'Summary of the reception and settlement of land documents',
+    'page_title_report_khac' => 'Table summarizing other data',
 
 
     'do_not_have_permission' => 'You do not have permission!',
@@ -47,6 +48,7 @@ return[
     'report_group_manager' => 'Land records',
     'report_group_print' => 'Report Land records',
     'form_report' => 'Form Report',
+    'report_khac' => 'Other Report',
 
 
     'add_data_unsuccessful' => 'Add data unsuccessful',

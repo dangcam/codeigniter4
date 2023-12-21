@@ -351,6 +351,7 @@
             event.preventDefault();
             $("#response_success").hide('fast');
             var formData = $(this).serialize();
+            console.log(formData);
             $.ajax({
                 url:"<?= base_url() ?>dashboard/userfunction/update",
                 method:"POST",
