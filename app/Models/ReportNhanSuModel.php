@@ -45,7 +45,7 @@ class ReportNhanSuModel extends BaseModel
                           <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value10]" value="'.$key->value10.'" class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value11]" value="'.$key->value11.'" class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value12]" value="'.$key->value12.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="text" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value13]" value="'.$key->value10.'"  class="form-control"></'.$th_td.'>';
+                          <'.$th_td.'><input type="text" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value13]" value="'.$key->value13.'"  class="form-control"></'.$th_td.'>';
 
             $response .= '</tr>';
         }

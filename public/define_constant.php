@@ -7,7 +7,7 @@ DEFINE('DB_NAME','qlbaocao');
 DEFINE('DB_PREFIX','');
 
 /** -------- CONFIG --------- **/
-DEFINE('BASE_URL','http://quanlybaocao.local');//
+DEFINE('BASE_URL','http://quanlybaocao.com');//
 DEFINE('DEFAULT_LANGUAGE','vi');
 DEFINE('PREFIX',MD5('DC_'));
 DEFINE('COOKIE_EXPIRY',86400);

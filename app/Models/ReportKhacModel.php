@@ -45,7 +45,7 @@ class ReportKhacModel extends BaseModel
                           <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value10]" value="'.$key->value10.'" class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value11]" value="'.$key->value11.'" class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value12]" value="'.$key->value12.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value13]" value="'.$key->value10.'" readonly class="form-control"></'.$th_td.'>';
+                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value13]" value="'.$key->value13.'" readonly class="form-control"></'.$th_td.'>';
 
             $response .= '</tr>';
         }
@@ -145,14 +145,13 @@ class ReportKhacModel extends BaseModel
         return 0;
 
     }
-    public function getListReportGroupPrint($data)
+    public function getListReportPrint($data)
     {
         $quarter_month = $data['quarter_month'];
         $report_month = $data['report_month'];
         $report_quarter = $data['report_quarter'];
         $report_year = $data['report_year'];
         $group_id = $data['group_id'];
-        $report_detail = $data['report_detail'];
 
         if ($quarter_month == 1) {
             $list_month = $report_month;

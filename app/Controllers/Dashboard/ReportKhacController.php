@@ -17,9 +17,8 @@ class ReportKhacController extends BaseController
         return $this->page_construct('dashboard/report_khac_view',$meta);
     }
     public function report_print(){
-        $data['list_group'] = $this->report_khac_model->getGroupParent($this->session->get('group_id'));
-        $meta = array('page_title'=>lang('AppLang.page_title_report_group'));
-        return $this->page_construct('dashboard/report_print',$meta,$data);
+        $meta = array('page_title'=>lang('AppLang.page_title_report_khac'));
+        return $this->page_construct('dashboard/report_khac_print',$meta);
     }
     public function data_report()
     {
@@ -37,7 +36,7 @@ class ReportKhacController extends BaseController
         if($this->request->getPost())
         {
             $data = $this->request->getPost();
-            $return_value = $this->report_khac_model->getListReportGroupPrint($data);
+            $return_value = $this->report_khac_model->getListReportPrint($data);
             echo json_encode(array_values($return_value));
         }else {
             echo json_encode(array_values('No Data'));
