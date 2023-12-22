@@ -11,6 +11,7 @@ return[
     'page_user_info' => 'Info User',
     'page_title_report_group' => 'Summary of the reception and settlement of land documents',
     'page_title_report_khac' => 'Table summarizing other data',
+    'page_title_report_nhansu' => 'Summary table of personnel data',
 
 
     'do_not_have_permission' => 'You do not have permission!',
@@ -49,6 +50,7 @@ return[
     'report_group_print' => 'Report Land records',
     'form_report' => 'Form Report',
     'report_khac' => 'Other Report',
+    'report_nhansu' => 'HR Report',
 
 
     'add_data_unsuccessful' => 'Add data unsuccessful',

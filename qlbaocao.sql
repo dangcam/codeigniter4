@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 21, 2023 lúc 10:21 AM
+-- Thời gian đã tạo: Th12 22, 2023 lúc 10:20 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -42,6 +42,7 @@ INSERT INTO `functions` (`function_id`, `function_name`, `function_status`) VALU
 ('group', 'group_manager', 1),
 ('report_group', 'report_group_manager', 1),
 ('report_khac', 'report_khac', 1),
+('report_nhansu', 'report_nhansu', 1),
 ('user', 'user_manager', 1);
 
 -- --------------------------------------------------------
@@ -328,6 +329,24 @@ CREATE TABLE `report_khac` (
   `value13` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `report_khac`
+--
+
+INSERT INTO `report_khac` (`report_month`, `report_year`, `group_id`, `value1`, `value2`, `value3`, `value4`, `value5`, `value6`, `value7`, `value8`, `value9`, `value10`, `value11`, `value12`, `value13`) VALUES
+(12, 2023, 'vpddbd', 10, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddbdp', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddbgm', 1, 2, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddbl', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddct', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpdddp', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpdddx', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddhq', 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddln', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddpl', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddpr', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 2023, 'vpddt', 13, 2, 9, 7, 2, 0, 10, 0, 0, 0, 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -415,6 +434,49 @@ INSERT INTO `report_name` (`row_id`, `row_name`, `row_parent`, `row_number`) VAL
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `report_nhansu`
+--
+
+CREATE TABLE `report_nhansu` (
+  `report_month` int(11) NOT NULL,
+  `report_year` int(11) NOT NULL,
+  `group_id` varchar(20) NOT NULL,
+  `value1` int(11) NOT NULL,
+  `value2` int(11) NOT NULL,
+  `value3` int(11) NOT NULL,
+  `value4` int(11) NOT NULL,
+  `value5` int(11) NOT NULL,
+  `value6` int(11) NOT NULL,
+  `value7` int(11) NOT NULL,
+  `value8` int(11) NOT NULL,
+  `value9` int(11) NOT NULL,
+  `value10` int(11) NOT NULL,
+  `value11` int(11) NOT NULL,
+  `value12` int(11) NOT NULL,
+  `value13` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `report_nhansu`
+--
+
+INSERT INTO `report_nhansu` (`report_month`, `report_year`, `group_id`, `value1`, `value2`, `value3`, `value4`, `value5`, `value6`, `value7`, `value8`, `value9`, `value10`, `value11`, `value12`, `value13`) VALUES
+(12, 2023, 'vpddbd', 10, 1, 9, 1, 0, 0, 1, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddbdp', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddbgm', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddbl', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddct', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpdddp', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpdddx', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddhq', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddln', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddpl', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddpr', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'),
+(12, 2023, 'vpddt', 10, 1, 9, 1, 0, 0, 1, 0, 0, 0, 0, 0, '');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `users`
 --
 
@@ -462,6 +524,7 @@ INSERT INTO `user_function` (`user_id`, `function_id`, `function_view`, `functio
 ('admin', 'group', 1, 1, 1, 1),
 ('admin', 'report_group', 1, 1, 1, 1),
 ('admin', 'report_khac', 1, 1, 1, 1),
+('admin', 'report_nhansu', 1, 1, 1, 1),
 ('admin', 'user', 1, 1, 1, 1),
 ('admin1', 'function', 0, 0, 0, 0),
 ('admin1', 'group', 0, 0, 0, 0),
@@ -505,6 +568,12 @@ ALTER TABLE `report_khac`
 --
 ALTER TABLE `report_name`
   ADD PRIMARY KEY (`row_id`);
+
+--
+-- Chỉ mục cho bảng `report_nhansu`
+--
+ALTER TABLE `report_nhansu`
+  ADD PRIMARY KEY (`report_month`,`report_year`,`group_id`);
 
 --
 -- Chỉ mục cho bảng `users`

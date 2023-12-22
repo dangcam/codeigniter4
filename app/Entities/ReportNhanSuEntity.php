@@ -2,7 +2,7 @@
 namespace App\Entities;
 use CodeIgniter\Entity\Entity;
 
-class ReportKhacEntity extends Entity{
+class ReportNhanSuEntity extends Entity{
     protected $report_month;
     protected $report_year ;
     protected $group_id;

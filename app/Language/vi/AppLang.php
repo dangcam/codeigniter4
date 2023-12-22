@@ -11,6 +11,7 @@ return[
     'page_user_info' => 'Thông tin cá nhân',
     'page_title_report_group' => 'Biểu tổng hợp công tác tiếp nhận và giải quyết HS đất đai',
     'page_title_report_khac' => 'Biểu tổng hợp số liệu khác',
+    'page_title_report_nhansu' => 'Biểu tổng hợp số liệu nhân sự',
 
 
     'do_not_have_permission' => 'Bạn không có quyền thực hiện chức năng này!',
@@ -51,6 +52,7 @@ return[
     'report_group_print' => 'BC Hồ sơ đất đai',
     'form_report' => 'Biểu mẫu',
     'report_khac' => 'Báo cáo khác',
+    'report_nhansu' => 'Báo cáo nhân sự',
 
     'add_data_unsuccessful' => 'Thêm dữ liệu không thành công',
     'add_data_successful' => 'Thêm dữ liệu thành công',
