@@ -98,6 +98,7 @@ class ReportGroupModel extends BaseModel
         if ($array_parent != '') { // tổng hợp chi nhánh lớn
             if($report_detail == 2) {
                 //
+
                 $sql = 'SELECT RGN.row_id,row_name, RGN.group_id, group_name, row_number,
                             value1_1, value1_2, value1_3, value1_total, value2_total,
                             value2_1, value2_2, value3_total, value3_1, value3_2,
@@ -107,7 +108,7 @@ class ReportGroupModel extends BaseModel
                     FROM groups RIGHT JOIN
                     (SELECT RN.row_id,row_number,row_name,row_parent, group_id,
                         value1_1, value1_2, value1_3, value1_total, value2_total,
-                        value2_1, value2_2, value3_total, value3_1, value3_2
+                        value2_1, value2_2, value3_total, value3_1, value3_2, value4_1, value4_2 
                         FROM (SELECT row_id,group_id, SUM(value1_1) as value1_1, SUM(value1_2) as value1_2,
                                     SUM(value1_3) as value1_3, SUM(value1_total) as value1_total,
                                     SUM(value2_total) as value2_total, SUM(value2_1) as value2_1,
@@ -117,6 +118,7 @@ class ReportGroupModel extends BaseModel
                         FROM report_group WHERE report_month IN (' . $list_month . ') AND group_id IN (\'' . $array_parent . '\') AND report_year = ? GROUP BY row_id,group_id) AS RG
                     RIGHT JOIN (SELECT * FROM report_name WHERE row_parent = \'\') AS RN ON RG.row_id = RN.row_id) AS RGN
                     ON groups.group_id = RGN.group_id';
+
                 $result = $this->db->query($sql, [$report_year])->getResult();
                 $i = 0;
                 $row_id = '';
