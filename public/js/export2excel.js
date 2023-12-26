@@ -133,6 +133,135 @@ async function export_word(title_group,title_month_year,title_report,myData){
 	fileDownload.click();
 	document.body.removeChild(fileDownload);
 }
+//
+async function export_excel_khac(title_group,title_month_year,title_report,myData){
+	const title = {
+		border: false,
+		height: 35,
+		font: { name: 'Times New Roman',size: 12, bold: true},
+		alignment: { horizontal: 'center', vertical: 'middle' , wrapText: true},
+	};
+	const header = {
+		border: true,
+		font: {  name: 'Times New Roman', size: 12, bold: true },
+		alignment: { horizontal: 'center', vertical: 'middle', wrapText: true },
+	};
+	const data = {
+		border: true,
+		font: { name: 'Times New Roman',size: 12, bold: false },
+		alignment: { horizontal: 'center', vertical: 'middle', wrapText: true },
+		fill: null,
+	};
+	let wb = new ExcelJS.Workbook();
+	let ws = wb.addWorksheet('Export');
+	widths = [{ width: 5 },{ width: 25 },{ width: 10 },{ width: 7 },{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },
+		{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },{ width: 7 },{ width: 10 },{ width: 10 }];
+	ws.columns = widths;
+	// Tiêu đề
+	let row = ws.addRow();
+	mergeCells(ws, row, 1, 7);
+	row.getCell(1).value = title_report+"\n"+title_group;
+	mergeCells(ws, row, 8, 15);
+	row.getCell(8).value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc";
+	set_section_row(row,title);
+	row = ws.addRow();
+	mergeCells(ws, row, 1, 15);
+	row.getCell(1).value = "BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI";
+	set_section_row(row,title);
+	row.font = {name: 'Times New Roman', size: 14, bold: true};
+	row.alignment = {horizontal: 'center',vertical:'bottom'}
+	row = ws.addRow();
+	mergeCells(ws, row, 1, 15);
+	row.getCell(1).value = title_month_year;
+	row.font = {name: 'Times New Roman', size: 12, italic: true, bold: true};
+	row.alignment = { horizontal: 'center', vertical: 'middle' , wrapText: true};
+	// header
+	row_header(ws,'A4:A6','A4','STT',header);
+	row_header(ws,'B4:B6','B4','Chi nhánh',header);
+
+	row_header(ws,'C4:G4','C4','Đo đạc',header);
+	row_header(ws,'C5:C6','C5','Hồ sơ trích đo, trích lục địa chính thửa đất',header);
+	row_header(ws,'D5:D6','D5','Kiểm tra hồ sơ trích đo địa chính thửa đất',header);
+	row_header(ws,'E5:G5','G5','Kiểm tra kết quả đo đạc của các cty',header);
+	row_header(ws,'E6:E6','E6','Tổng',header);
+	row_header(ws,'F6:F6','F6','Đạt',header);
+	row_header(ws,'G6:G6','G6','Không đạt',header);
+
+	row_header(ws,'H4:J4','H4','Cơ sở dữ liệu và lưu trữ',header);
+	row_header(ws,'H5:H6','H5','Scan',header);
+	row_header(ws,'I5:I6','I5','Cập nhật chỉnh lý biến động',header);
+	row_header(ws,'J5:J6','J5','Cung cấp thông tin ',header);
+
+	row_header(ws,'K4:M4','K4','Công tác cấp GCN',header);
+	row_header(ws,'K5:K6','K5','Hồ sơ cấp mới',header);
+	row_header(ws,'L5:M5','L5','Chỉnh lý biến động',header);
+	row_header(ws,'L6:L6','L6','Chi nhánh',header);
+	row_header(ws,'M6:M6','M6','Tỉnh',header);
+
+	row_header(ws,'N4:O5','N4','Thanh toán trực tuyến',header);
+	row_header(ws,'N6:N6','N6','Số giao dịch',header);
+	row_header(ws,'O6:O6','O6','Số tiền',header);
+	//
+	const rowValues = [];
+	let i = 0;
+	for(let i = 0;i<myData.length;i++){
+		rowValues[2] = myData[i]['group_name'];
+		rowValues[3] = myData[i]['value1'];
+		rowValues[4] = myData[i]['value2'];
+		rowValues[5] = myData[i]['value3'];
+		rowValues[6] = myData[i]['value4'];
+		rowValues[7] = myData[i]['value5'];
+		rowValues[8] = myData[i]['value6'];
+		rowValues[9] = myData[i]['value7'];
+		rowValues[10] = myData[i]['value8'];
+		rowValues[11] = myData[i]['value9'];
+		rowValues[12] = myData[i]['value10'];
+		rowValues[13] = myData[i]['value11'];
+		rowValues[14] = myData[i]['value12'];
+		rowValues[15] = myData[i]['value13'];
+		if(myData[i]['group_name'] == 'Tổng'){
+			rowValues[1] = '';
+			addRow(ws,rowValues,header);
+			i = 0;
+		}else {
+			rowValues[1] = i;
+			addRow(ws,rowValues,data);
+		}
+
+
+	}
+	/*
+	myData.forEach((rowData) => {
+		rowValues[2] = rowData['group_name'];
+		rowValues[3] = rowData['value1'];
+		rowValues[4] = rowData['value2'];
+		rowValues[5] = rowData['value3'];
+		rowValues[6] = rowData['value4'];
+		rowValues[7] = rowData['value5'];
+		rowValues[8] = rowData['value6'];
+		rowValues[9] = rowData['value7'];
+		rowValues[10] = rowData['value8'];
+		rowValues[11] = rowData['value9'];
+		rowValues[12] = rowData['value10'];
+		rowValues[13] = rowData['value11'];
+		rowValues[14] = rowData['value12'];
+		rowValues[15] = rowData['value13'];
+		i++;
+		if(rowData['group_name'] == 'Tổng'){
+			rowValues[1] = '';
+			addRow(ws,rowValues,header);
+			i = 0;
+		}else {
+			rowValues[1] = i;
+			addRow(ws,rowValues,data);
+		}
+	});
+	 */
+	//
+	const buf = await wb.xlsx.writeBuffer();
+	saveAs(new Blob([buf]), `${title_group}_${title_month_year}.xlsx`);
+}
+//
 async function export_excel(title_group,title_month_year,title_report,myData){
 	const title = {
 		border: false,
@@ -154,23 +283,23 @@ async function export_excel(title_group,title_month_year,title_report,myData){
 	let wb = new ExcelJS.Workbook();
 	let ws = wb.addWorksheet('Export');
 	widths = [{ width: 5 },{ width: 25 },{ width: 10 },{ width: 7 },{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },
-				{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },{ width: 7 },{ width: 10 },];
+		{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },];
 	ws.columns = widths;
 	// Tiêu đề
 	let row = ws.addRow();
-	mergeCells(ws, row, 1, 7);
+	mergeCells(ws, row, 1, 8);
 	row.getCell(1).value = title_report+"\n"+title_group;
-	mergeCells(ws, row, 8, 14);
+	mergeCells(ws, row, 9, 16);
 	row.getCell(8).value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc";
 	set_section_row(row,title);
 	row = ws.addRow();
-	mergeCells(ws, row, 1, 14);
+	mergeCells(ws, row, 1, 16);
 	row.getCell(1).value = "BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI";
 	set_section_row(row,title);
 	row.font = {name: 'Times New Roman', size: 14, bold: true};
 	row.alignment = {horizontal: 'center',vertical:'bottom'}
 	row = ws.addRow();
-	mergeCells(ws, row, 1, 14);
+	mergeCells(ws, row, 1, 16);
 	row.getCell(1).value = title_month_year;
 	row.font = {name: 'Times New Roman', size: 12, italic: true, bold: true};
 	row.alignment = { horizontal: 'center', vertical: 'middle' , wrapText: true};
@@ -438,3 +567,4 @@ function columnToLetter(column) {
 	}
 	return letter;
 }
+

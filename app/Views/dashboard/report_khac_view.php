@@ -77,8 +77,8 @@
                                     <th rowspan="2" style="vertical-align: middle">Hồ sơ cấp mới</th>
                                     <th colspan="2">Chỉnh lý biến động</th>
 
-                                    <th rowspan="2" style="vertical-align: middle">Hồ sơ</th>
-                                    <th rowspan="2" style="vertical-align: middle">Tỷ lệ</th>
+                                    <th rowspan="2" style="vertical-align: middle">Số giao dịch</th>
+                                    <th rowspan="2" style="vertical-align: middle">Số tiền</th>
                                 </tr>
                                 <tr>
                                     <th style="vertical-align: middle">Tổng</th>

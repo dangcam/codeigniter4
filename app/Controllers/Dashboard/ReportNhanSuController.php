@@ -19,7 +19,7 @@ class ReportNhanSuController extends BaseController
     public function report_print(){
         $data['list_group'] = $this->report_nhansu_model->getGroupParent($this->session->get('group_id'));
         $meta = array('page_title'=>lang('AppLang.page_title_report_group'));
-        return $this->page_construct('dashboard/report_print',$meta,$data);
+        return $this->page_construct('dashboard/report_nhansu_print',$meta,$data);
     }
     public function data_report()
     {

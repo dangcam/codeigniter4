@@ -3,7 +3,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-12 p-md-0">
                 <div class="welcome-text">
-                    <h4><?=lang('AppLang.page_title_report_khac')?></h4>
+                    <h4><?=lang('AppLang.page_title_report_nhansu')?></h4>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                             <br/>
                             <div class="row" style="text-align:center">
                                 <div class="col-md-12">
-                                    <h4 >BIỂU TỔNG HỢP SỐ LIỆU KHÁC</h4>
+                                    <h4 >BIỂU TỔNG HỢP SỐ LIỆU NHÂN SỰ</h4>
                                 </div>
                                 <div class="col-md-12">
                                     <h5 ><i id="title_month_year">Tháng 5 Năm 2023</i></h5>
@@ -96,37 +96,33 @@
                                 <table class="table table-hover table-bordered table-striped table-responsive-sm">
                                     <thead style="text-align:center" >
                                     <tr>
-                                        <th rowspan="3" style="vertical-align: middle">STT</th>
-                                        <th rowspan="3" style="vertical-align: middle">Chi nhánh</th>
-                                        <th colspan="5">Đo đạc</th>
-                                        <th colspan="3">Cơ sở dữ liệu và lưu trữ</th>
-                                        <th colspan="3">Công tác cấp GCN</th>
-                                        <th colspan="2">Thanh toán trực tuyến</th>
+                                        <th rowspan="2" style="vertical-align: middle">STT</th>
+                                        <th rowspan="2" style="vertical-align: middle">Chi nhánh</th>
+                                        <th colspan="3">Hiện trạng</th>
+                                        <th colspan="7">Tình hình biến động nhân sự</th>
+                                        <th colspan="2">Nâng lương</th>
+                                        <th rowspan="2" style="vertical-align: middle">Ghi chú</th>
                                     </tr>
                                     <tr>
-                                        <th rowspan="2" style="vertical-align: middle">Hồ sơ trích đo, trích lục địa chính thửa đất</th>
-                                        <th rowspan="2" style="vertical-align: middle">Kiểm tra hồ sơ trích đo địa chính thửa đất</th>
-                                        <th colspan="3">Kiểm tra kết quả đo đạc của các cty </th>
+                                        <th rowspan="1" style="vertical-align: middle">Tổng</th>
+                                        <th rowspan="1" style="vertical-align: middle">Viên chức</th>
+                                        <th rowspan="1" style="vertical-align: middle">NLĐ</th>
 
-                                        <th rowspan="2" style="vertical-align: middle">Scan</th>
-                                        <th rowspan="2" style="vertical-align: middle">Cập nhật chỉnh lý biến động</th>
-                                        <th rowspan="2" style="vertical-align: middle">Cung cấp thông tin</th>
-                                        <th rowspan="2" style="vertical-align: middle">Hồ sơ cấp mới</th>
-                                        <th colspan="2">Chỉnh lý biến động</th>
+                                        <th rowspan="1" style="vertical-align: middle">Tiếp nhận </th>
+                                        <th rowspan="1" style="vertical-align: middle">Ký HĐLĐ</th>
+                                        <th rowspan="1" style="vertical-align: middle">Miễn nhiệm</th>
+                                        <th rowspan="1" style="vertical-align: middle">Bổ nhiệm</th>
+                                        <th colspan="1">Chấm dứt HĐLĐ</th>
+                                        <th rowspan="1" style="vertical-align: middle">Điều động luân chuyên</th>
+                                        <th rowspan="1" style="vertical-align: middle">Kỉ luật</th>
 
-                                        <th rowspan="2" style="vertical-align: middle">Số giao dịch</th>
-                                        <th rowspan="2" style="vertical-align: middle">Số tiền</th>
+                                        <th rowspan="1" style="vertical-align: middle">Trước hạn</th>
+                                        <th rowspan="1" style="vertical-align: middle">Thường xuyên</th>
                                     </tr>
-                                    <tr>
-                                        <th style="vertical-align: middle">Tổng</th>
-                                        <th style="vertical-align: middle">Đạt</th>
-                                        <th  style="vertical-align: middle">Không đạt</th>
-                                        <th  style="vertical-align: middle">Chi nhánh</th>
-                                        <th  style="vertical-align: middle">Tỉnh</th>
 
-                                    </tr>
                                     </thead>
                                     <tbody id ="data_table">
+                                    <?php //echo $data_table?>
                                     </tbody>
                                 </table>
                             </div>
