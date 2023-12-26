@@ -134,6 +134,131 @@ async function export_word(title_group,title_month_year,title_report,myData){
 	document.body.removeChild(fileDownload);
 }
 //
+async function export_excel_nhansu(title_group,title_month_year,title_report,myData){
+	const title = {
+		border: false,
+		height: 35,
+		font: { name: 'Times New Roman',size: 12, bold: true},
+		alignment: { horizontal: 'center', vertical: 'middle' , wrapText: true},
+	};
+	const header = {
+		border: true,
+		font: {  name: 'Times New Roman', size: 12, bold: true },
+		alignment: { horizontal: 'center', vertical: 'middle', wrapText: true },
+	};
+	const data = {
+		border: true,
+		font: { name: 'Times New Roman',size: 12, bold: false },
+		alignment: { horizontal: 'center', vertical: 'middle', wrapText: true },
+		fill: null,
+	};
+	let wb = new ExcelJS.Workbook();
+	let ws = wb.addWorksheet('Export');
+	widths = [{ width: 5 },{ width: 25 },{ width: 10 },{ width: 7 },{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },
+		{ width: 7 },{ width: 10 },{ width: 10 },{ width: 10 },{ width: 7 },{ width: 10 },{ width: 10 }];
+	ws.columns = widths;
+	// Tiêu đề
+	let row = ws.addRow();
+	mergeCells(ws, row, 1, 7);
+	row.getCell(1).value = title_report+"\n"+title_group;
+	mergeCells(ws, row, 8, 15);
+	row.getCell(8).value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc";
+	set_section_row(row,title);
+	row = ws.addRow();
+	mergeCells(ws, row, 1, 15);
+	row.getCell(1).value = "BIỂU TỔNG HỢP CÔNG TÁC TIẾP NHẬN VÀ GIẢI QUYẾT HỒ SƠ ĐẤT ĐAI";
+	set_section_row(row,title);
+	row.font = {name: 'Times New Roman', size: 14, bold: true};
+	row.alignment = {horizontal: 'center',vertical:'bottom'}
+	row = ws.addRow();
+	mergeCells(ws, row, 1, 15);
+	row.getCell(1).value = title_month_year;
+	row.font = {name: 'Times New Roman', size: 12, italic: true, bold: true};
+	row.alignment = { horizontal: 'center', vertical: 'middle' , wrapText: true};
+	// header
+	row_header(ws,'A4:A5','A4','STT',header);
+	row_header(ws,'B4:B5','B4','Chi nhánh',header);
+
+	row_header(ws,'C4:E4','C4','Hiện trạng',header);
+	row_header(ws,'C5:C5','C5','Tổng',header);
+	row_header(ws,'D5:D5','D5','Viên chức',header);
+	row_header(ws,'E5:E5','E5','NLĐ',header);
+
+	row_header(ws,'F4:L4','F4','Tình hình biến động nhân sự',header);
+	row_header(ws,'F5:F5','F5','Tiếp nhận',header);
+	row_header(ws,'G5:G5','G5','Ký HĐLĐ',header);
+	row_header(ws,'H5:H5','H5','Miễn nhiệm',header);
+	row_header(ws,'I5:I5','I5','Bổ nhiệm',header);
+	row_header(ws,'J5:J5','J5','Chấm dứt HĐLĐ',header);
+	row_header(ws,'K5:K5','K5','Điều động luân chuyển',header);
+	row_header(ws,'L5:L5','L5','Kỉ luật',header);
+
+	row_header(ws,'M4:N4','N4','Nâng lương',header);
+	row_header(ws,'M5:M5','M5','Trước hạn',header);
+	row_header(ws,'N5:N5','N5','Thường xuyên',header);
+
+	row_header(ws,'O4:O5','O4','Ghi chú',header);
+	//
+	const rowValues = [];
+	let i = 0;
+	for(let i = 0;i<myData.length;i++){
+		rowValues[2] = myData[i]['group_name'];
+		rowValues[3] = myData[i]['value1'];
+		rowValues[4] = myData[i]['value2'];
+		rowValues[5] = myData[i]['value3'];
+		rowValues[6] = myData[i]['value4'];
+		rowValues[7] = myData[i]['value5'];
+		rowValues[8] = myData[i]['value6'];
+		rowValues[9] = myData[i]['value7'];
+		rowValues[10] = myData[i]['value8'];
+		rowValues[11] = myData[i]['value9'];
+		rowValues[12] = myData[i]['value10'];
+		rowValues[13] = myData[i]['value11'];
+		rowValues[14] = myData[i]['value12'];
+		rowValues[15] = myData[i]['value13'];
+		if(myData[i]['group_name'] == 'Tổng'){
+			rowValues[1] = '';
+			addRow(ws,rowValues,header);
+			i = 0;
+		}else {
+			rowValues[1] = i;
+			addRow(ws,rowValues,data);
+		}
+
+
+	}
+	/*
+	myData.forEach((rowData) => {
+		rowValues[2] = rowData['group_name'];
+		rowValues[3] = rowData['value1'];
+		rowValues[4] = rowData['value2'];
+		rowValues[5] = rowData['value3'];
+		rowValues[6] = rowData['value4'];
+		rowValues[7] = rowData['value5'];
+		rowValues[8] = rowData['value6'];
+		rowValues[9] = rowData['value7'];
+		rowValues[10] = rowData['value8'];
+		rowValues[11] = rowData['value9'];
+		rowValues[12] = rowData['value10'];
+		rowValues[13] = rowData['value11'];
+		rowValues[14] = rowData['value12'];
+		rowValues[15] = rowData['value13'];
+		i++;
+		if(rowData['group_name'] == 'Tổng'){
+			rowValues[1] = '';
+			addRow(ws,rowValues,header);
+			i = 0;
+		}else {
+			rowValues[1] = i;
+			addRow(ws,rowValues,data);
+		}
+	});
+	 */
+	//
+	const buf = await wb.xlsx.writeBuffer();
+	saveAs(new Blob([buf]), `${title_group}_${title_month_year}.xlsx`);
+}
+//
 async function export_excel_khac(title_group,title_month_year,title_report,myData){
 	const title = {
 		border: false,
