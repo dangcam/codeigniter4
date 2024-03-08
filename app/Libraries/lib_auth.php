@@ -12,7 +12,6 @@ class lib_auth
         $this->db = \Config\Database::connect();
         $this->listFunctions = $this->getFuntionUser(session()->get('user_id'));
     }
-
     public function check()
     {
         if($this->session->get('user_id'))
@@ -20,6 +19,7 @@ class lib_auth
         if(get_cookie('user_id')){
             $this->session->set('user_id',get_cookie('user_id'));
             $this->session->set('group_id',get_cookie('group_id'));
+            $this->session->set('user_system',get_cookie('user_system'));
             return true;
         }
         return false;
@@ -28,6 +28,7 @@ class lib_auth
         $this->session->destroy();
         delete_cookie('user_id');
         delete_cookie('group_id');
+        delete_cookie('user_system');
         return redirect()->to(base_url('/'))->withCookies();
     }
     public function getFuntionUser($user_id = false)

@@ -183,7 +183,6 @@ class UserModel Extends BaseModel
         $records = $this->find();
 
         $data = array();
-
         foreach($records as $record ){
 
             $data[] = array(
@@ -200,7 +199,7 @@ class UserModel Extends BaseModel
                             gender ="'.$record->gender.'" email ="'.$record->email.'" phonenumber ="'.$record->phonenumber.'" group_id ="'.$record->group_id.'"
                             user_status ="'.$record->user_status.'"
                                 data-placement="top" title="'.lang('AppLang.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
-                            <a href="#" class="mr-2 user_function" user_id="'.$record->user_id.'" system="'.$record->system.'" data-toggle="modal" data-placement="top" title="'.lang('AppLang.user_function').'">
+                            <a href="#" class="mr-2 user_function" user_id="'.$record->user_id.'" system="'.$this->session->get('user_system').'" data-toggle="modal" data-placement="top" title="'.lang('AppLang.user_function').'">
                             <i class="fa fa-gear color-muted"></i></a>
                             <a href="#" data-toggle="modal" data-target="#smallModal"
                                 data-placement="top" title="'.lang('AppLang.delete').'" data-user_id="'.$record->user_id.'">
@@ -335,11 +334,12 @@ class UserModel Extends BaseModel
         }
         $this->session->set('user_id',$user_id);
         $this->session->set('group_id',$records->group_id);
-
+        $this->session->set('user_system',$records->system);
         if($remember)
         {
             set_cookie('user_id',$user_id,COOKIE_EXPIRY);
             set_cookie('group_id',$records->group_id,COOKIE_EXPIRY);
+            set_cookie('user_system',$records->system,COOKIE_EXPIRY);
         }
         return 0;
     }
