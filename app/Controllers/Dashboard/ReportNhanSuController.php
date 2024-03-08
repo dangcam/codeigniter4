@@ -37,7 +37,7 @@ class ReportNhanSuController extends BaseController
         if($this->request->getPost())
         {
             $data = $this->request->getPost();
-            $return_value = $this->report_nhansu_model->getListReportGroupPrint($data);
+            $return_value = $this->report_nhansu_model->getListReportPrint($data);
             echo json_encode(array_values($return_value));
         }else {
             echo json_encode(array_values('No Data'));

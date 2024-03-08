@@ -144,7 +144,7 @@
             var title_group = document.getElementById('title_group');
             var title_month_year = document.getElementById('title_month_year');
             var title_report = document.getElementById('title_report');
-            export_excel_khac(title_group.innerText,title_month_year.innerText,title_report.innerText,myData);
+            export_excel_nhansu(title_group.innerText,title_month_year.innerText,title_report.innerText,myData);
         });
 
         $('#report_month').show('fast');
@@ -190,7 +190,7 @@
             var group_id = $('#group_id').val();
 
             $.ajax({
-                url: "<?= base_url() ?>dashboard/report_khac/data_report_print",
+                url: "<?= base_url() ?>dashboard/report_nhansu/data_report_print",
                 method: "POST",
                 dataType: "json",
                 data: {report_month: month,report_year: year,group_id: group_id,report_quarter: quarter,quarter_month:quarter_month},
