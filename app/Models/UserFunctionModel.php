@@ -9,13 +9,15 @@ class UserFunctionModel Extends BaseModel
     protected $protectFields = false;
     protected $returnType = UserFunctionEntity::class;
 
-    public function getListUserFunction($user_id)
+    public function getListUserFunction($user_id,$system)
     {
         if(!isset($user_id))
             $user_id = $this->session->get('user_id');
-        $sql = 'SELECT * FROM (SELECT * FROM user_function WHERE user_id = ?) AS UF RIGHT JOIN functions ON functions.function_id = UF.function_id';
+        if(!isset($system))
+            $system = 0;
+        $sql = 'SELECT * FROM (SELECT * FROM user_function WHERE user_id = ?) AS UF RIGHT JOIN (SELECT * FROM functions WHERE system = ? OR system =0) FF ON FF.function_id = UF.function_id';
 
-        $result = $this->db->query($sql,[$user_id])->getResult();
+        $result = $this->db->query($sql,[$user_id,$system])->getResult();
         $i=0;
         $response = '';
         foreach ($result as $key) {

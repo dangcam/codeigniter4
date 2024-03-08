@@ -20,7 +20,8 @@ class UserFunctionController extends BaseController
     {
         if ($this->request->getPost()) {
             $user_id = $this->request->getPost()['user_id'];
-            echo $this->userfunction_model->getListUserFunction($user_id);
+            $system = $this->request->getPost()['system'];
+            echo $this->userfunction_model->getListUserFunction($user_id,$system);
         }
     }
     public function update()

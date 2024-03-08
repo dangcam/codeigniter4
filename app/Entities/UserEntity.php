@@ -13,4 +13,5 @@ class UserEntity extends Entity
     protected $phonenumber;
     protected $group_id;
     protected $user_status;
+    protected $system;
 }

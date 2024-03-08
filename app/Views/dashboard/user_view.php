@@ -334,10 +334,11 @@
         });
         $("#data-table").on('click', '.user_function', function(event){
             var user_id =  $(this).attr("user_id");
+            var system =$(this).attr("system");
             $.ajax({
                 url: '<?= base_url() ?>dashboard/userfunction',
                 type: 'post',
-                data: {user_id: user_id},
+                data: {user_id: user_id,system:system},
                 success: function(response){
                     // Add response in Modal body
                     $('.data_table').html(response);

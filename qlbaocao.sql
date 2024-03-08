@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 22, 2023 lúc 10:20 AM
+-- Thời gian đã tạo: Th3 08, 2024 lúc 09:54 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -30,20 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `functions` (
   `function_id` varchar(20) NOT NULL,
   `function_name` varchar(100) NOT NULL,
-  `function_status` tinyint(2) NOT NULL
+  `function_status` tinyint(2) NOT NULL,
+  `system` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `functions`
 --
 
-INSERT INTO `functions` (`function_id`, `function_name`, `function_status`) VALUES
-('function', 'function_manager', 1),
-('group', 'group_manager', 1),
-('report_group', 'report_group_manager', 1),
-('report_khac', 'report_khac', 1),
-('report_nhansu', 'report_nhansu', 1),
-('user', 'user_manager', 1);
+INSERT INTO `functions` (`function_id`, `function_name`, `function_status`, `system`) VALUES
+('function', 'function_manager', 1, 1),
+('group', 'group_manager', 1, 1),
+('report_group', 'report_group_manager', 1, 0),
+('report_khac', 'report_khac', 1, 0),
+('report_nhansu', 'report_nhansu', 1, 0),
+('user', 'user_manager', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -345,7 +346,7 @@ INSERT INTO `report_khac` (`report_month`, `report_year`, `group_id`, `value1`, 
 (12, 2023, 'vpddln', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (12, 2023, 'vpddpl', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (12, 2023, 'vpddpr', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(12, 2023, 'vpddt', 13, 2, 9, 7, 2, 0, 10, 0, 0, 0, 0, 0, 0);
+(12, 2023, 'vpddt', 13, 2, 9, 7, 2, 0, 10, 0, 0, 0, 0, 0, 100000);
 
 -- --------------------------------------------------------
 
@@ -488,17 +489,19 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `phonenumber` varchar(15) NOT NULL,
   `group_id` varchar(10) NOT NULL,
-  `user_status` int(11) NOT NULL
+  `user_status` int(11) NOT NULL,
+  `system` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `password`, `gender`, `email`, `phonenumber`, `group_id`, `user_status`) VALUES
-('admin', 'Nguyễn Đăng Cẩm', 'b16f278e79dade5ef8e2207cf852d2e653e6c084', 1, 'dangcam.pr@outlook.com', '0979371093', 'vpddt', 1),
-('admin1', 'Admin 1', '8b2a31ad260da1ddd9e026d88d72dbfe42276f72', 1, 'admin1@gmail.com', '0979371093', 'vpddpr', 1),
-('admin2', 'Admin 2', '2e7c8260125e7cdc02300c9ee56be000fad6ab52', 2, 'dangcam.pr@gmail.com', '0979371093', 'vpdddx', 1);
+INSERT INTO `users` (`user_id`, `username`, `password`, `gender`, `email`, `phonenumber`, `group_id`, `user_status`, `system`) VALUES
+('admin', 'Nguyễn Đăng Cẩm', 'b16f278e79dade5ef8e2207cf852d2e653e6c084', 1, 'dangcam.pr@outlook.com', '0979371093', 'vpddt', 1, 1),
+('admin1', 'Admin 1', '8b2a31ad260da1ddd9e026d88d72dbfe42276f72', 1, 'admin1@gmail.com', '0979371093', 'vpddpr', 1, 0),
+('admin2', 'Admin 2', '2e7c8260125e7cdc02300c9ee56be000fad6ab52', 2, 'dangcam.pr@gmail.com', '0979371093', 'vpdddx', 1, 0),
+('admin3', 'Admin3', 'ed6eaf1536230e606c4e159e0d1059efdeeda6fc', 1, 'dangcam.pr@gmail.com', '', 'vpddt', 1, 0);
 
 -- --------------------------------------------------------
 

@@ -200,7 +200,7 @@ class UserModel Extends BaseModel
                             gender ="'.$record->gender.'" email ="'.$record->email.'" phonenumber ="'.$record->phonenumber.'" group_id ="'.$record->group_id.'"
                             user_status ="'.$record->user_status.'"
                                 data-placement="top" title="'.lang('AppLang.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
-                            <a href="#" class="mr-2 user_function" user_id="'.$record->user_id.'" data-toggle="modal" data-placement="top" title="'.lang('AppLang.user_function').'">
+                            <a href="#" class="mr-2 user_function" user_id="'.$record->user_id.'" system="'.$record->system.'" data-toggle="modal" data-placement="top" title="'.lang('AppLang.user_function').'">
                             <i class="fa fa-gear color-muted"></i></a>
                             <a href="#" data-toggle="modal" data-target="#smallModal"
                                 data-placement="top" title="'.lang('AppLang.delete').'" data-user_id="'.$record->user_id.'">
