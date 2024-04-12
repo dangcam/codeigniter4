@@ -91,10 +91,11 @@ abstract class BaseController extends Controller
                         <ul aria-expanded="false">';
         if($this->libauth->checkFunction('report_group','view'))
             $response .= '<li><a href="'.base_url().'dashboard/report_group/print">'.lang('AppLang.report_group_print').'</a></li>';
-        if($this->libauth->checkFunction('report_khac','view'))
-            $response .= '<li><a href="'.base_url().'dashboard/report_khac/print">'.lang('AppLang.report_khac').'</a></li>';
         if($this->libauth->checkFunction('report_nhansu','view'))
             $response .= '<li><a href="'.base_url().'dashboard/report_nhansu/print">'.lang('AppLang.report_nhansu').'</a></li>';
+        if($this->libauth->checkFunction('report_khac','view'))
+            $response .= '<li><a href="'.base_url().'dashboard/report_khac/print">'.lang('AppLang.report_khac').'</a></li>';
+
         $response   .='</ul>
                        </li>';
         $response .= '<li class="nav-label">'.lang('management').'</li>

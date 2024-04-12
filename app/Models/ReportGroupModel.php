@@ -54,8 +54,8 @@ class ReportGroupModel extends BaseModel
                           <'.$th_td.'><input type="number" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_1]" value="'.$key->value3_1.'" '.($readonly==true?'readonly':'').' class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="number" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_2]" value="'.$key->value3_2.'" '.($readonly==true?'readonly':'').' class="form-control"></'.$th_td.'>
                           <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value3_per]" value="'.$key->value3_per.'" readonly class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value4_1]" value="'.$key->value4_1.'" readonly class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value4_2]" value="'.$key->value4_1.'" readonly class="form-control"></'.$th_td.'>';
+                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value4_1]" value="'.$key->value4_1.'"  class="form-control"></'.$th_td.'>
+                          <'.$th_td.'><input type="text" data-group="'.$key->row_number.'" name="data['.$key->row_id.'][value4_2]" value="'.$key->value4_2.'"  class="form-control"></'.$th_td.'>';
 
             $response .= '</tr>';
         }

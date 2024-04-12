@@ -174,9 +174,9 @@ class ReportNhanSuModel extends BaseModel
                         value1, value2, value3, value4, value5, value6, value7,
                         value8, value9, value10, value11, value12, value13                   
                     FROM (SELECT * FROM report_nhansu WHERE report_month IN (' . $list_month . ') AND report_year = ?) AS RK 
-                RIGHT JOIN (SELECT * FROM groups WHERE  group_parent = ? ) AS GR ON GR.group_id = RK.group_id) AS GRN ORDER BY GRN.group_parent';
+                RIGHT JOIN (SELECT * FROM groups WHERE (group_parent = ? or group_id = ?)) AS GR ON GR.group_id = RK.group_id) AS GRN ORDER BY GRN.group_parent';
 
-        $result = $this->db->query($sql,[$report_year,$group_id])->getResult();
+        $result = $this->db->query($sql,[$report_year,$group_id,$group_id])->getResult();
         $i = 0;
         $row_total = array();
         $t = count($result)+1;
