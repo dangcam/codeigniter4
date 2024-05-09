@@ -70,6 +70,7 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('data_report_group','Dashboard\ReportGroupController::data_report_group');
         $routes->post('data_report_group_print','Dashboard\ReportGroupController::data_report_group_print');
         $routes->post('save_report_group','Dashboard\ReportGroupController::save_report_group');
+        $routes->post('data_report_group_import','Dashboard\ReportGroupController::data_report_group_import');
     });
     $routes->group('report_khac',static function($routes){
         $routes->get('/','Dashboard\ReportKhacController::index');

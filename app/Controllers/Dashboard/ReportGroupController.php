@@ -33,6 +33,18 @@ class ReportGroupController extends BaseController
             echo json_encode('No Data');
         }
     }
+    public function data_report_group_import()
+    {
+        if($this->request->getPost())
+        {
+            $data_file = $this->request->getFile('file_import');
+            //$return_value = $this->report_group_model->getListReportGroup($data['report_month'],$data['report_year'],$data['group_id']);
+            //echo json_encode($return_value);
+            echo json_encode('Data');
+        }else {
+            echo json_encode('No Data');
+        }
+    }
     public function data_report_group_print()
     {
         if($this->request->getPost())

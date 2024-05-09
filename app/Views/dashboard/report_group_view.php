@@ -52,6 +52,11 @@
                                         <option value="12" <?=date('m')=='12'? 'selected':''?>>12</option>
                                     </select>
                                 </div>
+                                <input type="file" id="myfile" name="myfile"><br><br>
+                                <div class="col-lg-2">
+                                    <button type="button" id="import_excel" class="btn btn-rounded btn-success"><span class="btn-icon-left text-success"><i class="fa fa-upload color-success"></i>
+                                        </span>Excel</button>
+                                </div>
                             </div>
                             <!---->
                             <input type="hidden" name="group_id" id="group_id" value="<?=session()->get('group_id')?>">
@@ -121,6 +126,16 @@
                 }
             });
         };
+        $("#import_excel").on( "click",async function() {
+            let data_file = document.getElementById("myfile").files[0];
+            let formData = new FormData();
+            formData.append("file_import", myfile.files[0]);
+            await fetch('<?= base_url() ?>dashboard/report_group/data_report_group_import', {
+                method: "POST",
+                body: formData
+            });
+        });
+
         loadDataTable();
         $('#report_month,#report_year').change(function(){
             loadDataTable();
