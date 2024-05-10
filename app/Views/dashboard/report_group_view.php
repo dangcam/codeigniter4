@@ -130,10 +130,23 @@
             let data_file = document.getElementById("myfile").files[0];
             let formData = new FormData();
             formData.append("file_import", myfile.files[0]);
-            await fetch('<?= base_url() ?>dashboard/report_group/data_report_group_import', {
-                method: "POST",
-                body: formData
-            });
+            try {
+                let response = await fetch('<?= base_url() ?>dashboard/report_group/data_report_group_import', {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    let message = await response.text();
+                    alert(message); // Hiển thị thông báo từ server
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+                alert('An error occurred. Please try again later.'); // Thông báo lỗi nếu có lỗi xảy ra
+            }
+
         });
 
         loadDataTable();

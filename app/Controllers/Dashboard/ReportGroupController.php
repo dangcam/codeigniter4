@@ -35,6 +35,21 @@ class ReportGroupController extends BaseController
     }
     public function data_report_group_import()
     {
+        /*
+        // Xử lý dữ liệu tệp tin tại đây
+        $file_import = $_FILES['file_import'];
+
+        // Tiến hành xử lý dữ liệu, ví dụ: lưu tệp tin vào thư mục cụ thể
+        $upload_path = './uploads/'; // Thư mục lưu trữ tệp tin tải lên
+        $uploaded_file_path = $upload_path . $file_import['name'];
+
+        // Di chuyển tệp tin vào thư mục lưu trữ
+        //($file_import['tmp_name'], $uploaded_file_path);
+
+        // Phản hồi về client
+        echo $uploaded_file_path;
+        */
+
         if($this->request->getPost())
         {
             $data_file = $this->request->getFile('file_import');
