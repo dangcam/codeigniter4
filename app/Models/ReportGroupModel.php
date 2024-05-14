@@ -314,6 +314,24 @@ class ReportGroupModel extends BaseModel
 
         }
     }
+    public  function save_import_report_group($update)
+    {
+        $this->where('report_month', $update['report_month'])->where('report_year', $update['report_year'])
+            ->where('group_id', $update['group_id'])->where('row_id', $update['row_id']);
+        if ($this->find()) {
+            if (!$this->replace($update)) {
+                $this->set_message("AppLang.save_data_unsuccessful");
+                return 3;
+            }
+        } else {
+            if ($this->insert($update)) {
+                $this->set_message("AppLang.save_data_unsuccessful");
+                return 3;
+            }
+        }
+        $this->set_message("AppLang.save_data_successful");
+        return 0;
+    }
     public function save_report_group($data)
     {
         $update['report_month'] = $data['report_month'];

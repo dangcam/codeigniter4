@@ -130,6 +130,9 @@
             let data_file = document.getElementById("myfile").files[0];
             let formData = new FormData();
             formData.append("file_import", myfile.files[0]);
+            formData.append("report_month", $('#report_month').val());
+            formData.append("report_year", $('#report_year').val());
+            formData.append("group_id", $('#group_id').val());
             try {
                 let response = await fetch('<?= base_url() ?>dashboard/report_group/data_report_group_import', {
                     method: "POST",
@@ -138,6 +141,7 @@
 
                 if (response.ok) {
                     let message = await response.text();
+                    loadDataTable();
                     alert(message); // Hiển thị thông báo từ server
                 } else {
                     throw new Error('Network response was not ok.');
