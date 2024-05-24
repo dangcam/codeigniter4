@@ -1,0 +1,16 @@
+CRITICAL - 2024-05-10 08:39:42 --> move_uploaded_file(./uploads/PHAN CONG NHIEM VU PHONG KHĐT.pdf): Failed to open stream: No such file or directory
+in APPPATH\Controllers\Dashboard\ReportGroupController.php on line 46.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'move_uploaded_file(./uploads/PHAN CONG NHIEM VU PHONG KHĐT.pdf): Failed to open stream: No such file or directory', 'APPPATH\\Controllers\\Dashboard\\ReportGroupController.php', 46)
+ 2 APPPATH\Controllers\Dashboard\ReportGroupController.php(46): move_uploaded_file('D:\\Xampp\\tmp\\php1AA3.tmp', './uploads/PHAN CONG NHIEM VU PHONG KHĐT.pdf')
+ 3 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Dashboard\ReportGroupController->data_report_group_import()
+ 4 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard\ReportGroupController))
+ 5 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2024-05-10 08:41:01 --> move_uploaded_file(./uploads/PHAN CONG NHIEM VU PHONG KHĐT.pdf): Failed to open stream: No such file or directory
+in APPPATH\Controllers\Dashboard\ReportGroupController.php on line 46.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'move_uploaded_file(./uploads/PHAN CONG NHIEM VU PHONG KHĐT.pdf): Failed to open stream: No such file or directory', 'APPPATH\\Controllers\\Dashboard\\ReportGroupController.php', 46)
+ 2 APPPATH\Controllers\Dashboard\ReportGroupController.php(46): move_uploaded_file('D:\\Xampp\\tmp\\php50B3.tmp', './uploads/PHAN CONG NHIEM VU PHONG KHĐT.pdf')
+ 3 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Dashboard\ReportGroupController->data_report_group_import()
+ 4 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard\ReportGroupController))
+ 5 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()

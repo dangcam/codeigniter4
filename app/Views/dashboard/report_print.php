@@ -161,6 +161,7 @@
 <script>
     jQuery(document).ready(function($) {
         let myData = [];
+        let data_BC = [];
         $("#export_excel").on( "click", function() {
             var title_group = document.getElementById('title_group')
             var title_month_year = document.getElementById('title_month_year')
