@@ -62,10 +62,7 @@
                                 <button type="button" id="export_excel" class="btn btn-rounded btn-success"><span class="btn-icon-left text-success"><i class="fa fa-upload color-success"></i>
                                         </span>Excel</button>
                             </div>
-                            <div class="col-lg-2">
-                                <button type="button" id="export_word" class="btn btn-rounded btn-info"><span class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
-                                        </span>Word</button>
-                            </div>
+
                         </div>
                         <!---->
                         </div>
