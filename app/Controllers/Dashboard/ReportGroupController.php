@@ -96,6 +96,17 @@ class ReportGroupController extends BaseController
             echo json_encode(array_values('No Data'));
         }
     }
+    public function data_report_khac_nhansu()
+    {
+        if($this->request->getPost())
+        {
+            $data = $this->request->getPost();
+            $return_value = $this->report_group_model->getListReportKhacNhanSuPrint($data);
+            echo json_encode(array_values($return_value));
+        }else {
+            echo json_encode(array_values('No Data'));
+        }
+    }
     public function save_report_group()
     {
         if($this->request->getPost()&&($this->libauth->checkFunction('report_group','add')))

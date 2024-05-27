@@ -459,4 +459,98 @@ class ReportGroupModel extends BaseModel
         }
         return $listGroup;
     }
+    public function getListReportKhacNhanSuPrint($data)
+    {
+        $quarter_month = $data['quarter_month'];
+        $report_month = $data['report_month'];
+        $report_quarter = $data['report_quarter'];
+        $report_year = $data['report_year'];
+        $group_id = $data['group_id'];
+
+        if ($quarter_month == 1) {
+            $list_month = $report_month;
+        } else {
+            if ($report_quarter == 1) {
+                $list_month = "1,2,3";
+            } elseif ($report_quarter == 2) {
+                $list_month = "4,5,6";
+            } elseif ($report_quarter == 3) {
+                $list_month = "7,8,9";
+            } else {
+                $list_month = "10,11,12";
+            }
+        }
+        // bao cao khac
+        $sql = 'SELECT * FROM 
+                (SELECT GR.group_id, group_name, group_parent, report_month, report_year,
+                        value1, value2, value3, value4, value5, value6, value7,
+                        value8, value9, value10, value11, value12, value13                   
+                    FROM (SELECT * FROM report_khac WHERE report_month IN (' . $list_month . ') AND report_year = ?) AS RK 
+                RIGHT JOIN (SELECT * FROM groups WHERE (group_parent = ? or group_id = ?)) AS GR ON GR.group_id = RK.group_id) AS GRN ORDER BY GRN.group_parent';
+
+        $result = $this->db->query($sql,[$report_year,$group_id,$group_id])->getResult();
+        $row_total = array();
+        $row_total['value1'] = 0;
+        $row_total['value2'] = 0;
+        $row_total['value3'] = 0;
+        $row_total['value4'] = 0;
+        $row_total['value5'] = 0;
+        $row_total['value6'] = 0;
+        $row_total['value7'] = 0;
+        $row_total['value8'] = 0;
+
+        foreach ($result as $item) {
+            $row_total['value1'] += (int)$item->value1;
+            $row_total['value2'] += (int)$item->value2;
+            $row_total['value3'] += (int)$item->value3;
+            $row_total['value4'] += (int)$item->value4;
+            $row_total['value5'] += (int)$item->value5;
+            $row_total['value6'] += (int)$item->value6;
+            $row_total['value7'] += (int)$item->value7;
+            $row_total['value8'] += (int)$item->value8;
+        }
+        // báo cao nhân sự
+        $sql = 'SELECT * FROM 
+                (SELECT GR.group_id, group_name, group_parent, report_month, report_year,
+                        value1, value2, value3, value4, value5, value6, value7,
+                        value8, value9, value10, value11, value12, value13                   
+                    FROM (SELECT * FROM report_nhansu WHERE report_month IN (' . $list_month . ') AND report_year = ?) AS RK 
+                RIGHT JOIN (SELECT * FROM groups WHERE (group_parent = ? or group_id = ?)) AS GR ON GR.group_id = RK.group_id) AS GRN ORDER BY GRN.group_parent';
+
+        $result = $this->db->query($sql,[$report_year,$group_id,$group_id])->getResult();
+        $row_ns = array();
+        $row_ns['value1'] = 0;
+        $row_ns['value2'] = 0;
+        $row_ns['value3'] = 0;
+        $row_ns['value4'] = 0;
+        $row_ns['value5'] = 0;
+        $row_ns['value6'] = 0;
+        $row_ns['value7'] = 0;
+        $row_ns['value8'] = 0;
+        $row_ns['value9'] = 0;
+        $row_ns['value10'] = 0;
+        $row_ns['value11'] = 0;
+        $row_ns['value12'] = 0;
+
+        foreach ($result as $item) {
+            //
+            $row_ns['value1'] += (int)$item->value1;
+            $row_ns['value2'] += (int)$item->value2;
+            $row_ns['value3'] += (int)$item->value3;
+            $row_ns['value4'] += (int)$item->value4;
+            $row_ns['value5'] += (int)$item->value5;
+            $row_ns['value6'] += (int)$item->value6;
+            $row_ns['value7'] += (int)$item->value7;
+            $row_ns['value8'] += (int)$item->value8;
+            $row_ns['value9'] += (int)$item->value9;
+            $row_ns['value10'] += (int)$item->value10;
+            $row_ns['value11'] += (int)$item->value11;
+            $row_ns['value12'] += (int)$item->value12;
+        }
+        //
+        $data_table['data_khac'] = array_values($row_total);
+        $data_table['data_nhansu'] = array_values($row_ns);
+        return $data_table;
+
+    }
 }

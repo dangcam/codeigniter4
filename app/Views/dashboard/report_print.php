@@ -161,7 +161,8 @@
 <script>
     jQuery(document).ready(function($) {
         let myData = [];
-        let data_BC = [];
+        let data_Khac = [];
+        let data_NS = [];
         $("#export_excel").on( "click", function() {
             var title_group = document.getElementById('title_group')
             var title_month_year = document.getElementById('title_month_year')
@@ -172,7 +173,38 @@
             var title_group = document.getElementById('title_group')
             var title_month_year = document.getElementById('title_month_year')
             var title_report = document.getElementById('title_report')
-            export_word(title_group.innerText,title_month_year.innerText,title_report.innerText,myData);
+            //export_word(title_group.innerText,title_month_year.innerText,title_report.innerText,myData);
+            //
+            var quarter_month = $('#quarter_month').val();
+            var month = $('#report_month').val();
+            var year = $('#report_year').val();
+            var quarter = $('#report_quarter').val();
+            var group_id = $('#group_id').val();
+
+            $.ajax({
+                url: "<?= base_url() ?>dashboard/report_group/data_report_khac_nhansu",
+                method: "POST",
+                dataType: "json",
+                data: {report_month: month,report_year: year,group_id: group_id,report_quarter: quarter,quarter_month:quarter_month},
+                success: function (data) {
+                    $("#data_table").html();
+                    data_Khac = (data[0]);
+                    data_NS = (data[1]);
+                    //console.log(data_NS);
+                    export_word(
+                        title_group.innerText,
+                        title_month_year.innerText,
+                        title_report.innerText,
+                        myData,
+                        data_Khac,
+                        data_NS
+                    );
+                },
+                error: function (data) {
+                    //$("#data_table").html(data[0]);
+                }
+            });
+            //export_word(title_group.innerText,title_month_year.innerText,title_report.innerText,myData,data_Khac,data_NS);
         });
         $('#report_month').show('fast');
         $('#report_quarter').hide();
