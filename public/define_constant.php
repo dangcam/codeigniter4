@@ -19,6 +19,7 @@ DEFINE('THOUSANDS_SEP','.');
 /** Cau hinh Codeigniter4
  * 1. Chay php spark serve bao loi
  * Mo file Xampp\php\php.ini xoa dau ";" o dong extension=intl
+ * Xóa dau ";" max_input_vars = 3000 tang gia tri len > 1000
  * extension=fileinfo
  * extension=gd import excel
  * 2. Tao virtualhost

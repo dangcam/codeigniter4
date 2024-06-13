@@ -183,7 +183,7 @@
                 error:function (data) {
                     $("#response_danger").show('fast');
                     $("#response_danger").effect("shake");
-                    $("#response_danger").html(data);
+                    $("#response_danger").html(data.responseText || "An error occurred");
                 }
             });
         });
