@@ -70,17 +70,24 @@ class ReportGroupModel extends BaseModel
         $group_id = $data['group_id'];
         $report_detail = $data['report_detail'];
 
+        $last_month = 1;
+        $last_year = $report_year;
         if ($quarter_month == 1) {
             $list_month = $report_month;
         } else {
             if ($report_quarter == 1) {
                 $list_month = "1,2,3";
+                $last_month = 12;
+                $last_year = $last_year -1;
             } elseif ($report_quarter == 2) {
                 $list_month = "4,5,6";
+                $last_month = 3;
             } elseif ($report_quarter == 3) {
                 $list_month = "7,8,9";
+                $last_month = 6;
             } else {
                 $list_month = "10,11,12";
+                $last_month = 9;
             }
         }
         // lọc nhóm chi nhánh
@@ -120,6 +127,29 @@ class ReportGroupModel extends BaseModel
                     ON groups.group_id = RGN.group_id';
 
                 $result = $this->db->query($sql, [$report_year])->getResult();
+                if ($quarter_month == 2){
+                    $last_sql =  'SELECT RGN.row_id,row_name, RGN.group_id, group_name, row_number,
+                                    value1_1
+                            FROM groups RIGHT JOIN
+                            (SELECT RN.row_id,row_number,row_name,row_parent, group_id,
+                                (value1_total-value2_total) as value1_1
+                                FROM (SELECT row_id,group_id, SUM(value1_total) as value1_total,SUM(value2_total) as value2_total
+                                FROM report_group WHERE report_month IN (' . $last_month . ') AND group_id IN (\'' . $array_parent . '\') AND report_year = ? GROUP BY row_id,group_id) AS RG
+                            RIGHT JOIN (SELECT * FROM report_name WHERE row_parent = \'\') AS RN ON RG.row_id = RN.row_id) AS RGN
+                            ON groups.group_id = RGN.group_id';
+                    $last_result = $this->db->query($last_sql, [$last_year])->getResult();
+                    // Update $result with value1_1 from $last_result
+                    $last_result_map = [];
+                    foreach ($last_result as $row) {
+                        $last_result_map[$row->row_id] = $row->value1_1;
+                    }
+
+                    foreach ($result as &$row) {
+                        if (isset($last_result_map[$row->row_id])) {
+                            $row->value1_1 = $last_result_map[$row->row_id];
+                        }
+                    }
+                }
                 $i = 0;
                 $row_id = '';
                 $j = 0;
@@ -225,6 +255,28 @@ class ReportGroupModel extends BaseModel
                                  GROUP BY row_id) AS RG 
                         RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
                 $result = $this->db->query($sql, [$report_year])->getResult();
+                // lay so luong ky truoc
+                if ($quarter_month == 2){
+                    $last_sql = 'SELECT *
+                                FROM (SELECT report_name.row_id,row_number,row_name,IF(LENGTH(row_parent) > 0,0,1) AS row_parent, 
+                                                (value1_total-value2_total) as value1_1
+                                            FROM (SELECT row_id, SUM(value1_total) as value1_total,SUM(value2_total) as value2_total
+                                                  FROM report_group WHERE (report_month in (' . $last_month . ')) AND report_year = ? AND group_id IN (\'' . $array_parent . '\')
+                                                 GROUP BY row_id) AS RG 
+                                        RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
+                    $last_result = $this->db->query($last_sql, [$last_year])->getResult();
+                    // Update $result with value1_1 from $last_result
+                    $last_result_map = [];
+                    foreach ($last_result as $row) {
+                        $last_result_map[$row->row_id] = $row->value1_1;
+                    }
+
+                    foreach ($result as &$row) {
+                        if (isset($last_result_map[$row->row_id])) {
+                            $row->value1_1 = $last_result_map[$row->row_id];
+                        }
+                    }
+                }
                 $i = 0;
                 $response = '';
                 foreach ($result as $key) {
@@ -277,6 +329,29 @@ class ReportGroupModel extends BaseModel
                                  GROUP BY row_id) AS RG 
                         RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
             $result = $this->db->query($sql, [$report_year, $group_id])->getResult();
+            // lay so luong ky truoc
+            if ($quarter_month == 2){
+                $last_sql = 'SELECT *
+                FROM (SELECT report_name.row_id,row_number,row_name,IF(LENGTH(row_parent) > 0,0,1) AS row_parent, 
+                                 (value1_total-value2_total) as value1_1
+                            FROM (SELECT row_id, SUM(value1_total) as value1_total,
+                                  SUM(value2_total) as value2_total
+                                  FROM report_group WHERE (report_month in (' . $last_month . ')) AND report_year = ? AND (group_id = ?)
+                                 GROUP BY row_id) AS RG 
+                        RIGHT JOIN report_name ON report_name.row_id = RG.row_id) AS GRN ORDER BY row_number';
+                $last_result = $this->db->query($last_sql, [$last_year, $group_id])->getResult();
+                // Update $result with value1_1 from $last_result
+                $last_result_map = [];
+                foreach ($last_result as $row) {
+                    $last_result_map[$row->row_id] = $row->value1_1;
+                }
+
+                foreach ($result as &$row) {
+                    if (isset($last_result_map[$row->row_id])) {
+                        $row->value1_1 = $last_result_map[$row->row_id];
+                    }
+                }
+            }
             $i = 0;
             $response = '';
             foreach ($result as $key) {
