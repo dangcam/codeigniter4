@@ -1,21 +1,21 @@
 <?php
 namespace App\Models;
 
-use App\Entities\FunctionEntity;
+use App\Entities\PhongBanEntity;
 
 class PhongBanModel extends BaseModel
 {
-    protected $table      = 'functions';
-    protected $primaryKey = 'function_id';
+    protected $table      = 'phongban';
+    protected $primaryKey = 'ma_pb';
     protected $useAutoIncrement = true;
     protected $protectFields = false;
-    protected $returnType = FunctionEntity::class;
+    protected $returnType = PhongBanEntity::class;
     protected $validationRules = [
-        'function_id'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[functions.function_id]',
-        'function_name'     => 'required|max_length[50]|alpha_dash'
+        'ma_pb'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[functions.ma_pb]',
+        'ten_pb'     => 'required|max_length[100]|alpha_dash'
     ];
     //
-    public function add_function($data)
+    public function add_phongban($data)
     {
         unset($data['add']);
         if(!$this->validate($data))
@@ -27,45 +27,45 @@ class PhongBanModel extends BaseModel
         }
         if(!$this->insert($data))
         {
-            $this->set_message("FunctionLang.function_creation_successful");
+            $this->set_message("PhongBanLang.phongban_creation_successful");
             return 0;
         }else
         {
-            $this->set_message("FunctionLang.function_creation_unsuccessful");
+            $this->set_message("PhongBanLang.phongban_creation_unsuccessful");
             return 3;
         }
     }
-    public function edit_function($data)
+    public function edit_phongban($data)
     {
-        $function_id = $data['function_id'];
+        $ma_pb = $data['ma_pb'];
         unset($data['edit']);
-        unset($data['function_id']);
-        $result = $this->update($function_id,$data);
+        unset($data['ma_pb']);
+        $result = $this->update($ma_pb,$data);
         if($result)
         {
-            $this->set_message("FunctionLang.function_update_successful");
+            $this->set_message("PhongBanLang.phongban_update_successful");
             return 0;
         }else
         {
-            $this->set_message("FunctionLang.function_update_unsuccessful");
+            $this->set_message("PhongBanLang.phongban_update_unsuccessful");
             return 3;
         }
     }
-    public function delete_function($data)
+    public function delete_phongban($data)
     {
-        $function_id = $data['function_id'];
+        $ma_pb = $data['ma_pb'];
 
-        if($this->where('function_id',$function_id)->delete())
+        if($this->where('ma_pb',$ma_pb)->delete())
         {
-            $this->set_message("FunctionLang.function_delete_successful");
+            $this->set_message("PhongBanLang.phongban_delete_successful");
             return 0;
         }else
         {
-            $this->set_message("FunctionLang.function_delete_unsuccessful");
+            $this->set_message("PhongBanLang.phongban_delete_unsuccessful");
             return 3;
         }
     }
-    public function getFunctions($postData=null){
+    public function getPhongBan($postData=null){
         ## Read value
         $draw = $postData['draw'];
         $start = $postData['start'];
@@ -81,7 +81,7 @@ class PhongBanModel extends BaseModel
         $records = $this->find();
         $totalRecords = $records[0]->allcount;
         ## Fetch records
-        $this->like('function_name',$strInput);
+        $this->like('ten_pb',$strInput);
         $this->orderBy($columnName, $columnSortOrder);
         if($rowperpage!=-1)
             $this->limit($rowperpage, $start);
@@ -91,17 +91,15 @@ class PhongBanModel extends BaseModel
 
         foreach($records as $record ){
             $data[] = array(
-                "function_id"=>$record->function_id,
-                "function_name"=>lang('AppLang.'.$record->function_name),
-                "function_status"=>$record->function_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
-                    '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
+                "ma_pb"=>$record->ma_pb,
+                "ten_pb"=>lang('AppLang.'.$record->ten_pb),
                 "active"=> ' <span>
                             <a class="mr-4" data-toggle="modal" data-target="#myModal" data-whatever="edit"
-                             data-function_id="'.$record->function_id.'" data-function_name ="'.$record->function_name.'"                          
-                            data-function_status ="'.$record->function_status.'"
+                             data-ma_pb="'.$record->ma_pb.'" data-ten_pb ="'.$record->ten_pb.'"                          
+                            data-phongban_status ="'.$record->phongban_status.'"
                                 data-placement="top" title="'.lang('AppLang.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
                             <a href="#" data-toggle="modal" data-target="#smallModal"
-                                data-placement="top" title="'.lang('AppLang.delete').'" data-function_id="'.$record->function_id.'">
+                                data-placement="top" title="'.lang('AppLang.delete').'" data-ma_pb="'.$record->ma_pb.'">
                                 <i class="fa fa-close color-danger"></i></a>
                             </span>'
             );
@@ -125,11 +123,11 @@ class PhongBanModel extends BaseModel
                     </button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" data-toggle="modal" data-target="#myModal" data-whatever="edit"
-						 	data-function_id="'.$record->function_id.'" href="#" data-function_name="'.$record->function_name.'" data-function_status="'.$record->function_status.'">
+						 	data-ma_pb="'.$record->ma_pb.'" href="#" data-ten_pb="'.$record->ten_pb.'" >
 							<i class="fa fa-pencil color-muted"></i>
 								<span class="align-middle">'.lang('AppLang.edit').'</span>
 						</a>
-					  	<a class="dropdown-item text-danger" data-toggle="modal" data-target="#smallModal" data-function_id="'.$record->function_id.'" href="#">
+					  	<a class="dropdown-item text-danger" data-toggle="modal" data-target="#smallModal" data-ma_pb="'.$record->ma_pb.'" href="#">
 							<i class="fa fa-close color-danger"></i>
 								<span class="align-middle">'.lang('AppLang.delete').'</span>
 						</a>
