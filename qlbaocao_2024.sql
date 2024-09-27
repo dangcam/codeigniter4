@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 26, 2024 lúc 12:16 PM
+-- Thời gian đã tạo: Th9 27, 2024 lúc 11:43 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -41,6 +41,7 @@ CREATE TABLE `functions` (
 INSERT INTO `functions` (`function_id`, `function_name`, `function_status`, `system`) VALUES
 ('function', 'function_manager', 1, 1),
 ('group', 'group_manager', 1, 1),
+('phongban', 'phongban_manager', 1, 0),
 ('report_group', 'report_group_manager', 1, 0),
 ('report_khac', 'report_khac', 1, 0),
 ('report_nhansu', 'report_nhansu', 1, 0),
@@ -87,6 +88,14 @@ CREATE TABLE `phongban` (
   `ma_pb` varchar(20) NOT NULL,
   `ten_pb` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `phongban`
+--
+
+INSERT INTO `phongban` (`ma_pb`, `ten_pb`) VALUES
+('CSDLLT', 'Phòng CSDL & LT'),
+('DKCGCN', 'Phòng ĐK & CGCN');
 
 -- --------------------------------------------------------
 
@@ -819,6 +828,20 @@ INSERT INTO `report_nhansu` (`report_month`, `report_year`, `group_id`, `value1`
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `report_phongban`
+--
+
+CREATE TABLE `report_phongban` (
+  `group_id` varchar(20) NOT NULL,
+  `report_year` int(11) NOT NULL,
+  `report_month` int(11) NOT NULL,
+  `ma_pb` varchar(20) NOT NULL,
+  `noi_dung` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `users`
 --
 
@@ -831,18 +854,19 @@ CREATE TABLE `users` (
   `phonenumber` varchar(15) NOT NULL,
   `group_id` varchar(10) NOT NULL,
   `user_status` int(11) NOT NULL,
-  `system` tinyint(1) NOT NULL
+  `system` tinyint(1) NOT NULL,
+  `ma_pb` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `password`, `gender`, `email`, `phonenumber`, `group_id`, `user_status`, `system`) VALUES
-('admin', 'Nguyễn Đăng Cẩm', 'b16f278e79dade5ef8e2207cf852d2e653e6c084', 1, 'dangcam.pr@outlook.com', '0979371093', 'vpddt', 1, 1),
-('admin1', 'Admin 1', '8b2a31ad260da1ddd9e026d88d72dbfe42276f72', 1, 'admin1@gmail.com', '0979371093', 'vpddpr', 1, 0),
-('admin2', 'Admin 2', '2e7c8260125e7cdc02300c9ee56be000fad6ab52', 2, 'dangcam.pr@gmail.com', '0979371093', 'vpdddx', 1, 0),
-('admin3', 'Admin3', 'ed6eaf1536230e606c4e159e0d1059efdeeda6fc', 1, 'dangcam.pr@gmail.com', '', 'vpddt', 1, 0);
+INSERT INTO `users` (`user_id`, `username`, `password`, `gender`, `email`, `phonenumber`, `group_id`, `user_status`, `system`, `ma_pb`) VALUES
+('admin', 'Nguyễn Đăng Cẩm', 'b16f278e79dade5ef8e2207cf852d2e653e6c084', 1, 'dangcam.pr@outlook.com', '0979371093', 'vpddt', 1, 1, 'CSDLLT'),
+('admin1', 'Admin 1', '8b2a31ad260da1ddd9e026d88d72dbfe42276f72', 1, 'admin1@gmail.com', '0979371093', 'vpddpr', 1, 0, 'DKCGCN'),
+('admin2', 'Admin 2', '2e7c8260125e7cdc02300c9ee56be000fad6ab52', 2, 'dangcam.pr@gmail.com', '0979371093', 'vpdddx', 1, 0, 'DKCGCN'),
+('admin3', 'Admin3', 'ed6eaf1536230e606c4e159e0d1059efdeeda6fc', 1, 'dangcam.pr@gmail.com', '', 'vpddt', 1, 0, 'CSDLLT');
 
 -- --------------------------------------------------------
 
@@ -866,6 +890,7 @@ CREATE TABLE `user_function` (
 INSERT INTO `user_function` (`user_id`, `function_id`, `function_view`, `function_add`, `function_edit`, `function_delete`) VALUES
 ('admin', 'function', 1, 1, 1, 1),
 ('admin', 'group', 1, 1, 1, 1),
+('admin', 'phongban', 1, 1, 1, 1),
 ('admin', 'report_group', 1, 1, 1, 1),
 ('admin', 'report_khac', 1, 1, 1, 1),
 ('admin', 'report_nhansu', 1, 1, 1, 1),
@@ -926,6 +951,12 @@ ALTER TABLE `report_name`
 --
 ALTER TABLE `report_nhansu`
   ADD PRIMARY KEY (`report_month`,`report_year`,`group_id`);
+
+--
+-- Chỉ mục cho bảng `report_phongban`
+--
+ALTER TABLE `report_phongban`
+  ADD PRIMARY KEY (`group_id`,`report_year`,`report_month`,`ma_pb`);
 
 --
 -- Chỉ mục cho bảng `users`

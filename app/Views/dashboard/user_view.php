@@ -50,15 +50,9 @@
                                         <label><?=lang('UserLang.password')?></label>
                                         <input type="password" name="password" id="password" class="form-control" placeholder="<?=lang('UserLang.password')?>" required>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         <label>Email</label>
                                         <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label><?=lang('UserLang.phonenumber')?></label>
-                                        <input type="text" name="phonenumber" id="phonenumber" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label><?=lang('UserLang.gender')?></label>
@@ -68,12 +62,29 @@
                                             <option value="3"><?=lang('UserLang.other')?></option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label><?=lang('UserLang.phonenumber')?></label>
+                                        <input type="text" name="phonenumber" id="phonenumber" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label><?=lang('UserLang.group')?></label>
                                         <select class="custom-select" id="group_id" name ="group_id">
                                             <?php if (isset($list_group) && count($list_group)) :
                                                 foreach ($list_group as $key => $item) : ?>
                                                     <option value="<?=$item->group_id?>"><?=$item->group_name?></option>
+                                                <?php
+                                                endforeach;
+                                            endif ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label><?=lang('UserLang.ma_pb')?></label>
+                                        <select class="custom-select" id="ma_pb" name ="ma_pb">
+                                            <?php if (isset($list_pb) && count($list_pb)) :
+                                                foreach ($list_pb as $key => $item) : ?>
+                                                    <option value="<?=$item->ma_pb?>"><?=$item->ten_pb?></option>
                                                 <?php
                                                 endforeach;
                                             endif ?>
@@ -111,6 +122,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col"><?=lang('UserLang.phonenumber')?></th>
                                 <th scope="col"><?=lang('UserLang.group')?></th>
+                                <th scope="col"><?=lang('UserLang.ma_pb')?></th>
                                 <th scope="col"><?=lang('UserLang.user_status')?></th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -236,6 +248,7 @@
                 {data: 'email'},
                 {data: 'phonenumber'},
                 {data: 'group_id'},
+                {data: 'ma_pb'},
                 {data: 'user_status'},
                 {data: 'active'}
             ]
@@ -318,6 +331,7 @@
             var email =  $(this).attr("email");
             var phonenumber =  $(this).attr("phonenumber");
             var group_id =  $(this).attr("group_id");
+            var ma_pb = $(this).attr("ma_pb");
             var user_status =  $(this).attr("user_status");
             $('#user_id').val(user_id);
             $('#username').val(username);
@@ -326,6 +340,8 @@
             $('#phonenumber').val(phonenumber);
             $('#user_status').val(user_status);
             $('#group_id').val(group_id);
+            $('#ma_pb').val(ma_pb);
+
             //
             var field = document.getElementById("btn_submit");
             field.setAttribute("name","update_user");

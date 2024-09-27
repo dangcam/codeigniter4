@@ -14,4 +14,5 @@ class UserEntity extends Entity
     protected $group_id;
     protected $user_status;
     protected $system;
+    protected $ma_pb;
 }

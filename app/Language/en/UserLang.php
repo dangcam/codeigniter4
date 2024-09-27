@@ -10,6 +10,7 @@ return [
     'other' => 'Orther',
     'user_status'=>'User Status',
     'group' => 'Group',
+    'ma_pb' => 'Department',
     'user_create'=> 'User Create',
     'user_creation_successful' => 'User Creation Successful',
     'user_creation_unsuccessful' => 'User Creation Unsuccessful',

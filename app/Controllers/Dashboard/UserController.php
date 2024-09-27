@@ -23,6 +23,7 @@ class UserController extends BaseController
             $data['message'] = null;
             $meta = array('page_title' => lang('AppLang.page_title_users'));
             $data['list_group'] = $this->user_model->getGroupParent();
+            $data['list_pb'] = $this->user_model->listPhongBan();
             return $this->page_construct('dashboard/user_view', $meta, $data);
         }else
             return view('errors/html/error_403');

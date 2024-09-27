@@ -12,6 +12,7 @@ return[
     'page_title_report_group' => 'Biểu tổng hợp công tác tiếp nhận và giải quyết HS đất đai',
     'page_title_report_khac' => 'Biểu tổng hợp số liệu khác',
     'page_title_report_nhansu' => 'Biểu tổng hợp số liệu nhân sự',
+    'page_title_phongban' => 'Danh mục phòng ban',
 
 
     'do_not_have_permission' => 'Bạn không có quyền thực hiện chức năng này!',
@@ -43,11 +44,13 @@ return[
     'report' => 'Báo cáo',
     'year' => 'Năm',
     'month' => 'Tháng',
+    'phongban' => 'Phòng ban',
     // Chức năng
     'user_function_manager' => 'Phân quyền người dùng',
     'user_manager'=>'Quản lý người dùng',
     'function_manager' => 'Quản lý chức năng',
     'group_manager' => 'Quản lý chi nhánh',
+    'phongban_manager' => 'Quản lý phòng ban',
     'report_group_manager' => 'Hồ sơ đất đai',
     'report_group_print' => 'BC Hồ sơ đất đai',
     'form_report' => 'Biểu mẫu',

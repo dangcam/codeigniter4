@@ -11,12 +11,13 @@ class PhongBanModel extends BaseModel
     protected $protectFields = false;
     protected $returnType = PhongBanEntity::class;
     protected $validationRules = [
-        'ma_pb'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[functions.ma_pb]',
-        'ten_pb'     => 'required|max_length[100]|alpha_dash'
+        'ma_pb'      => 'required|alpha_dash|min_length[3]|max_length[20]|is_unique[phongban.ma_pb]',
+        'ten_pb'     => 'required|max_length[100]'
     ];
     //
     public function add_phongban($data)
     {
+
         unset($data['add']);
         if(!$this->validate($data))
         {
@@ -25,6 +26,7 @@ class PhongBanModel extends BaseModel
             }
             return 3;
         }
+
         if(!$this->insert($data))
         {
             $this->set_message("PhongBanLang.phongban_creation_successful");
@@ -92,11 +94,11 @@ class PhongBanModel extends BaseModel
         foreach($records as $record ){
             $data[] = array(
                 "ma_pb"=>$record->ma_pb,
-                "ten_pb"=>lang('AppLang.'.$record->ten_pb),
+                "ten_pb"=>$record->ten_pb,
                 "active"=> ' <span>
                             <a class="mr-4" data-toggle="modal" data-target="#myModal" data-whatever="edit"
-                             data-ma_pb="'.$record->ma_pb.'" data-ten_pb ="'.$record->ten_pb.'"                          
-                            data-phongban_status ="'.$record->phongban_status.'"
+                             data-ma_pb="'.$record->ma_pb.'" data-ten_pb ="'.$record->ten_pb.'"                
+                       
                                 data-placement="top" title="'.lang('AppLang.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
                             <a href="#" data-toggle="modal" data-target="#smallModal"
                                 data-placement="top" title="'.lang('AppLang.delete').'" data-ma_pb="'.$record->ma_pb.'">

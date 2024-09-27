@@ -12,6 +12,7 @@ return[
     'page_title_report_group' => 'Summary of the reception and settlement of land documents',
     'page_title_report_khac' => 'Table summarizing other data',
     'page_title_report_nhansu' => 'Summary table of personnel data',
+    'page_title_phongban' => 'Department Management',
 
 
     'do_not_have_permission' => 'You do not have permission!',
@@ -41,11 +42,13 @@ return[
     'system' => 'System',
     'users' => 'Users',
     'report' => 'Report',
+    'phongban' => 'Department',
     // Chức năng
     'user_function_manager' => 'User Authorization',
     'user_manager'=>'User Manager',
     'function_manager' => 'Function Management',
     'group_manager' => 'Group Management',
+    'phongban_manager' => 'Department Management',
     'report_group_manager' => 'Land records',
     'report_group_print' => 'Report Land records',
     'form_report' => 'Form Report',

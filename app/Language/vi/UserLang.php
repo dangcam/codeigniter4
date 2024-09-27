@@ -10,6 +10,7 @@ return [
     'other' => 'Khác',
     'user_status'=>'Tình trạng',
     'group' => 'Chi nhánh',
+    'ma_pb' => 'Phòng ban',
     'user_create'=> 'Tạo người dùng',
     'user_creation_successful' => 'Tạo người dùng thành công',
     'user_creation_unsuccessful' => 'Tạo người dùng không thành công',

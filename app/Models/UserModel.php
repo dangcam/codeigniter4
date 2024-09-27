@@ -138,6 +138,11 @@ class UserModel Extends BaseModel
         $user_id = $this->session->get('user_id');
         return $this->where('user_id',$user_id)->first();
     }
+    public function listPhongBan()
+    {
+        $tb = $this->db->table('phongban')->select('*');
+        return $tb->get()->getResult();
+    }
     public function getUsers($postData=null){
 
         $response = array();
@@ -192,12 +197,13 @@ class UserModel Extends BaseModel
                 "email"=>$record->email,
                 "phonenumber"=>$record->phonenumber,
                 "group_id"=>$record->group_id,
+                "ma_pb" => $record->ma_pb,
                 "user_status"=>$record->user_status==1?'<div class="badge badge-success">'.lang('AppLang.active').'</div>':
                     '<div class="badge badge-danger">'.lang('AppLang.inactive').'</div>',
                 "active"=>' <span>
                             <a href="#" class="mr-2 update" data-toggle="modal"  user_id="'.$record->user_id.'" username ="'.$record->username.'"
                             gender ="'.$record->gender.'" email ="'.$record->email.'" phonenumber ="'.$record->phonenumber.'" group_id ="'.$record->group_id.'"
-                            user_status ="'.$record->user_status.'"
+                            user_status ="'.$record->user_status.'" ma_pb ="'.$record->ma_pb.'"
                                 data-placement="top" title="'.lang('AppLang.edit').'"><i class="fa fa-pencil color-muted"></i> </a>
                             <a href="#" class="mr-2 user_function" user_id="'.$record->user_id.'" system="'.$this->session->get('user_system').'" data-toggle="modal" data-placement="top" title="'.lang('AppLang.user_function').'">
                             <i class="fa fa-gear color-muted"></i></a>
