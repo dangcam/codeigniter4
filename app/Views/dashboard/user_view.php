@@ -98,6 +98,13 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label><?=lang('UserLang.phonenumber')?></label>
+                                        <textarea type="text" name="noidung" id="noidung" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
+                                        </textarea>
+                                    </div>`
+                                </div>
                                 <button type="submit" id="btn_submit" name="create_user" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                                 <button type="button" id="btn_cancel" class="btn btn-warning"><?=lang('AppLang.cancel')?></button>
                             </form>
@@ -211,10 +218,15 @@
 <link href="vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <script src="vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="js/plugins-init/datatables.init.js"></script>
-
+<script src="ckeditor/ckeditor.js"></script>
 <script>
     jQuery(document).ready(function($) {
-
+        $(function (){
+            CKEDITOR.editorConfig = function( config ) {
+                config.versionCheck = false;
+            };
+            CKEDITOR.replace('noidung');
+        });
         function reset_form(){
             $('#user_id').val('');
             $('#username').val('');
