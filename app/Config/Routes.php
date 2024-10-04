@@ -80,7 +80,15 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('data_report_print','Dashboard\ReportKhacController::data_report_print');
         $routes->post('save_report','Dashboard\ReportKhacController::save_report');
     });
-    $routes->group('phongban',static function($routes){
+    $routes->group('report_nhansu',static function($routes) {
+        $routes->get('/', 'Dashboard\ReportNhanSuController::index');
+        $routes->get('print', 'Dashboard\ReportNhanSuController::report_print');
+        $routes->post('data_report', 'Dashboard\ReportNhanSuController::data_report');
+        $routes->post('data_report_print', 'Dashboard\ReportNhanSuController::data_report_print');
+        $routes->post('save_report', 'Dashboard\ReportNhanSuController::save_report');
+    });
+
+        $routes->group('phongban',static function($routes){
         $routes->get('/','Dashboard\PhongBanController::index');
         $routes->post('phongban_ajax','Dashboard\PhongBanController::phongban_ajax');
         $routes->post('add_phongban','Dashboard\PhongBanController::add_phongban');

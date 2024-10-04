@@ -13,6 +13,7 @@ return[
     'page_title_report_khac' => 'Biểu tổng hợp số liệu khác',
     'page_title_report_nhansu' => 'Biểu tổng hợp số liệu nhân sự',
     'page_title_phongban' => 'Danh mục phòng ban',
+    'page_title_report_phongban' => 'Báo cáo theo phòng ban',
 
 
     'do_not_have_permission' => 'Bạn không có quyền thực hiện chức năng này!',
@@ -56,6 +57,7 @@ return[
     'form_report' => 'Biểu mẫu',
     'report_khac' => 'Báo cáo khác',
     'report_nhansu' => 'Báo cáo nhân sự',
+    'report_phongban' => 'Báo cáo phòng ban',
 
     'add_data_unsuccessful' => 'Thêm dữ liệu không thành công',
     'add_data_successful' => 'Thêm dữ liệu thành công',

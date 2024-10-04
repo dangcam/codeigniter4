@@ -13,6 +13,7 @@ return[
     'page_title_report_khac' => 'Table summarizing other data',
     'page_title_report_nhansu' => 'Summary table of personnel data',
     'page_title_phongban' => 'Department Management',
+    'page_title_report_phongban' => 'Report Department Management',
 
 
     'do_not_have_permission' => 'You do not have permission!',
@@ -54,6 +55,7 @@ return[
     'form_report' => 'Form Report',
     'report_khac' => 'Other Report',
     'report_nhansu' => 'HR Report',
+    'report_phongban' => 'Department Report',
 
 
     'add_data_unsuccessful' => 'Add data unsuccessful',
