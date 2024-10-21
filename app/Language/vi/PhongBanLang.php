@@ -2,6 +2,8 @@
 return[
     'ma_pb'=>'Mã phòng ban',
     'ten_pb'=>'Tên phòng ban',
+    'noi_dung'=>'Nội dung',
+
     'add_phongban'=>'Thêm mới phòng ban',
     'edit_phongban' => 'Sửa thông tin phòng ban',
     'phongban_creation_successful' => 'Tạo phòng ban thành công',

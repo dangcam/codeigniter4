@@ -340,11 +340,13 @@ class UserModel Extends BaseModel
         }
         $this->session->set('user_id',$user_id);
         $this->session->set('group_id',$records->group_id);
+        $this->session->set('ma_pb',$records->ma_pb);
         $this->session->set('user_system',$records->system);
         if($remember)
         {
             set_cookie('user_id',$user_id,COOKIE_EXPIRY);
             set_cookie('group_id',$records->group_id,COOKIE_EXPIRY);
+            set_cookie('ma_pb',$records->ma_pb,COOKIE_EXPIRY);
             set_cookie('user_system',$records->system,COOKIE_EXPIRY);
         }
         return 0;

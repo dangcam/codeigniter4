@@ -9,7 +9,7 @@ class ReportPhongBanModel extends BaseModel
     protected $primaryKey = 'group_id';
     protected $protectFields = false;
     protected $returnType = ReportPhongBanEntity::class;
-    public function getListReportKhac($report_month,$report_year,$group_id)
+    public function getNoiDung($report_month,$report_year,$group_id,$ma_pb)
     {
 
         $sql = 'SELECT * FROM 
