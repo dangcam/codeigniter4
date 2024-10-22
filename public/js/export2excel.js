@@ -1,6 +1,22 @@
 
 let myHeader = [];
 let myFooter = [];
+async function export_word_phong_ban(month,year,ten_pb,noi_dung){
+
+	var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+		"xmlns:w='urn:schemas-microsoft-com:office:word' "+
+		"xmlns='http://www.w3.org/TR/REC-html40'>"+
+		"<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+	var footer = "</body></html>";
+	var sourceHTML =header+noi_dung +footer;
+	var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+	var fileDownload = document.createElement("a");
+	document.body.appendChild(fileDownload);
+	fileDownload.href = source;
+	fileDownload.download = ten_pb+"_"+year+"_"+month+".doc";
+	fileDownload.click();
+	document.body.removeChild(fileDownload);
+}
 async function export_word(title_group,title_month_year,title_report,myData,data_Khac,data_NS){
 	const date = new Date();
 

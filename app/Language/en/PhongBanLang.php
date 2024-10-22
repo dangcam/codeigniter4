@@ -3,6 +3,8 @@ return[
     'ma_pb'=>'Department ID',
     'ten_pb'=>'Department Name',
     'noi_dung'=>'Report content',
+    'phong_ban'=>'Department',
+
     'add_phongban'=>'Add Department',
     'edit_phongban' => 'Edit Department',
     'phongban_creation_successful' => 'Department Creation Successful',

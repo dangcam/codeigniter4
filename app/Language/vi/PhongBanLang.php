@@ -3,6 +3,7 @@ return[
     'ma_pb'=>'Mã phòng ban',
     'ten_pb'=>'Tên phòng ban',
     'noi_dung'=>'Nội dung',
+    'phong_ban'=>'Phòng ban',
 
     'add_phongban'=>'Thêm mới phòng ban',
     'edit_phongban' => 'Sửa thông tin phòng ban',

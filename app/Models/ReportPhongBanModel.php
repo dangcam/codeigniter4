@@ -11,95 +11,32 @@ class ReportPhongBanModel extends BaseModel
     protected $returnType = ReportPhongBanEntity::class;
     public function getNoiDung($report_month,$report_year,$group_id,$ma_pb)
     {
-
-        $sql = 'SELECT * FROM 
-                (SELECT GR.group_id, group_name, group_parent, report_month, report_year,
-                        value1, value2, value3, value4, value5, value6, value7,
-                        value8, value9, value10, value11, value12, value13                   
-                    FROM (SELECT * FROM report_khac WHERE report_month = ? AND report_year = ?) AS RK 
-                RIGHT JOIN (SELECT * FROM groups WHERE group_id = ?) AS GR ON GR.group_id = RK.group_id) AS GRN ORDER BY GRN.group_id';
-
-        $result = $this->db->query($sql,[$report_month,$report_year,$group_id])->getResult();
-        $i=0;
-        $response = '';
-        $th_td = 'th';
-
-        foreach ($result as $key) {
-            $response .= '<tr >';
-            $i++;
-            $th_td = 'td';
-            $response .= '<td>'.$i.'</td>';
-
-            $response .= '<'.$th_td.'>'.$key->group_name.'
-                            <input type="hidden" name="data['.$key->group_id.'][group_id]" value="'.$key->group_id.'">
-                          </'.$th_td.'>';
-            $response .= '<'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value1]" value="'.$key->value1.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value2]" value="'.$key->value2.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value3]" value="'.$key->value3.'" readonly class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value4]" value="'.$key->value4.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value5]" value="'.$key->value5.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value6]" value="'.$key->value6.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value7]" value="'.$key->value7.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value8]" value="'.$key->value8.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value9]" value="'.$key->value9.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value10]" value="'.$key->value10.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value11]" value="'.$key->value11.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value12]" value="'.$key->value12.'" class="form-control"></'.$th_td.'>
-                          <'.$th_td.'><input type="number" data-group="'.$key->group_id.'" name="data['.$key->group_id.'][value13]" value="'.$key->value13.'"  class="form-control"></'.$th_td.'>';
-
-            $response .= '</tr>';
+        $result = $this->where('report_month',$report_month)->where('report_year',$report_year)->
+                where('group_id',$group_id)->where('ma_pb',$ma_pb)->find();
+        if(count($result)>0){
+            foreach ($result as $item) {
+                return $item->noi_dung;
+            }
         }
-        return $response;
+        return '';
     }
 
     public function save_report($data)
     {
-        $update['report_month'] = $data['report_month'];
-        $update['report_year'] = $data['report_year'];
-        $data_report = $data['data'];
-
-
-
-        foreach ($data_report as $index => $item) {
-
-            $update['group_id'] = $item['group_id'];
-
-            $update['value1'] = isset($item['value1']) ? $item['value1'] : 0;
-            $update['value2'] = isset($item['value2']) ? $item['value2'] : 0;
-
-            $update['value4'] = isset($item['value4']) ? $item['value4'] : 0;
-            $update['value5'] = isset($item['value5']) ? $item['value5'] : 0;
-            $update['value3'] = (int)$update['value4'] + (int)$update['value5'];
-
-            $update['value6'] = isset($item['value6']) ? $item['value6'] : 0;
-            $update['value7'] = isset($item['value7']) ? $item['value7'] : 0;
-            $update['value8'] = isset($item['value8']) ? $item['value8'] : 0;
-            $update['value9'] = isset($item['value9']) ? $item['value9'] : 0;
-            $update['value10'] = isset($item['value10']) ? $item['value10'] : 0;
-            $update['value11'] = isset($item['value11']) ? $item['value11'] : 0;
-            $update['value12'] = isset($item['value12']) ? $item['value12'] : 0;
-            $update['value13'] = isset($item['value13']) ? $item['value13'] : 0;
-
-
-
-
-            $this->where('report_month', $update['report_month'])->where('report_year', $update['report_year'])->where('group_id', $update['group_id']);
+        $this->where('report_month', $data['report_month'])->where('report_year', $data['report_year'])
+            ->where('group_id', $data['group_id'])->where('ma_pb', $data['ma_pb']);
             if ($this->find()) {
-
-                if (!$this->replace($update)) {
+                if (!$this->replace($data)) {
                     $this->set_message("AppLang.save_data_unsuccessful");
                     return 3;
                 }
             } else {
-                if ($this->insert($update)) {
+                if ($this->insert($data)) {
                     $this->set_message("AppLang.save_data_unsuccessful");
                     return 3;
                 }
             }
-        }
-
-
-        $this->set_message("AppLang.save_data_successful");
+       $this->set_message("AppLang.save_data_successful");
         return 0;
 
     }
@@ -220,26 +157,13 @@ class ReportPhongBanModel extends BaseModel
         return $data_table;
 
     }
-    public function getGroupParent($group_id)
+    public function getPhongban()
     {
-        $tbgroup = $this->db->table('groups');
-        $listGroup = $tbgroup->where('group_id',$group_id)->where('group_status',1)->get()->getResult();
-        if(count($listGroup)) {
-            $data[] = $listGroup[0];
-            $parent[] = $listGroup[0]->group_id;
-            while (count($parent)) {
-                $p = $parent[0];
-                array_splice($parent, 0, 1);
-                $list = $tbgroup->where('group_parent', $p)->where('group_status',1)->get()->getResult();
-                if (count($list)) {
-                    foreach ($list as $key => $value) {
-                        $data[] = $value;
-                        $parent[] = $value->group_id;
-                    }
-                }
-            }
-            return $data;
+        $tbPB = $this->db->table('phongban');
+        $listPB = $tbPB->get()->getResult();
+        if(count($listPB)) {
+                      return $listPB;
         }
-        return $listGroup;
+        return null;
     }
 }

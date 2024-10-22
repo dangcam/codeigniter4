@@ -13,8 +13,9 @@ class ReportPhongBanController extends BaseController
 
     public function index()
     {
+        $data['list_pb'] = $this->report_phongban_model->getPhongBan();
         $meta = array('page_title'=>lang('AppLang.page_title_report_group'));
-        return $this->page_construct('dashboard/report_phongban_view',$meta);
+        return $this->page_construct('dashboard/report_phongban_view',$meta,$data);
     }
     public function report_print(){
         $data['list_group'] = $this->report_phongban_model->getGroupParent($this->session->get('group_id'));
