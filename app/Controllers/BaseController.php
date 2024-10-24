@@ -110,6 +110,8 @@ abstract class BaseController extends Controller
         $response .= '<li><a href="'.base_url().'dashboard/group">'.lang('AppLang.group_manager').'</a></li>';
         if($this->libauth->checkFunction('phongban','view'))
             $response .= '<li><a href="'.base_url().'dashboard/phongban">'.lang('AppLang.phongban_manager').'</a></li>';
+        if($this->libauth->checkFunction('mau_report','view'))
+            $response .= '<li><a href="'.base_url().'dashboard/mau_report">'.lang('AppLang.mau_report_manager').'</a></li>';
         $response .='
                 </ul>
             </li>

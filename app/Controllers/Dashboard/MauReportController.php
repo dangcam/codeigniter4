@@ -4,7 +4,7 @@ namespace App\Controllers\Dashboard;
 use App\Controllers\BaseController;
 use App\Models\GroupModel;
 
-class GroupController extends BaseController
+class MauReportController extends BaseController
 {
     private $group_model;
     public function __construct()
@@ -17,11 +17,11 @@ class GroupController extends BaseController
         if($this->libauth->checkFunction('group','view')) {
             $meta = array('page_title' => lang('AppLang.page_title_groups'));
             $data['list_group'] = $this->group_model->getGroupParent();
-            return $this->page_construct('dashboard/group_view', $meta, $data);
+            return $this->page_construct('dashboard/mau_report_view', $meta, $data);
         }else
             return view('errors/html/error_403');
     }
-    public function group_ajax()
+    public function mau_ajax()
     {
         if($this->request->getPost())
         {
@@ -29,7 +29,7 @@ class GroupController extends BaseController
             echo json_encode($data);
         }
     }
-    public function add_group()
+    public function add_mau()
     {
         if($this->request->getPost()&&($this->libauth->checkFunction('group','add')))
         {
@@ -41,7 +41,7 @@ class GroupController extends BaseController
             echo json_encode(array_values($this->libauth->getError()));
         }
     }
-    public function edit_group()
+    public function edit_mau()
     {
         if($this->request->getPost()&&($this->libauth->checkFunction('group','edit')))
         {
@@ -53,7 +53,7 @@ class GroupController extends BaseController
             echo json_encode(array_values($this->libauth->getError()));
         }
     }
-    public function delete_group()
+    public function delete_mau()
     {
         if($this->request->getPost()&&($this->libauth->checkFunction('group','delete')))
         {
@@ -65,9 +65,9 @@ class GroupController extends BaseController
             echo json_encode(array_values($this->libauth->getError()));
         }
     }
-    public function tree_group()
+    public function tree_mau()
     {
-        $data = $this->group_model->getTreeGroupParent(session()->get('group_id'));
+        $data = $this->group_model->getTreeGroupParent('vpddt');
 
         echo json_encode(array_values($data),JSON_UNESCAPED_UNICODE);
 

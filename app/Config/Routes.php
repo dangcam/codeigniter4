@@ -102,6 +102,14 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('data_report_print', 'Dashboard\ReportPhongBanController::data_report_print');
         $routes->post('save_report', 'Dashboard\ReportPhongBanController::save_report');
     });
+    $routes->group('mau_report',static function($routes){
+        $routes->get('/','Dashboard\MauReportController::index');
+        $routes->post('mau_ajax','Dashboard\MauReportController::mau_ajax');
+        $routes->post('add_mau','Dashboard\MauReportController::add_mau');
+        $routes->post('edit_mau','Dashboard\MauReportController::edit_mau');
+        $routes->post('delete_mau','Dashboard\MauReportController::delete_mau');
+        $routes->post('tree_mau','Dashboard\MauReportController::tree_mau');
+    });
 });
 //$routes->post('login', 'Login::index');
 

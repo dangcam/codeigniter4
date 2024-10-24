@@ -14,6 +14,7 @@ return[
     'page_title_report_nhansu' => 'Biểu tổng hợp số liệu nhân sự',
     'page_title_phongban' => 'Danh mục phòng ban',
     'page_title_report_phongban' => 'Báo cáo theo phòng ban',
+    'page_title_mau_report' => 'Mẫu báo cáo theo phòng ban',
 
 
     'do_not_have_permission' => 'Bạn không có quyền thực hiện chức năng này!',
@@ -46,6 +47,7 @@ return[
     'year' => 'Năm',
     'month' => 'Tháng',
     'phongban' => 'Phòng ban',
+    'mau_report' => 'Mẫu báo cáo',
     // Chức năng
     'user_function_manager' => 'Phân quyền người dùng',
     'user_manager'=>'Quản lý người dùng',
@@ -58,6 +60,7 @@ return[
     'report_khac' => 'Báo cáo khác',
     'report_nhansu' => 'Báo cáo nhân sự',
     'report_phongban' => 'Báo cáo phòng ban',
+    'mau_report_manager' => 'Quản lý mẫu báo cáo',
 
     'add_data_unsuccessful' => 'Thêm dữ liệu không thành công',
     'add_data_successful' => 'Thêm dữ liệu thành công',

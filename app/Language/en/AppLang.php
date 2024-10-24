@@ -14,6 +14,7 @@ return[
     'page_title_report_nhansu' => 'Summary table of personnel data',
     'page_title_phongban' => 'Department Management',
     'page_title_report_phongban' => 'Report Department Management',
+    'page_title_mau_report' => 'Departmental report template',
 
 
     'do_not_have_permission' => 'You do not have permission!',
@@ -44,6 +45,7 @@ return[
     'users' => 'Users',
     'report' => 'Report',
     'phongban' => 'Department',
+    'mau_report' => 'Report Template',
     // Chức năng
     'user_function_manager' => 'User Authorization',
     'user_manager'=>'User Manager',
@@ -56,6 +58,8 @@ return[
     'report_khac' => 'Other Report',
     'report_nhansu' => 'HR Report',
     'report_phongban' => 'Department Report',
+    'mau_report_manager' => 'Report Template Management',
+
 
 
     'add_data_unsuccessful' => 'Add data unsuccessful',
