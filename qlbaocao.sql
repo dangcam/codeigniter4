@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 24, 2024 lúc 12:13 PM
+-- Thời gian đã tạo: Th10 25, 2024 lúc 11:59 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -87,12 +87,14 @@ INSERT INTO `groups` (`group_id`, `group_name`, `group_parent`, `group_status`) 
 --
 
 CREATE TABLE `mau_report` (
+  `id_mau` int(11) NOT NULL,
   `ma_pb` varchar(20) NOT NULL,
   `stt` int(2) NOT NULL,
   `tieu_de` varchar(20) NOT NULL,
   `ten_tieu_de` varchar(100) NOT NULL,
   `tieu_de_tren` varchar(20) NOT NULL,
-  `noi_dung` text NOT NULL
+  `noi_dung` text NOT NULL,
+  `nguon_noi_dung` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -954,7 +956,7 @@ ALTER TABLE `groups`
 -- Chỉ mục cho bảng `mau_report`
 --
 ALTER TABLE `mau_report`
-  ADD PRIMARY KEY (`ma_pb`,`stt`,`tieu_de`);
+  ADD PRIMARY KEY (`id_mau`);
 
 --
 -- Chỉ mục cho bảng `phongban`
@@ -1004,6 +1006,16 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_function`
   ADD PRIMARY KEY (`user_id`,`function_id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `mau_report`
+--
+ALTER TABLE `mau_report`
+  MODIFY `id_mau` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

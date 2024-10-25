@@ -2,21 +2,22 @@
 namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
-use App\Models\GroupModel;
+use App\Models\MauReportModel;
 
 class MauReportController extends BaseController
 {
     private $group_model;
     public function __construct()
     {
-        $this->group_model = new GroupModel();
+        $this->mau_report_model = new MauReportModel();
     }
 
     public function index()
     {
-        if($this->libauth->checkFunction('group','view')) {
-            $meta = array('page_title' => lang('AppLang.page_title_groups'));
-            $data['list_group'] = $this->group_model->getGroupParent();
+        if($this->libauth->checkFunction('mau_report','view')) {
+            $meta = array('page_title' => lang('AppLang.page_title_mau_report'));
+            $data['list_mau'] = $this->mau_report_model->getMauParent($this->session->get('ma_pb'));
+            $data['list_pb'] = $this->mau_report_model->getPhongBan();
             return $this->page_construct('dashboard/mau_report_view', $meta, $data);
         }else
             return view('errors/html/error_403');
@@ -25,7 +26,7 @@ class MauReportController extends BaseController
     {
         if($this->request->getPost())
         {
-            $data = $this->group_model->getGroups($this->request->getPost());
+            $data = $this->mau_report_model->getGroups($this->request->getPost());
             echo json_encode($data);
         }
     }
@@ -34,8 +35,8 @@ class MauReportController extends BaseController
         if($this->request->getPost()&&($this->libauth->checkFunction('group','add')))
         {
             $data_group = $this->request->getPost();
-            $data['result'] = ($this->group_model->add_group($data_group));
-            $data['message']= $this->group_model->get_messages();
+            $data['result'] = ($this->mau_report_model->add_group($data_group));
+            $data['message']= $this->mau_report_model->get_messages();
             echo json_encode(array_values($data));
         }else {
             echo json_encode(array_values($this->libauth->getError()));
@@ -46,8 +47,8 @@ class MauReportController extends BaseController
         if($this->request->getPost()&&($this->libauth->checkFunction('group','edit')))
         {
             $data_group = $this->request->getPost();
-            $data['result'] = ($this->group_model->edit_group($data_group));
-            $data['message']= $this->group_model->get_messages();
+            $data['result'] = ($this->mau_report_model->edit_group($data_group));
+            $data['message']= $this->mau_report_model->get_messages();
             echo json_encode(array_values($data));
         }else {
             echo json_encode(array_values($this->libauth->getError()));
@@ -58,8 +59,8 @@ class MauReportController extends BaseController
         if($this->request->getPost()&&($this->libauth->checkFunction('group','delete')))
         {
             $data_group = $this->request->getPost();
-            $data['result'] = ($this->group_model->delete_group($data_group));
-            $data['message']= $this->group_model->get_messages();
+            $data['result'] = ($this->mau_report_model->delete_group($data_group));
+            $data['message']= $this->mau_report_model->get_messages();
             echo json_encode(array_values($data));
         }else {
             echo json_encode(array_values($this->libauth->getError()));
@@ -67,9 +68,13 @@ class MauReportController extends BaseController
     }
     public function tree_mau()
     {
-        $data = $this->group_model->getTreeGroupParent('vpddt');
-
-        echo json_encode(array_values($data),JSON_UNESCAPED_UNICODE);
-
+        if($this->request->getPost())
+        {
+            $data = $this->request->getPost();
+            $return_value = $this->mau_report_model->getTreeMauParent($data['ma_pb']);
+            echo json_encode(array_values($return_value),JSON_UNESCAPED_UNICODE);
+        }else {
+            echo json_encode('No Data');
+        }
     }
 }

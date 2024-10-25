@@ -4,6 +4,11 @@ return[
     'ten_pb'=>'Department Name',
     'noi_dung'=>'Report content',
     'phong_ban'=>'Department',
+    'stt'=>'Number',
+    'tieu_de'=>'Title',
+    'ten_tieu_de'=>'Title Name',
+    'tieu_de_tren'=>'Parent Title',
+    'nguon_noi_dung'=>'Content source',
 
     'add_phongban'=>'Add Department',
     'edit_phongban' => 'Edit Department',

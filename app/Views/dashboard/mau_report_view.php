@@ -11,15 +11,130 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <label class="col-lg-1 col-form-label" for="list_ma_pb"><?=lang('PhongBanLang.phong_ban')?></label>
+                            <div class="col-lg-4">
+                                <select class="custom-select" id="list_ma_pb" name ="list_ma_pb">
+                                    <?php if (isset($list_pb) && count($list_pb)) :
+                                        foreach ($list_pb as $key => $item) : ?>
+                                            <option value="<?=$item->ma_pb?>" <?=session()->get('ma_pb')==$item->ma_pb? 'selected':''?>><?=$item->ten_pb?></option>
+                                        <?php
+                                        endforeach;
+                                    endif ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"><?=lang('GroupLang.diagram')?></h4>
+                        <h4 class="card-title"><?=lang('PhongBanLang.tieu_de')?></h4>
                     </div>
                     <div id="treeview"></div>
                 </div>
             </div>
             <div class="col-lg-8">
+                <!---->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"><?=lang('AppLang.info')?></h4>
+                    </div>
+                    <div class="card-body">
+                        <!---->
+
+                        <div class="alert alert-success alert-alt"role="alert" id="response_success">
+                            <strong>Success!</strong> Message has been sent.
+                        </div>
+                        <div class="alert alert-info alert-alt"role="alert" id="response_info">
+                            <strong>Info!</strong> You have got 5 new email.
+                        </div>
+                        <div class="alert alert-warning alert-alt "role="alert" id="response_warning">
+                            <strong>Warning!</strong> Something went wrong. Please check.
+                        </div>
+                        <div class="alert alert-danger alert-alt" role="alert" id="response_danger">
+                            <strong>Error!</strong> Message Sending failed.
+                        </div>
+
+                        <!---->
+                        <div class="basic-form">
+                            <form method="post" id="create_user">
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label><?=lang('UserLang.user_id')?></label>
+                                        <input type="text" name="user_id" id="user_id" class="form-control" placeholder="<?=lang('UserLang.user_id')?>" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label><?=lang('UserLang.username')?></label>
+                                        <input type="text" name="username" id="username" class="form-control" placeholder="<?=lang('UserLang.username')?>" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label><?=lang('UserLang.password')?></label>
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="<?=lang('UserLang.password')?>" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Email</label>
+                                        <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label><?=lang('UserLang.gender')?></label>
+                                        <select id="gender" name="gender" class="form-control">
+                                            <option value="1"><?=lang('UserLang.male')?></option>
+                                            <option value="2"><?=lang('UserLang.female')?></option>
+                                            <option value="3"><?=lang('UserLang.other')?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label><?=lang('UserLang.phonenumber')?></label>
+                                        <input type="text" name="phonenumber" id="phonenumber" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label><?=lang('UserLang.group')?></label>
+                                        <select class="custom-select" id="group_id" name ="group_id">
+                                            <?php if (isset($list_group) && count($list_group)) :
+                                                foreach ($list_group as $key => $item) : ?>
+                                                    <option value="<?=$item->group_id?>"><?=$item->group_name?></option>
+                                                <?php
+                                                endforeach;
+                                            endif ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label><?=lang('UserLang.ma_pb')?></label>
+                                        <select class="custom-select" id="ma_pb" name ="ma_pb">
+                                            <?php if (isset($list_pb) && count($list_pb)) :
+                                                foreach ($list_pb as $key => $item) : ?>
+                                                    <option value="<?=$item->ma_pb?>"><?=$item->ten_pb?></option>
+                                                <?php
+                                                endforeach;
+                                            endif ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label><?=lang('UserLang.user_status')?></label>
+                                        <select id="user_status" class="form-control"name ="user_status">
+                                            <option value="1"><?=lang('AppLang.active')?></option>
+                                            <option value="2"><?=lang('AppLang.inactive')?></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button type="submit" id="btn_submit" name="create_user" class="btn btn-primary "><?=lang('AppLang.save')?></button>
+                                <button type="button" id="btn_cancel" class="btn btn-warning"><?=lang('AppLang.cancel')?></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <!---->
                 <div class="card">
                     <div class="card-header">
@@ -116,9 +231,9 @@
                     <div class="form-group">
                         <label for="message-text" class="col-form-label"><?=lang('GroupLang.group_parent')?></label>
                         <select class="custom-select" id="group_parent" name ="group_parent">
-                            <?php if (isset($list_group) && count($list_group)) :
-                                foreach ($list_group as $key => $item) : ?>
-                                    <option value="<?=$item->group_id?>"><?=$item->group_name?></option>
+                            <?php if (isset($list_mau) && count($list_mau)) :
+                                foreach ($list_mau as $key => $item) : ?>
+                                    <option value="<?=$item->tieu_de?>"><?=$item->ten_tieu_de?></option>
                                 <?php
                                 endforeach;
                             endif ?>
@@ -187,17 +302,24 @@
 
         function treeGroup() {
             $.ajax({
-                url: "<?= base_url() ?>dashboard/group/tree_group",
+                url: "<?= base_url() ?>dashboard/mau_report/tree_mau",
                 method: "POST",
                 dataType: "json",
+                data: {ma_pb: $('#list_ma_pb').val() },
                 success: function (data) {
                     $('#treeview').treeview({
                         data: data,
+                        onNodeSelected: function(event, data) {
+                            alert(data.id);
+                        }
                     });
                 }
             });
         };
         treeGroup();
+        $('#list_ma_pb').change(function(){
+            treeGroup();
+        });
         $('#myModal').on('show.bs.modal', function (event) {
             $("#response_danger_modal").hide('fast');
             var button = $(event.relatedTarget); // Button that triggered the modal

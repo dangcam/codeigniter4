@@ -4,6 +4,11 @@ return[
     'ten_pb'=>'Tên phòng ban',
     'noi_dung'=>'Nội dung',
     'phong_ban'=>'Phòng ban',
+    'stt'=>'STT',
+    'tieu_de'=>'Tiêu đề',
+    'ten_tieu_de'=>'Tên tiêu đề',
+    'tieu_de_tren'=>'Tiêu đề cấp trên',
+    'nguon_noi_dung'=>'Nguồn nội dung',
 
     'add_phongban'=>'Thêm mới phòng ban',
     'edit_phongban' => 'Sửa thông tin phòng ban',
