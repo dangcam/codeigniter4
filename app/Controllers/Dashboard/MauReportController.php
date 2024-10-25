@@ -76,5 +76,15 @@ class MauReportController extends BaseController
         }else {
             echo json_encode('No Data');
         }
+    }public function tieu_de_tren()
+    {
+        if($this->request->getPost())
+        {
+            $data = $this->request->getPost();
+            $return_value = $this->mau_report_model->getTieuDeTren($data['ma_pb']);
+            echo json_encode($return_value);
+        }else {
+            echo json_encode('No Data');
+        }
     }
 }

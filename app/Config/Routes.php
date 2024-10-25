@@ -109,6 +109,7 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('edit_mau','Dashboard\MauReportController::edit_mau');
         $routes->post('delete_mau','Dashboard\MauReportController::delete_mau');
         $routes->post('tree_mau','Dashboard\MauReportController::tree_mau');
+        $routes->post('tieu_de_tren','Dashboard\MauReportController::tieu_de_tren');
     });
 });
 //$routes->post('login', 'Login::index');

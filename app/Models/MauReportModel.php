@@ -9,7 +9,7 @@ use App\Entities\MauReportEntity;
 class MauReportModel extends BaseModel
 {
     protected $table      = 'mau_report';
-    protected $primaryKey = 'id_mau';
+    protected $primaryKey = 'tieu_de';
     protected $useAutoIncrement = true;
     protected $protectFields = false;
     protected $returnType = MauReportEntity::class;
@@ -166,8 +166,19 @@ class MauReportModel extends BaseModel
         }
         return $listGroup;
     }
+    public function getTieuDeTren($ma_pb)
+    {
+        $listOption ='';
+        $listTieuDe = $this->where('ma_pb',$ma_pb)->find();
+        if(count($listTieuDe)) {
+            foreach ($listTieuDe as $row) {
+                $listOption += '<option value="'+ $row->tieu_de+'">'+$row->ten_tieu_de+'</option>';
+            }
+        }
+        return $listOption;
+    }
 
-    public function add_group($data)
+    public function add_mau($data)
     {
         unset($data['add']);
         $group = new GroupEntity($data);
@@ -188,7 +199,7 @@ class MauReportModel extends BaseModel
             return 3;
         }
     }
-    public function edit_group($data)
+    public function edit_mau($data)
     {
         $group_id = $data['group_id'];
         unset($data['edit']);
@@ -204,7 +215,7 @@ class MauReportModel extends BaseModel
             return 3;
         }
     }
-    public function delete_group($data)
+    public function delete_mau($data)
     {
         $group_id = $data['group_id'];
 

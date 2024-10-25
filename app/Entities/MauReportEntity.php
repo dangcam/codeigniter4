@@ -3,8 +3,7 @@ namespace App\Entities;
 use CodeIgniter\Entity\Entity;
 
 class MauReportEntity extends Entity{
-    protected $id_mau;
-    protected $ma_pb;
+     protected $ma_pb;
     protected $stt;
     protected $tieu_de;
     protected $ten_tieu_de;

@@ -78,7 +78,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label><?=lang('PhongBanLang.noi_dung')?></label>
-                                    <textarea type="text" name="noi_dung" id="noi_dung" class="form-control" placeholder="<?=lang('UserLang.phonenumber')?>">
+                                    <textarea type="text" name="noi_dung" id="noi_dung" class="form-control">
                                         </textarea>
                                 </div>`
                             </div>
