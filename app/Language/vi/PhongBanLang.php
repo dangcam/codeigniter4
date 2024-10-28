@@ -18,6 +18,13 @@ return[
     'phongban_update_unsuccessful' => 'Cập nhật phòng ban không thành công',
     'phongban_delete_successful' => 'Xoá phòng ban thành công',
     'phongban_delete_unsuccessful' => 'Xoá phòng ban không thành công',
+
+    'maureport_creation_successful' => 'Tạo mẫu báo cáo thành công',
+    'maureport_creation_unsuccessful' => 'Tạo mẫu báo cáo không thành công',
+    'maureport_update_successful' => 'Cập nhật mẫu báo cáo thành công',
+    'maureport_update_unsuccessful' => 'Cập nhật mẫu báo cáo không thành công',
+    'maureport_delete_successful' => 'Xoá mẫu báo cáo thành công',
+    'maureport_delete_unsuccessful' => 'Xoá mẫu báo cáo không thành công',
     //
     'view' => 'Xem',
     'add' => 'Thêm',

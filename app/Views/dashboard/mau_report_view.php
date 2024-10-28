@@ -64,7 +64,7 @@
 
                         <!---->
                         <div class="basic-form">
-                            <form method="post" id="create_mau">
+                            <form method="post" id="form_id">
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label><?=lang('PhongBanLang.tieu_de')?></label>
@@ -86,12 +86,7 @@
                                     <div class="form-group col-md-5">
                                         <label><?=lang('PhongBanLang.nguon_noi_dung')?></label>
                                         <select class="custom-select" id="nguon_noi_dung" name ="nguon_noi_dung">
-                                            <?php if (isset($list_pb) && count($list_pb)) :
-                                                foreach ($list_pb as $key => $item) : ?>
-                                                    <option value="<?=$item->ma_pb?>"><?=$item->ten_pb?></option>
-                                                <?php
-                                                endforeach;
-                                            endif ?>
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
@@ -157,6 +152,7 @@
 <script>
     jQuery(document).ready(function($) {
         loadTieuDecapTren();
+        loadNguonNoiDung();
         $(function (){
             CKEDITOR.editorConfig = function( config ) {
                 config.versionCheck = false;
@@ -217,37 +213,6 @@
                 });
             });
         });
-
-        $('#form_id').on('submit', function (event) {
-            event.preventDefault();
-            $("#response_success").hide('fast');
-            $("#response_danger").hide('fast');
-            $("#response_danger_modal").hide('fast');
-            var name = $("#add_edit").attr("name");
-            var formData = $(this).serialize();
-            $.ajax({
-                url: "<?= base_url() ?>dashboard/group/"+name+"_group",
-                method: "POST",
-                data: formData,
-                dataType: "json",
-                success: function (data) {
-                    if (data[0]==0) {
-                        $("#response_success").show('fast');
-                        $("#response_success").html(data[1]);
-                        //$('#myModal').modal('hide');
-                        $('#myModal').modal('toggle');
-                        treeGroup();
-                    } else {
-                        $("#response_danger_modal").show('fast');
-                        $("#response_danger_modal").html(data[1]);
-                    }
-                },
-                error: function (data) {
-                    $("#response_danger_modal").show('fast');
-                    $("#response_danger_modal").html(data);
-                }
-            });
-        });
         function loadTieuDecapTren(){
             // load cùng list tiêu  đề theo phòng ban
             $.ajax({
@@ -259,10 +224,55 @@
                     $("#tieu_de_tren").html(data);
                 }
             });
-        };
+        }
         function loadNguonNoiDung(){
             // load tat ca cac tieu de trong các phòng ban
-        };
+            $.ajax({
+                url: "<?= base_url() ?>dashboard/mau_report/nguon_noi_dung",
+                method: "POST",
+                dataType: "json",
+                success: function (data) {
+                    $("#nguon_noi_dung").html(data);
+                }
+            });
+        }
+        $("#form_id").on('submit',function (event) {
+            event.preventDefault();
+            $("#response_success").hide('fast');
+            $("#response_danger").hide('fast');
+            var noi_dung = CKEDITOR.instances.noi_dung.getData();
+            var ma_pb = $('#list_ma_pb').val();
+            //var formData = $(this).serialize();
+            var formData = new FormData(this);
+            formData.append('noi_dung',noi_dung);
+            formData.append('ma_pb',ma_pb);
+            console.log(formData);
+            $.ajax({
+                url:"<?= base_url() ?>dashboard/mau_report/save_report",
+                method:"POST",
+                data:formData,
+                processData: false,  // Important for FormData
+                contentType: false,  // Important for FormData
+                dataType:"json",
+                success:function (data) {
+                    if(data[0]==0){
+                        $("#response_success").show('fast');
+                        $("#response_success").effect("shake");
+                        $("#response_success").html(data[1]);
+                        loadDataTable();
+                    }else {
+                        $("#response_danger").show('fast');
+                        $("#response_danger").effect("shake");
+                        $("#response_danger").html(data[1]);
+                    }
+                },
+                error:function (data) {
+                    $("#response_danger").show('fast');
+                    $("#response_danger").effect("shake");
+                    $("#response_danger").html(data);
+                }
+            });
+        });
 
     });
 </script>

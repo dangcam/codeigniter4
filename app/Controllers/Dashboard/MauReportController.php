@@ -30,24 +30,14 @@ class MauReportController extends BaseController
             echo json_encode($data);
         }
     }
-    public function add_mau()
+
+    public function save_report()
     {
-        if($this->request->getPost()&&($this->libauth->checkFunction('group','add')))
+
+        if($this->request->getPost()&&($this->libauth->checkFunction('mau_report','edit')))
         {
-            $data_group = $this->request->getPost();
-            $data['result'] = ($this->mau_report_model->add_group($data_group));
-            $data['message']= $this->mau_report_model->get_messages();
-            echo json_encode(array_values($data));
-        }else {
-            echo json_encode(array_values($this->libauth->getError()));
-        }
-    }
-    public function edit_mau()
-    {
-        if($this->request->getPost()&&($this->libauth->checkFunction('group','edit')))
-        {
-            $data_group = $this->request->getPost();
-            $data['result'] = ($this->mau_report_model->edit_group($data_group));
+            $data_mau = $this->request->getPost();
+            $data['result'] = ($this->mau_report_model->save_report($data_mau));
             $data['message']= $this->mau_report_model->get_messages();
             echo json_encode(array_values($data));
         }else {
@@ -56,7 +46,7 @@ class MauReportController extends BaseController
     }
     public function delete_mau()
     {
-        if($this->request->getPost()&&($this->libauth->checkFunction('group','delete')))
+        if($this->request->getPost()&&($this->libauth->checkFunction('mau_report','delete')))
         {
             $data_group = $this->request->getPost();
             $data['result'] = ($this->mau_report_model->delete_group($data_group));
@@ -76,7 +66,8 @@ class MauReportController extends BaseController
         }else {
             echo json_encode('No Data');
         }
-    }public function tieu_de_tren()
+    }
+    public function tieu_de_tren()
     {
         if($this->request->getPost())
         {
@@ -87,4 +78,10 @@ class MauReportController extends BaseController
             echo json_encode('No Data');
         }
     }
+    public function nguon_noi_dung()
+    {
+            $return_value = $this->mau_report_model->getNguonNoiDung();
+            echo json_encode($return_value);
+    }
+
 }

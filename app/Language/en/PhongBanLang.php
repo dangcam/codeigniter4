@@ -18,6 +18,13 @@ return[
     'phongban_update_unsuccessful' => 'Department Update Unsuccessful',
     'phongban_delete_successful' => 'Department Delete Successful',
     'phongban_delete_unsuccessful' => 'Department Delete Unsuccessful',
+
+    'maureport_creation_successful' => 'Report template Creation Successful',
+    'maureport_creation_unsuccessful' => 'Report template Creation Unsuccessful',
+    'maureport_update_successful' => 'Report template Update Successful',
+    'maureport_update_unsuccessful' => 'Report template Update Unsuccessful',
+    'maureport_delete_successful' => 'Report template Delete Successful',
+    'maureport_delete_unsuccessful' => 'Report template Delete Unsuccessful',
     //
     'view' => 'View',
     'add' => 'Add',

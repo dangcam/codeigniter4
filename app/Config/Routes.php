@@ -105,11 +105,11 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
     $routes->group('mau_report',static function($routes){
         $routes->get('/','Dashboard\MauReportController::index');
         $routes->post('mau_ajax','Dashboard\MauReportController::mau_ajax');
-        $routes->post('add_mau','Dashboard\MauReportController::add_mau');
-        $routes->post('edit_mau','Dashboard\MauReportController::edit_mau');
+        $routes->post('save_report','Dashboard\MauReportController::save_report');
         $routes->post('delete_mau','Dashboard\MauReportController::delete_mau');
         $routes->post('tree_mau','Dashboard\MauReportController::tree_mau');
         $routes->post('tieu_de_tren','Dashboard\MauReportController::tieu_de_tren');
+        $routes->post('nguon_noi_dung','Dashboard\MauReportController::nguon_noi_dung');
     });
 });
 //$routes->post('login', 'Login::index');
