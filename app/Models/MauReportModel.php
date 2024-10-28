@@ -65,7 +65,7 @@ class MauReportModel extends BaseModel
     public function getMauParent($ma_pb)
     {
         //$ma_pb = $this->session->get('ma_pb');
-        $listGroup = $this->where('ma_pb',$ma_pb)->find();
+        $listGroup = $this->where('ma_pb',$ma_pb)->orderBy('stt')->find();
         if(count($listGroup)) {
             $data[] = $listGroup[0];
             $parent[] = $listGroup[0]->tieu_de;
@@ -86,21 +86,21 @@ class MauReportModel extends BaseModel
     }
     public function getTieuDeTren($ma_pb)
     {
-        $listOption ='';
+        $listOption ='<option></option>';
         $listTieuDe = $this->where('ma_pb',$ma_pb)->find();
         if(count($listTieuDe)) {
             foreach ($listTieuDe as $row) {
-                $listOption = '<option value="'+ $row->tieu_de+'">'+$row->ten_tieu_de+'</option>';
+                $listOption .= '<option value="'.$row->tieu_de.'">'.$row->ten_tieu_de.'</option>';
             }
         }
         return $listOption;
     }
     public function getNguonNoiDung(){
         $listNguon = $this->get()->getResult();
-        $listOption ='';
+        $listOption ='<option></option>';
         if(count($listNguon)) {
             foreach ($listNguon as $row) {
-                $listOption += '<option value="'+ $row->ma_pb+'.'+$row->tieu_de+'">'+ $row->ma_pb+'.'+$row->ten_tieu_de+'</option>';
+                $listOption .= '<option value="'.$row->ma_pb.'.'.$row->tieu_de.'">'.$row->ma_pb.'.'.$row->ten_tieu_de.'</option>';
             }
         }
         return $listOption;

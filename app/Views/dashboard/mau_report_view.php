@@ -171,7 +171,7 @@
                     $('#treeview').treeview({
                         data: data,
                         onNodeSelected: function(event, data) {
-                            //alert(data.id);
+                            loadThongTinTieuDe(data.id);
                         }
                     });
                 }
@@ -181,7 +181,9 @@
         $('#list_ma_pb').change(function(){
             treeGroup();
         });
-
+        function loadThongTinTieuDe(tieu_de){
+            //alert(tieu_de);
+        }
         // Delete
         $('#smallModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
