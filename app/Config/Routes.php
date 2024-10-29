@@ -110,6 +110,7 @@ $routes->group('dashboard',['filter'=>'authFilters'], static function ($routes) 
         $routes->post('tree_mau','Dashboard\MauReportController::tree_mau');
         $routes->post('tieu_de_tren','Dashboard\MauReportController::tieu_de_tren');
         $routes->post('nguon_noi_dung','Dashboard\MauReportController::nguon_noi_dung');
+        $routes->post('thong_tin','Dashboard\MauReportController::thong_tin');
     });
 });
 //$routes->post('login', 'Login::index');

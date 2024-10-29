@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="form-group col-md-8">
                                         <label><?=lang('PhongBanLang.ten_tieu_de')?></label>
-                                        <input type="text" name="ten_tieu_de" id="ten_tieu_de" class="form-control" placeholder="<?=lang('PhongBanLang.ten_tieu_de')?>" required>
+                                        <input type="text" name="ten_tieu_de" id="ten_tieu_de" class="form-control" placeholder="<?=lang('PhongBanLang.ten_tieu_de')?>" >
                                     </div>
 
                                 </div>
@@ -151,8 +151,12 @@
 
 <script>
     jQuery(document).ready(function($) {
-        loadTieuDecapTren();
-        loadNguonNoiDung();
+        CapNhat();
+        function CapNhat(){
+            loadTieuDecapTren();
+            loadNguonNoiDung();
+            treeGroup();
+        }
         $(function (){
             CKEDITOR.editorConfig = function( config ) {
                 config.versionCheck = false;
@@ -177,12 +181,27 @@
                 }
             });
         };
-        treeGroup();
+
         $('#list_ma_pb').change(function(){
-            treeGroup();
+           CapNhat();
         });
         function loadThongTinTieuDe(tieu_de){
             //alert(tieu_de);
+            $.ajax({
+                url: "<?= base_url() ?>dashboard/mau_report/thong_tin",
+                method: "POST",
+                dataType: "json",
+                data: {ma_pb: $('#list_ma_pb').val(),tieu_de:tieu_de },
+                success: function (data) {
+                    $('#tieu_de').val(data['tieu_de']);
+                    $('#ten_tieu_de').val(data['ten_tieu_de']);
+                    $('#tieu_de_tren').val(data['tieu_de_tren']);
+                    $('#nguon_noi_dung').val(data['nguon_noi_dung']);
+                    $('#stt').val(data['stt']);
+                    CKEDITOR.instances.noi_dung.setData(data['noi_dung']);
+                    $('#tieu_de').prop("readonly", true);
+                }
+            });
         }
         // Delete
         $('#smallModal').on('show.bs.modal', function (event) {
@@ -202,7 +221,7 @@
                         if(data[0]==0){
                             $("#response_success").show('fast');
                             $("#response_success").html(data[1]);
-                            treeGroup();
+                            CapNhat();
                         }else {
                             $("#response_danger").show('fast');
                             $("#response_danger").html(data[1]);
@@ -261,7 +280,7 @@
                         $("#response_success").show('fast');
                         $("#response_success").effect("shake");
                         $("#response_success").html(data[1]);
-                        loadDataTable();
+                        CapNhat();
                     }else {
                         $("#response_danger").show('fast');
                         $("#response_danger").effect("shake");
@@ -275,7 +294,21 @@
                 }
             });
         });
-
+        $("#btn_cancel").click(function(){
+            $("#response_success").hide('fast');
+            $("#response_danger").hide('fast');
+            //
+            reset_form();
+        });
+        function reset_form(){
+            $('#tieu_de').val('');
+            $('#ten_tieu_de').val('');
+            $('#tieu_de_tren').val('');
+            $('#nguon_noi_dung').val('');
+            $('#stt').val('');
+            CKEDITOR.instances.noi_dung.setData('');
+            $('#tieu_de').prop("readonly", false);
+        };
     });
 </script>
 

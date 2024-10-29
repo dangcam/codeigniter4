@@ -35,8 +35,8 @@ class MauReportModel extends BaseModel
         if (count($listGroup)) {
             foreach ($listGroup as $key => $item) {
                 $sub_data["id"] = $item->tieu_de;
-                $sub_data["name"] = $item->ten_tieu_de;
-                $sub_data["text"] = $item->ten_tieu_de;
+                $sub_data["name"] = strlen($item->ten_tieu_de)>0?$item->ten_tieu_de:$item->tieu_de;
+                $sub_data["text"] = strlen($item->ten_tieu_de)>0?$item->ten_tieu_de:$item->tieu_de;
                 $sub_data["parent_id"] = $item->tieu_de_tren;
                 $data[] = $sub_data;
             }
@@ -66,7 +66,7 @@ class MauReportModel extends BaseModel
     {
         //$ma_pb = $this->session->get('ma_pb');
         $listGroup = $this->where('ma_pb',$ma_pb)->orderBy('stt')->find();
-        if(count($listGroup)) {
+        /*if(count($listGroup)) {
             $data[] = $listGroup[0];
             $parent[] = $listGroup[0]->tieu_de;
             while (count($parent)) {
@@ -81,7 +81,7 @@ class MauReportModel extends BaseModel
                 }
             }
             return $data;
-        }
+        }*/
         return $listGroup;
     }
     public function getTieuDeTren($ma_pb)
@@ -94,6 +94,14 @@ class MauReportModel extends BaseModel
             }
         }
         return $listOption;
+    }
+    public function getThongTin($ma_pb,$tieu_de)
+    {
+        $listTieuDe = $this->where('ma_pb',$ma_pb)->where('tieu_de',$tieu_de)->find();
+        if(count($listTieuDe)) {
+            return $listTieuDe[0];
+        }
+        return null;
     }
     public function getNguonNoiDung(){
         $listNguon = $this->get()->getResult();

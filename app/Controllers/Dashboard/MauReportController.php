@@ -78,6 +78,17 @@ class MauReportController extends BaseController
             echo json_encode('No Data');
         }
     }
+    public function thong_tin()
+    {
+        if($this->request->getPost())
+        {
+            $data = $this->request->getPost();
+            $return_value = $this->mau_report_model->getThongTin($data['ma_pb'],$data['tieu_de']);
+            echo json_encode($return_value);
+        }else {
+            echo json_encode('No Data');
+        }
+    }
     public function nguon_noi_dung()
     {
             $return_value = $this->mau_report_model->getNguonNoiDung();
