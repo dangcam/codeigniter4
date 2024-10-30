@@ -90,7 +90,7 @@ class MauReportModel extends BaseModel
         $listTieuDe = $this->where('ma_pb',$ma_pb)->find();
         if(count($listTieuDe)) {
             foreach ($listTieuDe as $row) {
-                $listOption .= '<option value="'.$row->tieu_de.'">'.$row->ten_tieu_de.'</option>';
+                $listOption .= '<option value="'.$row->tieu_de.'">'.(strlen($row->ten_tieu_de)>0?$row->ten_tieu_de:$row->tieu_de).'</option>';
             }
         }
         return $listOption;
@@ -108,7 +108,7 @@ class MauReportModel extends BaseModel
         $listOption ='<option></option>';
         if(count($listNguon)) {
             foreach ($listNguon as $row) {
-                $listOption .= '<option value="'.$row->ma_pb.'.'.$row->tieu_de.'">'.$row->ma_pb.'.'.$row->ten_tieu_de.'</option>';
+                $listOption .= '<option value="'.$row->ma_pb.'.'.$row->tieu_de.'">'.$row->ma_pb.'.'.(strlen($row->ten_tieu_de)>0?$row->ten_tieu_de:$row->tieu_de).'</option>';
             }
         }
         return $listOption;
@@ -135,9 +135,10 @@ class MauReportModel extends BaseModel
 
     public function delete_mau($data)
     {
-        $group_id = $data['group_id'];
+        $ma_pb = $data['ma_pb'];
+        $tieu_de = $data['tieu_de'];
 
-        if($this->where('group_id',$group_id)->delete())
+        if($this->where('ma_pb',$ma_pb)->where('tieu_de',$tieu_de)->delete())
         {
             $this->set_message("PhongBanLang.maureport_delete_successful");
             return 0;

@@ -103,6 +103,7 @@
                                 </div>
                                 <button type="submit" id="btn_submit" name="create_user" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                                 <button type="button" id="btn_cancel" class="btn btn-warning"><?=lang('AppLang.cancel')?></button>
+                                <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#smallModal" data-placement="top"><?=lang('AppLang.delete')?></button>
                             </form>
                         </div>
                     </div>
@@ -151,12 +152,7 @@
 
 <script>
     jQuery(document).ready(function($) {
-        CapNhat();
-        function CapNhat(){
-            loadTieuDecapTren();
-            loadNguonNoiDung();
-            treeGroup();
-        }
+
         $(function (){
             CKEDITOR.editorConfig = function( config ) {
                 config.versionCheck = false;
@@ -165,6 +161,13 @@
                 height:300
             });
         });
+        CapNhat();
+        function CapNhat(){
+            loadTieuDecapTren();
+            loadNguonNoiDung();
+            treeGroup();
+            //reset_form();
+        }
         function treeGroup() {
             $.ajax({
                 url: "<?= base_url() ?>dashboard/mau_report/tree_mau",
@@ -184,6 +187,7 @@
 
         $('#list_ma_pb').change(function(){
            CapNhat();
+            reset_form();
         });
         function loadThongTinTieuDe(tieu_de){
             //alert(tieu_de);
@@ -205,23 +209,22 @@
         }
         // Delete
         $('#smallModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var recipient = button.data('group_id') // Extract info from data-* attributes
             $("#modal-btn-yes").on("click", function(event){
                 $("#smallModal").modal('hide');
                 event.preventDefault();
                 $("#response_success").hide('fast');
                 $("#response_danger").hide('fast');
                 $.ajax({
-                    url: '<?= base_url() ?>dashboard/group/delete_group',
+                    url: '<?= base_url() ?>dashboard/mau_report/delete_mau',
                     type: 'POST',
-                    data: { group_id:recipient },
+                    data: { ma_pb: $('#list_ma_pb').val(),tieu_de: $('#tieu_de').val()},
                     dataType:"json",
                     success:function (data) {
                         if(data[0]==0){
                             $("#response_success").show('fast');
                             $("#response_success").html(data[1]);
                             CapNhat();
+                            reset_form();
                         }else {
                             $("#response_danger").show('fast');
                             $("#response_danger").html(data[1]);
@@ -281,6 +284,7 @@
                         $("#response_success").effect("shake");
                         $("#response_success").html(data[1]);
                         CapNhat();
+                        reset_form();
                     }else {
                         $("#response_danger").show('fast');
                         $("#response_danger").effect("shake");

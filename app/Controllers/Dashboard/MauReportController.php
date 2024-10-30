@@ -48,8 +48,8 @@ class MauReportController extends BaseController
     {
         if($this->request->getPost()&&($this->libauth->checkFunction('mau_report','delete')))
         {
-            $data_group = $this->request->getPost();
-            $data['result'] = ($this->mau_report_model->delete_group($data_group));
+            $data_mau = $this->request->getPost();
+            $data['result'] = ($this->mau_report_model->delete_mau($data_mau));
             $data['message']= $this->mau_report_model->get_messages();
             echo json_encode(array_values($data));
         }else {

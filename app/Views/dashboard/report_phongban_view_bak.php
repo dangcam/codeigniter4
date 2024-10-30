@@ -75,12 +75,12 @@
                             <!---->
                             <input type="hidden" name="group_id" id="group_id" value="<?=session()->get('group_id')?>">
                             <!--<input type="hidden" name="ma_pb" id="ma_pb" value="<?//=session()->get('ma_pb')?>"> -->
-                            <div class="form-row" id="tieu_de_noi_dung">
+                            <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label><?=lang('PhongBanLang.noi_dung')?></label>
-                                    <textarea type="text" name="noi_dung" id="noi_dung" class="">
+                                    <textarea type="text" name="noi_dung" id="noi_dung" class="form-control">
                                         </textarea>
-                                </div>
+                                </div>`
                             </div>
                             <button type="submit" id="btn_submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                         </form>
@@ -116,13 +116,10 @@
                 data: {report_month: $('#report_month').val(),report_year: $('#report_year').val(),
                     group_id: $('#group_id').val(),ma_pb: $('#ma_pb').val() },
                 success: function (data) {
-                    //CKEDITOR.instances.noi_dung.setData(data);
-                    //$("#tieu_de_noi_dung").html(data]);
-                    alert(data);
+                    CKEDITOR.instances.noi_dung.setData(data);
                 },
                 error: function (data) {
-                    //CKEDITOR.instances.noi_dung.setData(data);
-                    //$("#tieu_de_noi_dung").html(data);
+                    CKEDITOR.instances.noi_dung.setData(data);
                 }
             });
         };
