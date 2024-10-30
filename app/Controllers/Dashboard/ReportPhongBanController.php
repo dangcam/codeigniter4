@@ -27,8 +27,9 @@ class ReportPhongBanController extends BaseController
         if($this->request->getPost())
         {
             $data = $this->request->getPost();
-            $return_value = $this->report_phongban_model->getNoiDung($data['report_month'],$data['report_year'],$data['group_id'],$data['ma_pb']);
-            echo json_encode($return_value);
+            $return_value = $this->report_phongban_model->getNoiDung($data['report_month'],$data['report_year'],
+                $data['group_id'],$data['ma_pb']);
+            echo json_encode($return_value,JSON_UNESCAPED_UNICODE);
         }else {
             echo json_encode('No Data');
         }

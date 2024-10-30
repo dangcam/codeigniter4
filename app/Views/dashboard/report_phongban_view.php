@@ -104,9 +104,6 @@
             CKEDITOR.editorConfig = function( config ) {
                 config.versionCheck = false;
             };
-            CKEDITOR.replace('noi_dung',{
-                height:500
-            });
         });
         function loadDataTable() {
             $.ajax({
@@ -117,8 +114,12 @@
                     group_id: $('#group_id').val(),ma_pb: $('#ma_pb').val() },
                 success: function (data) {
                     //CKEDITOR.instances.noi_dung.setData(data);
-                    //$("#tieu_de_noi_dung").html(data]);
+                    $("#tieu_de_noi_dung").html(data);
                     alert(data);
+                    $('.daEditor').each(function(){
+                        CKEDITOR.replace( $(this).attr('name'),
+                            {});
+                    });
                 },
                 error: function (data) {
                     //CKEDITOR.instances.noi_dung.setData(data);
@@ -173,6 +174,11 @@
             var year = $('#report_year').val();
             var ten_pb = $("#ma_pb  option:selected").text();
             export_word_phong_ban(month,year,ten_pb,noi_dung);
+        });
+        window.CKEDITOR_BASEPATH='ckeditor';
+        $('.daEditor').each(function(){
+            CKEDITOR.replace( $(this).attr('name'),
+                {});
         });
     });
 </script>

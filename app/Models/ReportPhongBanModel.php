@@ -17,10 +17,11 @@ class ReportPhongBanModel extends BaseModel
                     rp.report_month,
                     rp.ma_pb,
                     mr.stt,
+                    mr.ten_tieu_de,
                     COALESCE(rp.tieu_de, mr.tieu_de) AS tieu_de,
                     COALESCE(rp.noi_dung, mr.noi_dung) AS noi_dung
                 FROM 
-                    mau_report mr
+                    mau_report mr 
                 LEFT JOIN 
                     report_phongban rp 
                 ON 
@@ -30,24 +31,25 @@ class ReportPhongBanModel extends BaseModel
                     AND rp.report_year = ?     
                     AND rp.report_month = ?    
                 WHERE 
-                    rp.tieu_de  IS NULL 
-                    OR (rp.group_id = ?
-                        AND rp.report_year = ? 
-                        AND rp.report_month = ?)
+                    mr.ma_pb = ?
+                    AND (rp.tieu_de IS NULL 
+                         OR (rp.group_id = ? 
+                             AND rp.report_year = ? 
+                             AND rp.report_month = ?))
                 ORDER BY 
                     mr.stt';
 
         $result = $this->db->query($sql,[$group_id,$report_year,$report_month,
-                                    $group_id,$report_year,$report_month])->getResult();
+                                    $ma_pb,$group_id,$report_year,$report_month])->getResult();
         //
 
         $response = '';
         if(count($result)>0){
             foreach ($result as $item) {
                 $response.=    '<div class="form-group col-md-12">
-                                    <label></label>
-                                    <textarea type="text" name="noi_dung" id="noi_dung" class="">
-                                        </textarea>
+                                    <label>'.(strlen($item->ten_tieu_de)>0?$item->ten_tieu_de:$item->tieu_de).'</label>
+                                    <textarea type="text" name="'.$item->tieu_de.'" 
+                                    id="'.$item->tieu_de.'" class="form-control daEditor">'.$item->noi_dung.'</textarea>
                                 </div>';
             }
         }
