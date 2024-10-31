@@ -202,7 +202,7 @@
                     $('#tieu_de_tren').val(data['tieu_de_tren']);
                     $('#nguon_noi_dung').val(data['nguon_noi_dung']);
                     $('#stt').val(data['stt']);
-                    alert(data['noi_dung']);
+                    //alert(data['noi_dung']);
                     CKEDITOR.instances.noi_dung.setData(data['noi_dung']);
                     $('#tieu_de').prop("readonly", true);
                 }

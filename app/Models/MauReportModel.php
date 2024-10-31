@@ -108,7 +108,7 @@ class MauReportModel extends BaseModel
         $listOption ='<option></option>';
         if(count($listNguon)) {
             foreach ($listNguon as $row) {
-                $listOption .= '<option value="'.$row->ma_pb.'.'.$row->tieu_de.'">'.$row->ma_pb.'.'.(strlen($row->ten_tieu_de)>0?$row->ten_tieu_de:$row->tieu_de).'</option>';
+                $listOption .= '<option value="'.$row->ma_pb.'_'.$row->tieu_de.'">'.$row->ma_pb.'.'.(strlen($row->ten_tieu_de)>0?$row->ten_tieu_de:$row->tieu_de).'</option>';
             }
         }
         return $listOption;

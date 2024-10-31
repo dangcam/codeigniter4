@@ -76,11 +76,7 @@
                             <input type="hidden" name="group_id" id="group_id" value="<?=session()->get('group_id')?>">
                             <!--<input type="hidden" name="ma_pb" id="ma_pb" value="<?//=session()->get('ma_pb')?>"> -->
                             <div class="form-row" id="tieu_de_noi_dung">
-                                <div class="form-group col-md-12">
-                                    <label><?=lang('PhongBanLang.noi_dung')?></label>
-                                    <textarea type="text" name="noi_dung" id="noi_dung" class="">
-                                        </textarea>
-                                </div>
+
                             </div>
                             <button type="submit" id="btn_submit" class="btn btn-primary "><?=lang('AppLang.save')?></button>
                         </form>
@@ -115,15 +111,15 @@
                 success: function (data) {
                     //CKEDITOR.instances.noi_dung.setData(data);
                     $("#tieu_de_noi_dung").html(data);
-                    alert(data);
+                    //alert(data);
                     $('.daEditor').each(function(){
                         CKEDITOR.replace( $(this).attr('name'),
-                            {});
+                            {height:300});
                     });
                 },
                 error: function (data) {
                     //CKEDITOR.instances.noi_dung.setData(data);
-                    //$("#tieu_de_noi_dung").html(data);
+                    $("#tieu_de_noi_dung").html(data);
                 }
             });
         };
@@ -135,12 +131,15 @@
             event.preventDefault();
             $("#response_success").hide('fast');
             $("#response_danger").hide('fast');
-            var name = $("#btn_submit").attr("name");
-            var noi_dung = CKEDITOR.instances.noi_dung.getData();
-            //var formData = $(this).serialize();
             var formData = new FormData(this);
-            formData.append('noi_dung',noi_dung);
-            console.log(formData);
+            $('.daEditor').each(function() {
+                var editorName = $(this).attr('name');
+                var editorData = CKEDITOR.instances[editorName].getData();
+                formData.append(editorName, editorData); // Thêm dữ liệu CKEditor vào formData
+                //var tentieude = $(this).attr('data-ten_tieu_de');
+                //console.log(tentieude);
+            });
+            //console.log(formData);
             $.ajax({
                 url:"<?= base_url() ?>dashboard/report_phongban/save_report",
                 method:"POST",
@@ -168,14 +167,21 @@
             });
         });
         $("#export_word").on( "click", function() {
-            var noi_dung = CKEDITOR.instances.noi_dung.getData();
-            //var month = $('#report_month').val();
+            var noi_dung ='';
+            $('.daEditor').each(function() {
+                var editorName = $(this).attr('name');
+                var editorData = CKEDITOR.instances[editorName].getData();
+                var tentieude ='<p><span style="font-family:Times New Roman"><strong><span style="font-size:13.0pt">'
+                                +$(this).attr('data-ten_tieu_de')+'</span></strong></span></p>';
+                noi_dung += tentieude + editorData;
+            });
             var month = $("#report_month  option:selected").text();
             var year = $('#report_year').val();
             var ten_pb = $("#ma_pb  option:selected").text();
             export_word_phong_ban(month,year,ten_pb,noi_dung);
         });
-        window.CKEDITOR_BASEPATH='ckeditor';
+        window.CKEDITO
+        R_BASEPATH='ckeditor';
         $('.daEditor').each(function(){
             CKEDITOR.replace( $(this).attr('name'),
                 {});

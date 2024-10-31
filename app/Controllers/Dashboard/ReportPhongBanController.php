@@ -50,7 +50,7 @@ class ReportPhongBanController extends BaseController
         if($this->request->getPost()&&($this->libauth->checkFunction('report_phongban','add')))
         {
             $data_report = $this->request->getPost();
-            $data['result'] = ($this->report_phongban_model->save_report($data_report));
+            $data['result'] = ($this->report_phongban_model->saveReportData($data_report));
             $data['message']= $this->report_phongban_model->get_messages();
             echo json_encode(array_values($data));
         }else {

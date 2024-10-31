@@ -8,7 +8,7 @@ async function export_word_phong_ban(month,year,ten_pb,noi_dung){
 		"xmlns='http://www.w3.org/TR/REC-html40'>"+
 		"<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
 	var footer = "</body></html>";
-	var sourceHTML =header+noi_dung +footer;
+	var sourceHTML =header+noi_dung+footer;
 	var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
 	var fileDownload = document.createElement("a");
 	document.body.appendChild(fileDownload);
