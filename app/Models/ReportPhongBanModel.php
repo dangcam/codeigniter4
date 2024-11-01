@@ -20,7 +20,8 @@ class ReportPhongBanModel extends BaseModel
                     mr.ten_tieu_de,
                     mr.nguon_noi_dung,
                     COALESCE(rp.tieu_de, mr.tieu_de) AS tieu_de,
-                    COALESCE(rp.noi_dung, mr.noi_dung) AS noi_dung
+                    COALESCE(rp.noi_dung, mr.noi_dung) AS noi_dung,
+                    CASE WHEN rp.tieu_de IS NULL THEN 1 ELSE 0 END AS is_null_tieu_de
                 FROM 
                     mau_report mr 
                 LEFT JOIN 
@@ -47,16 +48,45 @@ class ReportPhongBanModel extends BaseModel
         $response = '';
         if(count($result)>0){
             foreach ($result as $item) {
+                $itemArray = json_decode(json_encode($item), true);
+                $noi_dung =$item->is_null_tieu_de ==1?$this->layNguonNoiDung($itemArray): $item->noi_dung;
                 $response.=    '<div class="form-group col-md-12">
                                     <label>'.(strlen($item->ten_tieu_de)>0?$item->ten_tieu_de:$item->tieu_de).'</label>
                                     <textarea type="text" name="tieu_de_'.$item->tieu_de.'" data-ten_tieu_de = "'.$item->ten_tieu_de.'"
-                                    id="tieu_de_'.$item->tieu_de.'" class="form-control daEditor">'.$item->noi_dung.'</textarea>
+                                    id="tieu_de_'.$item->tieu_de.'" class="form-control daEditor">'.$noi_dung.'</textarea>
                                 </div>';
             }
         }
         return $response;
     }
+    public function layNguonNoiDung($item)
+    {
+        $noi_dung =$item['noi_dung'];
+        $ma_pb ='';
+        $tieu_de = '';
+        if (strlen($item['nguon_noi_dung'])>0) list($ma_pb, $tieu_de) = explode('_', $item['nguon_noi_dung']);
+        if(strlen($ma_pb)>0 && strlen($tieu_de)>0) {
+            if ($tieu_de == 'baocao1') {
 
+            } elseif ($tieu_de == 'baocao2') {
+
+            } elseif ($tieu_de == 'baocao3') {
+
+            } else {
+                $listTieuDe = $this->where([
+                    'group_id' => $item['group_id'],
+                    'report_year' => $item['report_year'],
+                    'report_month' => $item['report_month'],
+                    'ma_pb' => $ma_pb,
+                    'tieu_de' => $tieu_de
+                ])->find();
+                if (count($listTieuDe)) {
+                    $noi_dung .= $listTieuDe[0]['noi_dung'];
+                }
+            }
+        }
+        return $noi_dung;
+    }
     public function save_report($data)
     {
         $this->where('report_month', $data['report_month'])->where('report_year', $data['report_year'])

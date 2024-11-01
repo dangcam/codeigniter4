@@ -106,6 +106,9 @@ class MauReportModel extends BaseModel
     public function getNguonNoiDung(){
         $listNguon = $this->get()->getResult();
         $listOption ='<option></option>';
+        $listOption .='<option value="vpddt_baocao1">Biểu báo cáo 01 HS đất đai</option>';
+        $listOption .='<option value="vpddt_baocao2">Biểu báo cáo 02 Bản đồ địa chính</option>';
+        $listOption .='<option value="vpddt_baocao3">Biểu báo cáo 02 Sử dụng tài liệu</option>';
         if(count($listNguon)) {
             foreach ($listNguon as $row) {
                 $listOption .= '<option value="'.$row->ma_pb.'_'.$row->tieu_de.'">'.$row->ma_pb.'.'.(strlen($row->ten_tieu_de)>0?$row->ten_tieu_de:$row->tieu_de).'</option>';
