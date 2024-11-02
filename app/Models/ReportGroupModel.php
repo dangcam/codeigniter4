@@ -628,4 +628,5 @@ class ReportGroupModel extends BaseModel
         return $data_table;
 
     }
+
 }
