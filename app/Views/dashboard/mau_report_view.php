@@ -177,6 +177,7 @@
                 success: function (data) {
                     $('#treeview').treeview({
                         data: data,
+                        levels: 99,
                         onNodeSelected: function(event, data) {
                             loadThongTinTieuDe(data.id);
                         }
