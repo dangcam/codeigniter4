@@ -137,7 +137,7 @@
                 var editorData = CKEDITOR.instances[editorName].getData();
                 formData.append(editorName, editorData); // Thêm dữ liệu CKEditor vào formData
                 //var tentieude = $(this).attr('data-ten_tieu_de');
-                //console.log(tentieude);
+                console.log(formData);
             });
             //console.log(formData);
             $.ajax({

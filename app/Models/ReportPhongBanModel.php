@@ -48,7 +48,7 @@ class ReportPhongBanModel extends BaseModel
         $response = '';
         if(count($result)>0){
             foreach ($result as $item) {
-                $itemArray = json_decode(json_encode($item), true);
+                //$itemArray = json_decode(json_encode($item), true);
                 $noi_dung =$item->is_null_tieu_de ==1?$this->layNguonNoiDung($item->noi_dung,$item->nguon_noi_dung,
                     $group_id,$report_year,$report_month): $item->noi_dung;
                 $response.=    '<div class="form-group col-md-12">
@@ -394,7 +394,7 @@ class ReportPhongBanModel extends BaseModel
 
             if (strpos($key, 'tieu_de_') === 0) {
                 $tieu_de = str_replace('tieu_de_', '', $key); // Lấy `tieu_de` từ key
-                $insertData['tieu_de'] = $tieu_de;
+                $insertData['tieu_de'] =  str_replace('_', '.', $tieu_de);// php chuyển dấu . thành _
                 $insertData['noi_dung'] = $value;
 
                 // Kiểm tra xem đã có bản ghi nào với `group_id`, `report_year`, `report_month`, `ma_pb`, và `tieu_de` này chưa
